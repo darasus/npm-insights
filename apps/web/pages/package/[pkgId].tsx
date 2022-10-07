@@ -20,6 +20,8 @@ import {
   Text,
   useToken,
 } from "@chakra-ui/react";
+import { trpc } from "../../utils/trpc";
+import { useRouter } from "next/router";
 
 interface Props {
   name: string;
@@ -84,10 +86,13 @@ const Chart = ({ dataKey, stat, label, data, color1, color2 }: any) => {
   );
 };
 
-export default function Page({ name, description, sizeHistory }: Props) {
+export default function Page() {
+  const router = useRouter();
+  const pkg = trpc.package.useQuery({ pkgId: router.query.pkgId as string });
+
   const [c1, c2] = useToken("colors", ["green.100", "green.200"]);
   const [c3, c4] = useToken("colors", ["orange.100", "orange.200"]);
-  const data = sizeHistory
+  const data = pkg.data?.sizeHistory
     .sort((a, b) => compareSemanticVersions(a.version, b.version))
     .map((x) => {
       const gzipStrNum = x.gzip.toString();
@@ -107,18 +112,18 @@ export default function Page({ name, description, sizeHistory }: Props) {
       <Flex flexDirection={"column"} alignItems="center" mb={4}>
         <Box>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
-            {name}
+            {pkg.data?.name}
           </Text>
         </Box>
         <Box>
-          <Text>{description}</Text>
+          <Text>{pkg.data?.description}</Text>
         </Box>
       </Flex>
       <Grid templateColumns="repeat(2, 1fr)" gap={4} mx={4} w={"2xl"}>
         <GridItem w="100%" h="10">
           <Chart
             dataKey="size"
-            stat={`${data.pop()?.gzip} KB`}
+            stat={`${data?.pop()?.gzip} KB`}
             label="Gzipped"
             data={data}
             color1={c1}
@@ -128,7 +133,7 @@ export default function Page({ name, description, sizeHistory }: Props) {
         <GridItem w="100%" h="10">
           <Chart
             dataKey="gzip"
-            stat={`${data.pop()?.size} KB`}
+            stat={`${data?.pop()?.size} KB`}
             label="Minified"
             data={data}
             color1={c3}
@@ -139,31 +144,3 @@ export default function Page({ name, description, sizeHistory }: Props) {
     </Flex>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  const pkgId = context.params?.pkgId as string;
-  const cache = new CacheService();
-  const { name, description, versions, ...rest } = (await cache.get(
-    stringToHash(pkgId)
-  )) as any;
-
-  let sizeHistory: any = [];
-
-  for (const v of Object.keys(versions)) {
-    const data = (await cache.get(stringToHash(`${pkgId}@${v}`))) as any;
-
-    sizeHistory.push({
-      version: v,
-      size: data?.size,
-      gzip: data?.gzip,
-    });
-  }
-
-  sizeHistory = sizeHistory.filter(
-    (i: any) => Boolean(i.size) && Boolean(i.gzip)
-  );
-
-  return { props: { name, description, sizeHistory } };
-};

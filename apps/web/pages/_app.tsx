@@ -1,5 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../theme";
+import { trpc } from "../utils/trpc";
 
 function MyApp({ Component, pageProps }: any) {
   return (
@@ -9,4 +10,4 @@ function MyApp({ Component, pageProps }: any) {
   );
 }
 
-export default MyApp;
+export default trpc.withTRPC(MyApp);

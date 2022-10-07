@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalDependencies": ["$REDIS_URL"],
+  "globalDependencies": ["$REDIS_URL","$VERCEL_URL", "$PORT"],
   "globalEnv": [
     "REDIS_URL"
   ],
@@ -18,7 +18,9 @@
     "generate": {
       "cache": false,
       "env": [
-        "REDIS_URL"
+        "REDIS_URL",
+        "VERCEL_URL",
+        "PORT"
       ]
     }
   }
