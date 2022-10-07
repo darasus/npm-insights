@@ -8,19 +8,18 @@ const cache = new CacheService();
 
 const getPkg = async (pkgId: string) => {
   const data = await npm.getPackage(pkgId);
+  const versions = Object.keys(data.versions)
+    .filter((v) => !v.includes("-"))
+    .reverse()
+    .slice(0, 100)
+    .reverse()
+    .reduce((prev, next) => {
+      return { ...prev, [next]: data.versions[next] };
+    }, {});
+
   return {
     ...data,
-    versions: Object.keys(data.versions)
-      .reverse()
-      .slice(0, 100)
-      .reverse()
-      .reduce((prev, next) => {
-        if (next.includes("-")) {
-          return prev;
-        }
-
-        return { ...prev, [next]: data.versions[next] };
-      }, {}),
+    versions,
   };
 };
 
