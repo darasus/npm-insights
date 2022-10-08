@@ -50,13 +50,13 @@ export const packageRouter = t.router({
     )
     .query(async ({ ctx, input }) => {
       const data = await ctx.npm.searchPackages(input.q);
-      const response = data.objects.map((pkg: any) => {
+      const response = data.objects?.map((pkg: any) => {
         return {
           name: pkg.package.name as string,
           version: pkg.package.version as string,
           description: pkg.package.description as string,
         };
-      });
+      }) as Array<{ name: string; version: string; description: string }>;
 
       return response;
     }),

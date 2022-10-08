@@ -17,6 +17,7 @@
     "@trpc/next": "^10.0.0-proxy-beta.15",
     "@trpc/react": "^10.0.0-proxy-beta.15",
     "@trpc/server": "^10.0.0-proxy-beta.15",
+    "downshift": "^6.1.12",
     "framer-motion": "^6",
     "lib": "workspace:*",
     "next": "12.3.1",
