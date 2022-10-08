@@ -66,6 +66,9 @@ export default function Combobox() {
     },
   });
 
+  const showSuggestions =
+    isOpen && searchResults.data && searchResults.data.length > 0;
+
   return (
     <Flex direction="column" align="center">
       <Flex {...getComboboxProps()} direction="column" flex="1 1 auto" w="full">
@@ -73,7 +76,7 @@ export default function Combobox() {
           direction="row"
           alignItems="baseline"
           w="full"
-          mb={isOpen ? 4 : 0}
+          mb={showSuggestions ? 4 : 0}
         >
           <InputGroup w="full">
             <Input w="full" {...getInputProps()} placeholder="Search..." />
@@ -84,11 +87,11 @@ export default function Combobox() {
             </InputRightElement>
           </InputGroup>
         </Flex>
-        <Card borderWidth={isOpen ? "thin" : "0px"}>
+        <Card borderWidth={showSuggestions ? "thin" : "0px"}>
           <List
-            display={isOpen ? undefined : "none"}
-            py={2}
             {...getMenuProps()}
+            display={showSuggestions ? undefined : "none"}
+            py={2}
             flex={1}
             overflowY="auto"
           >
