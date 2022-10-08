@@ -38,7 +38,6 @@
     "eslint": "7.32.0",
     "eslint-config-custom": "workspace:*",
     "next-transpile-modules": "9.0.0",
-    "tsconfig": "workspace:*",
-    "typescript": "^4.5.3"
+    "tsconfig": "workspace:*"
   }
 }

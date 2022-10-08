@@ -19,7 +19,8 @@
     "dotenv-cli": "^6.0.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "latest",
+    "typescript": "^4.8.4"
   },
   "engines": {
     "node": ">=14.0.0"

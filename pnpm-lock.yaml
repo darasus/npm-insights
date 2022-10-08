@@ -11,6 +11,7 @@ importers:
       ms: ^2.1.3
       prettier: latest
       turbo: latest
+      typescript: ^4.8.4
     dependencies:
       ms: 2.1.3
     devDependencies:
@@ -20,6 +21,7 @@ importers:
       eslint-config-custom: link:packages/eslint-config-custom
       prettier: 2.7.1
       turbo: 1.5.5
+      typescript: 4.8.4
 
   apps/web:
     specifiers:
@@ -49,7 +51,6 @@ importers:
       recharts: 2.1.12
       superjson: ^1.10.0
       tsconfig: workspace:*
-      typescript: ^4.5.3
       ui: workspace:*
       zod: ^3.19.1
     dependencies:
@@ -82,7 +83,6 @@ importers:
       eslint-config-custom: link:../../packages/eslint-config-custom
       next-transpile-modules: 9.0.0
       tsconfig: link:../../packages/tsconfig
-      typescript: 4.8.4
 
   packages/eslint-config-custom:
     specifiers:
@@ -91,15 +91,12 @@ importers:
       eslint-config-prettier: ^8.3.0
       eslint-config-turbo: latest
       eslint-plugin-react: 7.31.8
-      typescript: ^4.7.4
     dependencies:
       eslint: 7.32.0
-      eslint-config-next: 12.3.1_3rubbgt5ekhqrcgx4uwls3neim
+      eslint-config-next: 12.3.1_eslint@7.32.0
       eslint-config-prettier: 8.5.0_eslint@7.32.0
       eslint-config-turbo: 0.0.4_eslint@7.32.0
       eslint-plugin-react: 7.31.8_eslint@7.32.0
-    devDependencies:
-      typescript: 4.8.4
 
   packages/generator:
     specifiers:
@@ -111,7 +108,6 @@ importers:
       package-size: ^2.3.0
       query-registry: ^2.6.0
       tsx: ^3.9.0
-      typescript: ^4.8.4
     dependencies:
       got: 12.5.1
       lib: link:../lib
@@ -122,7 +118,6 @@ importers:
       esno: 0.16.3
       package-build-stats: 7.3.13
       tsx: 3.9.0
-      typescript: 4.8.4
 
   packages/lib:
     specifiers:
@@ -141,7 +136,6 @@ importers:
       eslint-config-custom: workspace:*
       react: ^18.2.0
       tsconfig: workspace:*
-      typescript: ^4.5.2
     devDependencies:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -149,7 +143,6 @@ importers:
       eslint-config-custom: link:../eslint-config-custom
       react: 18.2.0
       tsconfig: link:../tsconfig
-      typescript: 4.8.4
 
 packages:
 
@@ -2098,7 +2091,7 @@ packages:
       - uglify-js
       - webpack-cli
 
-  /@typescript-eslint/parser/5.39.0_3rubbgt5ekhqrcgx4uwls3neim:
+  /@typescript-eslint/parser/5.39.0_eslint@7.32.0:
     resolution: {integrity: sha512-PhxLjrZnHShe431sBAGHaNe6BDdxAASDySgsBCGxcBecVCi8NQWxQZMcizNA4g0pN51bBAn/FUfkWG3SDVcGlA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2110,10 +2103,9 @@ packages:
     dependencies:
       '@typescript-eslint/scope-manager': 5.39.0
       '@typescript-eslint/types': 5.39.0
-      '@typescript-eslint/typescript-estree': 5.39.0_typescript@4.8.4
+      '@typescript-eslint/typescript-estree': 5.39.0
       debug: 4.3.4
       eslint: 7.32.0
-      typescript: 4.8.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2131,7 +2123,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: false
 
-  /@typescript-eslint/typescript-estree/5.39.0_typescript@4.8.4:
+  /@typescript-eslint/typescript-estree/5.39.0:
     resolution: {integrity: sha512-qLFQP0f398sdnogJoLtd43pUgB18Q50QSA+BTE5h3sUxySzbWDpTSdgt4UyxNSozY/oDK2ta6HVAzvGgq8JYnA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2146,8 +2138,7 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.3.8
-      tsutils: 3.21.0_typescript@4.8.4
-      typescript: 4.8.4
+      tsutils: 3.21.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5221,7 +5212,7 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-config-next/12.3.1_3rubbgt5ekhqrcgx4uwls3neim:
+  /eslint-config-next/12.3.1_eslint@7.32.0:
     resolution: {integrity: sha512-EN/xwKPU6jz1G0Qi6Bd/BqMnHLyRAL0VsaQaWA7F3KkjAgZHi4f1uL1JKGWNxdQpHTW/sdGONBd0bzxUka/DJg==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
@@ -5232,7 +5223,7 @@ packages:
     dependencies:
       '@next/eslint-plugin-next': 12.3.1
       '@rushstack/eslint-patch': 1.2.0
-      '@typescript-eslint/parser': 5.39.0_3rubbgt5ekhqrcgx4uwls3neim
+      '@typescript-eslint/parser': 5.39.0_eslint@7.32.0
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.6
       eslint-import-resolver-typescript: 2.7.1_hpmu7kn6tcn2vnxpfzvv33bxmy
@@ -5240,7 +5231,6 @@ packages:
       eslint-plugin-jsx-a11y: 6.6.1_eslint@7.32.0
       eslint-plugin-react: 7.31.8_eslint@7.32.0
       eslint-plugin-react-hooks: 4.6.0_eslint@7.32.0
-      typescript: 4.8.4
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
       - supports-color
@@ -5312,7 +5302,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.39.0_3rubbgt5ekhqrcgx4uwls3neim
+      '@typescript-eslint/parser': 5.39.0_eslint@7.32.0
       debug: 3.2.7
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.6
@@ -5331,7 +5321,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.39.0_3rubbgt5ekhqrcgx4uwls3neim
+      '@typescript-eslint/parser': 5.39.0_eslint@7.32.0
       array-includes: 3.1.5
       array.prototype.flat: 1.3.0
       debug: 2.6.9
@@ -11171,14 +11161,13 @@ packages:
     resolution: {integrity: sha512-LxhtAkPDTkVCMQjt2h6eBVY28KCjikZqZfMcC15YBeNjkgUpdCfBu5HoiOTDu86v6smE8yOjyEktJ8hlbANHQA==}
     engines: {node: '>=0.6.x'}
 
-  /tsutils/3.21.0_typescript@4.8.4:
+  /tsutils/3.21.0:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
     engines: {node: '>= 6'}
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     dependencies:
       tslib: 1.14.1
-      typescript: 4.8.4
     dev: false
 
   /tsx/3.9.0:
@@ -11309,6 +11298,7 @@ packages:
     resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
 
   /uglify-js/3.17.3:
     resolution: {integrity: sha512-JmMFDME3iufZnBpyKL+uS78LRiC+mK55zWfM5f/pWBJfpOttXAqYfdDGRukYhJuyRinvPVAtUhvy7rlDybNtFg==}
