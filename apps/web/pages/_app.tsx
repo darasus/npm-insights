@@ -1,4 +1,5 @@
 import { ChakraProvider } from "@chakra-ui/react";
+import { withTRPC } from "@trpc/next";
 import { theme } from "../theme";
 import { trpc } from "../utils/trpc";
 
