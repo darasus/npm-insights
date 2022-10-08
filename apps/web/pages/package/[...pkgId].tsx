@@ -1,9 +1,20 @@
-import { Box, Flex, Grid, GridItem, Text, useToken } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  IconButton,
+  Text,
+  useToken,
+} from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import { formatKbs } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
+import Image from "next/image";
+import { HomeIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   name: string;
@@ -35,51 +46,82 @@ export default function Page() {
 
   return (
     <Flex flexDirection={"column"} alignItems="center">
-      <Card
-        display={"flex"}
-        flexDirection={"column"}
-        alignItems="center"
-        mb={4}
-        w="full"
-        p={4}
-      >
+      <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
         <Box>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
             {pkg.data?.name}
           </Text>
         </Box>
-        <Box>
+        <Box mb={2}>
           <Text>{pkg.data?.description}</Text>
         </Box>
+        <Flex>
+          <Button
+            href={`https://npmjs.com/package/${pkg.data?.name}`}
+            as="a"
+            size="xs"
+            mr={2}
+            target={"_blank"}
+            leftIcon={
+              <Image
+                height="12"
+                width="12"
+                src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/npm.svg"
+                alt="npm logo"
+              />
+            }
+          >
+            npm
+          </Button>
+          <Button
+            href={pkg.data?.repository}
+            as="a"
+            size="xs"
+            target={"_blank"}
+            leftIcon={
+              <Image
+                height="12"
+                width="12"
+                src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/github.svg"
+                alt="npm logo"
+              />
+            }
+          >
+            GitHub
+          </Button>
+          <Button
+            href={pkg.data?.repository}
+            as="a"
+            size="xs"
+            target={"_blank"}
+            leftIcon={<HomeIcon height={15} width={15} />}
+          >
+            Homepage
+          </Button>
+        </Flex>
       </Card>
       <Grid templateColumns="repeat(2, 1fr)" gap={4} mx={4} w={"full"}>
         <GridItem w="100%" h="10">
-          {pkgSizeHistory.isLoading ? (
-            <Text>Loading...</Text>
-          ) : (
-            <LineChartCard
-              dataKey="gzip"
-              label={formatKbs(data?.reverse()[0]?.gzip as number)}
-              description="Gzipped"
-              data={data}
-              fillColor={c1}
-              strokeColor={c2}
-            />
-          )}
+          <LineChartCard
+            dataKey="gzip"
+            label={formatKbs(data?.reverse()[0]?.gzip as number)}
+            description="Gzipped"
+            data={data}
+            fillColor={c1}
+            strokeColor={c2}
+            isLoading={pkgSizeHistory.isLoading}
+          />
         </GridItem>
         <GridItem w="100%" h="10">
-          {pkgSizeHistory.isLoading ? (
-            <Text>Loading...</Text>
-          ) : (
-            <LineChartCard
-              dataKey="size"
-              label={formatKbs(data?.reverse()[0]?.size as number)}
-              description="Minified"
-              data={data}
-              fillColor={c3}
-              strokeColor={c4}
-            />
-          )}
+          <LineChartCard
+            dataKey="size"
+            label={formatKbs(data?.reverse()[0]?.size as number)}
+            description="Minified"
+            data={data}
+            fillColor={c3}
+            strokeColor={c4}
+            isLoading={pkgSizeHistory.isLoading}
+          />
         </GridItem>
       </Grid>
     </Flex>

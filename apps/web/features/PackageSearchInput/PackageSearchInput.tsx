@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCombobox } from "downshift";
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import {
   Button,
   Flex,
@@ -8,36 +9,18 @@ import {
   InputRightElement,
   List,
   ListItem,
-  ListItemProps,
-  ListProps,
+  Spinner,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { Card } from "../../components/Card";
 import { useRouter } from "next/router";
 
-const ComboboxItem = React.forwardRef<
-  HTMLLIElement,
-  ListItemProps & { itemIndex: number; highlightedIndex: number }
->(function ComboboxItem({ itemIndex, highlightedIndex, ...props }, ref) {
-  return (
-    <ListItem
-      transition="background-color 220ms, color 220ms"
-      bg={itemIndex === highlightedIndex ? "gray.100" : undefined}
-      px={4}
-      py={2}
-      cursor="pointer"
-      {...props}
-      ref={ref}
-    />
-  );
-});
-
-export default function Combobox() {
+export function PackageSearchInput() {
   const router = useRouter();
   const [q, setQ] = useState("");
   const searchResults = trpc.package.searchPackage.useQuery(
     { q },
-    { enabled: Boolean(q) }
+    { enabled: Boolean(q), keepPreviousData: true }
   );
   const {
     isOpen,
@@ -80,9 +63,20 @@ export default function Combobox() {
         >
           <InputGroup w="full">
             <Input w="full" {...getInputProps()} placeholder="Search..." />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" {...getToggleButtonProps()}>
-                {isOpen ? "Hide" : "Show"}
+            <InputRightElement>
+              <Button
+                size="sm"
+                {...getToggleButtonProps()}
+                disabled={searchResults.isFetching}
+                mr={1}
+              >
+                {!searchResults.isFetching &&
+                  (isOpen ? (
+                    <ChevronDownIcon width={15} height={15} />
+                  ) : (
+                    <ChevronUpIcon width={15} height={15} />
+                  ))}
+                {searchResults.isFetching && <Spinner width={15} height={15} />}
               </Button>
             </InputRightElement>
           </InputGroup>

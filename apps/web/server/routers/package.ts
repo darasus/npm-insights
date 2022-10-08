@@ -12,7 +12,16 @@ export const packageRouter = t.router({
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId);
 
-      return { name: pkg.name, description: pkg.description };
+      console.log(pkg);
+
+      return {
+        name: pkg.name as string,
+        description: pkg.description as string,
+        homepage: pkg.homepage as string,
+        repository: pkg.repository.url
+          .replace("git+", "")
+          .replace(".git", "") as string,
+      };
     }),
   getSizeHistory: t.procedure
     .input(
