@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useCombobox } from "downshift";
 import {
-  Box,
   Button,
   Flex,
-  IconButton,
   Input,
   InputGroup,
   InputRightElement,
@@ -12,38 +10,19 @@ import {
   ListItem,
   ListItemProps,
   ListProps,
-  Text,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { Card } from "../../components/Card";
 import { useRouter } from "next/router";
 
-const ComboboxInput = React.forwardRef<HTMLInputElement>(function ComboboxInput(
-  { ...props },
-  ref
-) {
-  return <Input {...props} ref={ref} />;
-});
-
-const ComboboxList = React.forwardRef<
-  HTMLUListElement,
-  ListProps & { isOpen: boolean }
->(function ComboboxList({ isOpen, ...props }, ref) {
-  return (
-    <List display={isOpen ? undefined : "none"} py={2} {...props} ref={ref} />
-  );
-});
-
 const ComboboxItem = React.forwardRef<
   HTMLLIElement,
   ListItemProps & { itemIndex: number; highlightedIndex: number }
 >(function ComboboxItem({ itemIndex, highlightedIndex, ...props }, ref) {
-  const isActive = itemIndex === highlightedIndex;
-
   return (
     <ListItem
       transition="background-color 220ms, color 220ms"
-      bg={isActive ? "gray.100" : undefined}
+      bg={itemIndex === highlightedIndex ? "gray.100" : undefined}
       px={4}
       py={2}
       cursor="pointer"
@@ -82,17 +61,13 @@ export default function Combobox() {
     },
     onSelectedItemChange(changes) {
       if (changes.selectedItem) {
-        console.log(changes.selectedItem);
         router.push(`/package/${changes.selectedItem.name}`);
       }
     },
   });
 
   return (
-    <Flex direction="column" align="center" mb={4}>
-      <Text as="label" fontSize="lg" {...getLabelProps()}>
-        Choose a city
-      </Text>
+    <Flex direction="column" align="center">
       <Flex {...getComboboxProps()} direction="column" flex="1 1 auto" w="full">
         <Flex
           direction="row"
@@ -110,26 +85,30 @@ export default function Combobox() {
           </InputGroup>
         </Flex>
         <Card borderWidth={isOpen ? "thin" : "0px"}>
-          <ComboboxList
-            isOpen={isOpen}
+          <List
+            display={isOpen ? undefined : "none"}
+            py={2}
             {...getMenuProps()}
             flex={1}
             overflowY="auto"
           >
             {searchResults.data?.map((item, index: number) => (
-              <ComboboxItem
+              <ListItem
                 {...getItemProps({
                   item,
                   index,
                 })}
-                itemIndex={index}
-                highlightedIndex={highlightedIndex}
                 key={index}
+                transition="background-color 220ms, color 220ms"
+                bg={index === highlightedIndex ? "gray.100" : undefined}
+                px={4}
+                py={2}
+                cursor="pointer"
               >
                 {item.name}
-              </ComboboxItem>
+              </ListItem>
             ))}
-          </ComboboxList>
+          </List>
         </Card>
       </Flex>
     </Flex>

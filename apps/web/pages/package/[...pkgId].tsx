@@ -24,7 +24,6 @@ export default function Page() {
       ? router.query?.pkgId
       : router.query?.pkgId?.join("/")
   ) as string;
-  console.log(pkgId);
   const pkg = trpc.package.getInfo.useQuery({ pkgId }, { enabled: !!pkgId });
   const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
     { pkgId },
