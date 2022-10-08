@@ -50,4 +50,20 @@ export class NPM {
 
     return data ? JSON.parse(data) : null;
   }
+
+  async searchPackages(q: string) {
+    const data = await this.cache.fetch(
+      stringToHash(`search-package:${q}`),
+      async () => {
+        const url = new URL("https://registry.npmjs.org/-/v1/search");
+        url.searchParams.set("text", q);
+        const response = await fetch(url);
+        const data = await response.json();
+        return JSON.stringify(data);
+      },
+      ms("10 years")
+    );
+
+    return data ? JSON.parse(data) : null;
+  }
 }

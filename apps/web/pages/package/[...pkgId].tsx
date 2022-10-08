@@ -1,17 +1,6 @@
-import { Area, AreaChart, ResponsiveContainer } from "recharts";
-import {
-  AspectRatio,
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  Text,
-  useToken,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Text, useToken } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
-import { GetServerSidePropsContext } from "next";
-import superjson from "superjson";
 import { formatKbs } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
@@ -30,7 +19,12 @@ export default function Page() {
     "orange.200",
   ]);
   const router = useRouter();
-  const pkgId = router.query.pkgId as string;
+  const pkgId = (
+    typeof router.query?.pkgId === "string"
+      ? router.query?.pkgId
+      : router.query?.pkgId?.join("/")
+  ) as string;
+  console.log(pkgId);
   const pkg = trpc.package.getInfo.useQuery({ pkgId }, { enabled: !!pkgId });
   const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
     { pkgId },
@@ -41,7 +35,7 @@ export default function Page() {
   if (pkg.isLoading) return null;
 
   return (
-    <Flex flexDirection={"column"} alignItems="center" p={4} w="xl" m="0 auto">
+    <Flex flexDirection={"column"} alignItems="center">
       <Card
         display={"flex"}
         flexDirection={"column"}

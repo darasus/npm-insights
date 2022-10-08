@@ -12,8 +12,6 @@ export const packageRouter = t.router({
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId);
 
-      console.log(pkg);
-
       return { name: pkg.name, description: pkg.description };
     }),
   getSizeHistory: t.procedure
@@ -43,6 +41,24 @@ export const packageRouter = t.router({
       );
 
       return { sizeHistory };
+    }),
+  searchPackage: t.procedure
+    .input(
+      z.object({
+        q: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const data = await ctx.npm.searchPackages(input.q);
+      const response = data.objects.map((pkg: any) => {
+        return {
+          name: pkg.package.name as string,
+          version: pkg.package.version as string,
+          description: pkg.package.description as string,
+        };
+      });
+
+      return response;
     }),
   perge: t.procedure.query(async ({ ctx }) => {
     await ctx.cache.perge();
