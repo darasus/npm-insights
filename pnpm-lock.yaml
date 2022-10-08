@@ -152,10 +152,8 @@ importers:
   packages/lib:
     specifiers:
       ioredis: ^5.2.3
-      package-build-stats: ^7.3.13
     dependencies:
       ioredis: 5.2.3
-      package-build-stats: 7.3.13
 
   packages/tsconfig:
     specifiers: {}
@@ -2254,6 +2252,7 @@ packages:
       - velocityjs
       - walrus
       - whiskers
+    dev: true
 
   /@vue/component-compiler-utils/3.3.0_pvnihi4muhoy7kenlmiyxwzuqy:
     resolution: {integrity: sha512-97sfH2mYNU+2PzGrmK2haqffDpVASuib9/w2/noxiFi31Z54hW+q3izKQXXQZSNhtiUpAI36uSuYepeBe4wpHQ==}
@@ -2925,6 +2924,7 @@ packages:
       resolve: 1.22.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /babel-eslint/10.1.0_eslint@7.32.0:
     resolution: {integrity: sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==}
@@ -3271,7 +3271,7 @@ packages:
       minipass-pipeline: 1.2.4
       mkdirp: 1.0.4
       p-map: 4.0.0
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 3.0.2
       ssri: 8.0.1
       tar: 6.1.11
@@ -3904,6 +3904,7 @@ packages:
     dependencies:
       bluebird: 3.7.2
       lodash: 4.17.21
+    dev: true
 
   /consolidate/0.15.1_pvnihi4muhoy7kenlmiyxwzuqy:
     resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
@@ -8636,6 +8637,7 @@ packages:
       - whiskers
       - zen-observable
       - zenObservable
+    dev: true
 
   /package-build-stats/7.3.13_nc4e36j55nxsmdmqqj5dtindr4:
     resolution: {integrity: sha512-Ji4atLCFB2A/QUMTIv2ZSDAeNDyxIO+Mk8GPvWaBUGa6ohE5OuILpKHKEW/a6QsNIjjL0BqYNnzaAAvCWLhCZg==}
@@ -9339,14 +9341,6 @@ packages:
   /progress/2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
     engines: {node: '>=0.4.0'}
-
-  /promise-inflight/1.0.1:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
 
   /promise-inflight/1.0.1_bluebird@3.7.2:
     resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
@@ -11689,6 +11683,7 @@ packages:
       - velocityjs
       - walrus
       - whiskers
+    dev: true
 
   /vue-loader/15.10.0_raewr3da4cs2fzwjp4b7v7x24u:
     resolution: {integrity: sha512-VU6tuO8eKajrFeBzMssFUP9SvakEeeSi1BxdTH5o3+1yUyrldp8IERkSdXlMI2t4kxF2sqYUDsQY+WJBxzBmZg==}

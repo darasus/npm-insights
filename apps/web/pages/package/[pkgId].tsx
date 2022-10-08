@@ -12,6 +12,9 @@ import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import superjson from "superjson";
+import { formatKbs } from "../../utils/formatKbs";
+import { Card } from "../../components/Card";
+import { LineChartCard } from "../../components/LineChartCard";
 
 interface Props {
   name: string;
@@ -19,55 +22,34 @@ interface Props {
   sizeHistory: Array<{ version: string; size: number; gzip: number }>;
 }
 
-const Chart = ({ dataKey, stat, label, data, color1, color2 }: any) => {
-  return (
-    <AspectRatio ratio={1}>
-      <Flex
-        flexDirection={"column"}
-        borderRadius="3xl"
-        overflow={"hidden"}
-        bg="white"
-        borderWidth="thin"
-        borderColor="gray.200"
-        h={"full"}
-      >
-        <Flex flexDirection={"column"} alignItems="center" pt={4}>
-          <Text fontWeight={"bold"} fontSize="2xl">
-            {stat}
-          </Text>
-          <Text color="gray.600">{label}</Text>
-        </Flex>
-        <ResponsiveContainer>
-          <AreaChart
-            data={data}
-            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-          >
-            <Area
-              type="monotoneX"
-              dataKey={dataKey}
-              stroke={color2}
-              fill={color1}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </Flex>
-    </AspectRatio>
-  );
-};
-
 export default function Page() {
-  const [c1, c2] = useToken("colors", ["green.100", "green.200"]);
-  const [c3, c4] = useToken("colors", ["orange.100", "orange.200"]);
+  const [c1, c2, c3, c4] = useToken("colors", [
+    "green.100",
+    "green.200",
+    "orange.100",
+    "orange.200",
+  ]);
   const router = useRouter();
   const pkgId = router.query.pkgId as string;
-  const pkg = trpc.package.get.useQuery({ pkgId }, { enabled: !!pkgId });
-  const data = pkg.data?.sizeHistory;
+  const pkg = trpc.package.getInfo.useQuery({ pkgId }, { enabled: !!pkgId });
+  const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
+    { pkgId },
+    { enabled: !!pkgId }
+  );
+  const data = pkgSizeHistory.data?.sizeHistory;
 
   if (pkg.isLoading) return null;
 
   return (
-    <Flex flexDirection={"column"} alignItems="center">
-      <Flex flexDirection={"column"} alignItems="center" mb={4}>
+    <Flex flexDirection={"column"} alignItems="center" p={4} w="xl" m="0 auto">
+      <Card
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems="center"
+        mb={4}
+        w="full"
+        p={4}
+      >
         <Box>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
             {pkg.data?.name}
@@ -76,27 +58,35 @@ export default function Page() {
         <Box>
           <Text>{pkg.data?.description}</Text>
         </Box>
-      </Flex>
-      <Grid templateColumns="repeat(2, 1fr)" gap={4} mx={4} w={"2xl"}>
+      </Card>
+      <Grid templateColumns="repeat(2, 1fr)" gap={4} mx={4} w={"full"}>
         <GridItem w="100%" h="10">
-          <Chart
-            dataKey="size"
-            stat={`${data?.reverse()[0]?.gzip} KB`}
-            label="Gzipped"
-            data={data}
-            color1={c1}
-            color2={c2}
-          />
+          {pkgSizeHistory.isLoading ? (
+            <Text>Loading...</Text>
+          ) : (
+            <LineChartCard
+              dataKey="gzip"
+              label={formatKbs(data?.reverse()[0]?.gzip as number)}
+              description="Gzipped"
+              data={data}
+              fillColor={c1}
+              strokeColor={c2}
+            />
+          )}
         </GridItem>
         <GridItem w="100%" h="10">
-          <Chart
-            dataKey="gzip"
-            stat={`${data?.reverse()[0]?.size} KB`}
-            label="Minified"
-            data={data}
-            color1={c3}
-            color2={c4}
-          />
+          {pkgSizeHistory.isLoading ? (
+            <Text>Loading...</Text>
+          ) : (
+            <LineChartCard
+              dataKey="size"
+              label={formatKbs(data?.reverse()[0]?.size as number)}
+              description="Minified"
+              data={data}
+              fillColor={c3}
+              strokeColor={c4}
+            />
+          )}
         </GridItem>
       </Grid>
     </Flex>

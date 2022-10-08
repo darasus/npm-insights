@@ -3,7 +3,20 @@ import { z } from "zod";
 import { t } from "../trpc";
 
 export const packageRouter = t.router({
-  get: t.procedure
+  getInfo: t.procedure
+    .input(
+      z.object({
+        pkgId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const pkg = await ctx.npm.fetchPackage(input.pkgId);
+
+      console.log(pkg);
+
+      return { name: pkg.name, description: pkg.description };
+    }),
+  getSizeHistory: t.procedure
     .input(
       z.object({
         pkgId: z.string(),
@@ -25,13 +38,11 @@ export const packageRouter = t.router({
             });
           });
 
-      console.log(sizeHistory);
-
       sizeHistory = sizeHistory.filter(
         (i: any) => Boolean(i.size) && Boolean(i.gzip)
       );
 
-      return { name: pkg.name, description: pkg.description, sizeHistory };
+      return { sizeHistory };
     }),
   perge: t.procedure.query(async ({ ctx }) => {
     await ctx.cache.perge();
