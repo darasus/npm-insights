@@ -62,7 +62,13 @@ export function PackageSearchInput() {
           mb={showSuggestions ? 4 : 0}
         >
           <InputGroup w="full">
-            <Input w="full" {...getInputProps()} placeholder="Search..." />
+            <Input
+              w="full"
+              {...getInputProps()}
+              placeholder="Search npm package..."
+              borderRadius={"none"}
+              borderColor="gray.200"
+            />
             <InputRightElement>
               <Button
                 size="sm"
