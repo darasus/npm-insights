@@ -12,7 +12,7 @@ export class CacheService {
 
     if (existing !== null) return existing;
 
-    return this.set(key, fetcher, expires * 1000);
+    return this.set(key, fetcher, expires);
   };
 
   get = async (key: string): Promise<string | null> => {
@@ -28,7 +28,7 @@ export class CacheService {
   ) => {
     const value = await fetcher();
     if (value) {
-      await this.redis.set(key, value, "EX", expires * 1000);
+      await this.redis.set(key, value, "EX", expires);
     }
     return value;
   };

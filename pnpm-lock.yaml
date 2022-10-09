@@ -37,6 +37,7 @@ importers:
       '@trpc/server': ^10.0.0-proxy-beta.15
       '@types/node': ^17.0.12
       '@types/react': 18.0.17
+      date-fns: ^2.29.3
       downshift: ^6.1.12
       eslint: 7.32.0
       eslint-config-custom: workspace:*
@@ -64,6 +65,7 @@ importers:
       '@trpc/next': 10.0.0-proxy-beta.15_kxd7mbxk6at6mr4br2lyqcd4m4
       '@trpc/react': 10.0.0-proxy-beta.15_jjv3zjmwoq7ukhbwpo7bbpfi2u
       '@trpc/server': 10.0.0-proxy-beta.15
+      date-fns: 2.29.3
       downshift: 6.1.12_react@18.2.0
       framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
       lib: link:../../packages/lib
@@ -4483,6 +4485,11 @@ packages:
 
   /date-fns/1.30.1:
     resolution: {integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==}
+
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /de-indent/1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}

@@ -1,5 +1,6 @@
+import { format, sub, isWeekend } from "date-fns";
 import { compareSemanticVersions } from "lib";
-import { z } from "zod";
+import { date, z } from "zod";
 import { t } from "../trpc";
 
 export const packageRouter = t.router({
@@ -11,8 +12,6 @@ export const packageRouter = t.router({
     )
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId);
-
-      console.log(pkg);
 
       return {
         name: pkg.name as string,
@@ -68,6 +67,35 @@ export const packageRouter = t.router({
       }) as Array<{ name: string; version: string; description: string }>;
 
       return response;
+    }),
+  getPackageDownloads: t.procedure
+    .input(
+      z.object({
+        pkgId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const data = await ctx.npm.fetchDownloads(
+        input.pkgId,
+        format(
+          sub(new Date(), {
+            months: 6,
+          }),
+          "yyyy-MM-dd"
+        ),
+        format(
+          sub(new Date(), {
+            days: 1,
+          }),
+          "yyyy-MM-dd"
+        )
+      );
+
+      return data.downloads
+        .filter((item: any) => isWeekend(new Date(item.day)))
+        .map((item: any) => {
+          return { count: item.downloads as string, date: item.day as string };
+        });
     }),
   perge: t.procedure.query(async ({ ctx }) => {
     await ctx.cache.perge();

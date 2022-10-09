@@ -66,4 +66,19 @@ export class NPM {
 
     return data ? JSON.parse(data) : null;
   }
+
+  async fetchDownloads(pkgId: string, start: string, end: string) {
+    const data = await this.cache.fetch(
+      stringToHash(`package-downloads:${pkgId}:${start}:${end}`),
+      async () => {
+        const url = `https://api.npmjs.org/downloads/range/${start}:${end}/${pkgId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        return JSON.stringify(data);
+      },
+      ms("1d")
+    );
+
+    return data ? JSON.parse(data) : null;
+  }
 }

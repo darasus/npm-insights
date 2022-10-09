@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { useRouter } from "next/router";
-import { formatKbs } from "../../utils/formatKbs";
+import { formatKbs, formatNumber } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
 import Image from "next/image";
@@ -40,9 +40,19 @@ export default function Page() {
     { pkgId },
     { enabled: !!pkgId }
   );
+  const pkgDownloads = trpc.package.getPackageDownloads.useQuery(
+    { pkgId },
+    { enabled: !!pkgId }
+  );
   const data = pkgSizeHistory.data?.sizeHistory;
 
   if (pkg.isLoading) return null;
+
+  const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : "";
+  const sizeLabel = data ? formatKbs(data?.[data?.length - 1]?.size || 0) : "";
+  const downloadLabel = pkgDownloads.data
+    ? formatNumber(pkgDownloads.data[pkgDownloads.data.length - 1]?.count || 0)
+    : "";
 
   return (
     <Flex flexDirection={"column"} alignItems="center">
@@ -78,6 +88,7 @@ export default function Page() {
             as="a"
             size="xs"
             target={"_blank"}
+            mr={2}
             leftIcon={
               <Image
                 height="12"
@@ -90,7 +101,7 @@ export default function Page() {
             GitHub
           </Button>
           <Button
-            href={pkg.data?.repository}
+            href={pkg.data?.homepage}
             as="a"
             size="xs"
             target={"_blank"}
@@ -100,11 +111,18 @@ export default function Page() {
           </Button>
         </Flex>
       </Card>
-      <Grid templateColumns="repeat(2, 1fr)" gap={4} mx={4} w={"full"}>
-        <GridItem w="100%" h="10">
+      <Grid
+        templateColumns="repeat(2, 1fr)"
+        templateRows="repeat(2, 1fr)"
+        gap={4}
+        mx={4}
+        w={"full"}
+        h="xl"
+      >
+        <GridItem rowSpan={1} colSpan={1}>
           <LineChartCard
             dataKey="gzip"
-            label={formatKbs(data?.reverse()[0]?.gzip as number)}
+            label={gzipLabel}
             description="Gzipped"
             data={data}
             fillColor={c1}
@@ -112,15 +130,27 @@ export default function Page() {
             isLoading={pkgSizeHistory.isLoading}
           />
         </GridItem>
-        <GridItem w="100%" h="10">
+        <GridItem rowSpan={1} colSpan={1}>
           <LineChartCard
             dataKey="size"
-            label={formatKbs(data?.reverse()[0]?.size as number)}
+            label={sizeLabel}
             description="Minified"
             data={data}
             fillColor={c3}
             strokeColor={c4}
             isLoading={pkgSizeHistory.isLoading}
+          />
+        </GridItem>
+        <GridItem rowSpan={1} colSpan={2}>
+          <LineChartCard
+            dataKey="count"
+            // label={formatNumber(pkgDownloads.data?.reverse()[0]?.count)}
+            label={downloadLabel}
+            description="Downloads yesterday"
+            data={pkgDownloads.data}
+            fillColor={c3}
+            strokeColor={c4}
+            isLoading={pkgDownloads.isLoading}
           />
         </GridItem>
       </Grid>

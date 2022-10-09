@@ -1,5 +1,5 @@
-import { AspectRatio, Box, Flex, Spinner, Text } from "@chakra-ui/react";
-import { ResponsiveContainer, AreaChart, Area } from "recharts";
+import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import { ResponsiveContainer, AreaChart, Area, Tooltip } from "recharts";
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { Card } from "./Card";
 
@@ -26,8 +26,8 @@ export function LineChartCard({
   const showError = !isLoading && data.length === 0;
 
   return (
-    <AspectRatio ratio={1}>
-      <Card display="flex" flexDirection={"column"}>
+    <Box h={"full"} w={"full"}>
+      <Card display="flex" flexDirection={"column"} h={"full"} w={"full"}>
         {isLoading && (
           <Flex
             alignItems={"center"}
@@ -61,6 +61,7 @@ export function LineChartCard({
                   stroke={strokeColor}
                   fill={fillColor}
                 />
+                {/* <Tooltip /> */}
               </AreaChart>
             </ResponsiveContainer>
           </>
@@ -80,6 +81,6 @@ export function LineChartCard({
           </Flex>
         )}
       </Card>
-    </AspectRatio>
+    </Box>
   );
 }
