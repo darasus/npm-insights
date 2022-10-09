@@ -13,6 +13,8 @@ export const packageRouter = t.router({
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId);
 
+      console.log(pkg);
+
       return {
         name: pkg.name as string,
         description: pkg.description as string,
@@ -20,6 +22,7 @@ export const packageRouter = t.router({
         repository: pkg.repository.url
           .replace("git+", "")
           .replace(".git", "") as string,
+        latestVersion: pkg["dist-tags"].latest as string,
       };
     }),
   getSizeHistory: t.procedure

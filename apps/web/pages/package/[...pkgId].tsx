@@ -59,7 +59,7 @@ export default function Page() {
       <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
         <Box>
           <Text fontSize={"2xl"} fontWeight={"bold"}>
-            {pkg.data?.name}
+            {`${pkg.data?.name}@${pkg.data?.latestVersion}`}
           </Text>
         </Box>
         <Box mb={2}>
