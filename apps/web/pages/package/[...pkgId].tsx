@@ -35,14 +35,17 @@ export default function Page() {
       ? router.query?.pkgId
       : router.query?.pkgId?.join("/")
   ) as string;
-  const pkg = trpc.package.getInfo.useQuery({ pkgId }, { enabled: !!pkgId });
+  const pkg = trpc.package.getInfo.useQuery(
+    { pkgId },
+    { enabled: !!pkgId, refetchOnWindowFocus: false }
+  );
   const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
     { pkgId },
-    { enabled: !!pkgId }
+    { enabled: !!pkgId, refetchOnWindowFocus: false }
   );
   const pkgDownloads = trpc.package.getPackageDownloads.useQuery(
     { pkgId },
-    { enabled: !!pkgId }
+    { enabled: !!pkgId, refetchOnWindowFocus: false }
   );
   const data = pkgSizeHistory.data?.sizeHistory;
 
