@@ -20,7 +20,7 @@ export function PackageSearchInput() {
   const [q, setQ] = useState("");
   const searchResults = trpc.package.searchPackage.useQuery(
     { q },
-    { enabled: Boolean(q), keepPreviousData: true }
+    { enabled: Boolean(q), keepPreviousData: true, refetchOnWindowFocus: false }
   );
   const {
     isOpen,
