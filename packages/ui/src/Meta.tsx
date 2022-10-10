@@ -18,7 +18,7 @@ export const Meta: React.FC<Props> = ({
 }) => {
   const baseUrl = getBaseUrl();
   const canonicalUrl = useCanonicalUrl({ slug });
-  const actualTitle = `${title} | The AI Paper`;
+  const actualTitle = `${title} | NPM Package Size`;
   const imgSrc = imageSrc
     ? `${baseUrl}${imageSrc}`
     : `${baseUrl}/thumbnail.png`;
