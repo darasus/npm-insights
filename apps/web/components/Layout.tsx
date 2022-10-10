@@ -6,7 +6,7 @@ export function Layout({ children }: React.PropsWithChildren) {
     <Box maxW="xl" m="0 auto" p={4}>
       <Center mb={4}>
         <Text fontSize={"2xl"} fontWeight="bold">
-          NPM Insights
+          NPM Package Size
         </Text>
       </Center>
       <Box mb={4}>
