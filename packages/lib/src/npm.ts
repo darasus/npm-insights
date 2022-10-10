@@ -32,15 +32,13 @@ export class NPM {
     return data ? JSON.parse(data) : null;
   }
 
-  async fetchPackageStats(pkgId: string, versions: string[]) {
+  async fetchPackageStats(pkgId: string, version: string) {
     const data = await this.cache.fetch(
-      stringToHash(`package-sizes:${pkgId}:${versions.join(",")}`),
+      stringToHash(`package-sizes:${pkgId}:${version}`),
       async () => {
-        const url = new URL(
-          "https://seashell-app-fac5r.ondigitalocean.app/generate-size"
-        );
+        const url = new URL("https://package-size-q4phwtlcaa-ew.a.run.app ");
         url.searchParams.set("pkgId", pkgId);
-        url.searchParams.set("versions", versions.join(","));
+        url.searchParams.set("version", version);
         const response = await fetch(url);
         const data = await response.json();
         return JSON.stringify(data);

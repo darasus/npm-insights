@@ -13,8 +13,6 @@ export const packageRouter = t.router({
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId);
 
-      console.log(pkg);
-
       return {
         name: pkg.name as string,
         description: pkg.description as string,
@@ -35,17 +33,19 @@ export const packageRouter = t.router({
       const pkg = await ctx.npm.fetchPackage(input.pkgId);
 
       let sizeHistory: Array<{ version: string; size: number; gzip: number }> =
-        await ctx.npm
-          .fetchPackageStats(input.pkgId, Object.keys(pkg.versions))
-          .then((packageStats) => {
-            return packageStats.map(({ version, size, gzip }: any) => {
-              return {
-                version,
-                size,
-                gzip,
-              };
-            });
-          });
+        await Promise.all(
+          Object.keys(pkg.versions).map((v) => {
+            return ctx.npm
+              .fetchPackageStats(input.pkgId, v)
+              .then(({ version, size, gzip }: any) => {
+                return {
+                  version,
+                  size,
+                  gzip,
+                };
+              });
+          })
+        );
 
       sizeHistory = sizeHistory.filter(
         (i: any) => Boolean(i.size) && Boolean(i.gzip)
