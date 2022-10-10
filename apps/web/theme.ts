@@ -17,7 +17,7 @@ export const headingSizeMap = {
   h4: "4xl",
 };
 
-export const theme: ThemeConfig = extendTheme({
+export const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
