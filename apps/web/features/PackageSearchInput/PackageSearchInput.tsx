@@ -56,13 +56,15 @@ export function PackageSearchInput() {
 
   return (
     <Flex direction="column" align="center">
-      <Flex {...getComboboxProps()} direction="column" flex="1 1 auto" w="full">
-        <Flex
-          direction="row"
-          alignItems="baseline"
-          w="full"
-          mb={showSuggestions ? 4 : 0}
-        >
+      <Flex
+        {...getComboboxProps()}
+        direction="column"
+        flex="1 1 auto"
+        w="full"
+        position="relative"
+        zIndex={"dropdown"}
+      >
+        <Flex direction="row" alignItems="baseline" w="full">
           <InputGroup w="full">
             <Input
               w="full"
@@ -89,13 +91,21 @@ export function PackageSearchInput() {
             </InputRightElement>
           </InputGroup>
         </Flex>
-        <Card borderWidth={showSuggestions ? "thin" : "0px"}>
+        <Card
+          borderWidth={showSuggestions ? "thin" : "0px"}
+          position="absolute"
+          left={0}
+          right={0}
+          top={"12"}
+        >
           <List
             {...getMenuProps()}
             display={showSuggestions ? undefined : "none"}
             py={2}
             flex={1}
             overflowY="auto"
+            maxH={40}
+            zIndex="dropdown"
           >
             {searchResults.data?.map((item, index: number) => (
               <ListItem
