@@ -4,7 +4,7 @@ import { useCanonicalUrl } from "hooks";
 import { getBaseUrl } from "utils";
 
 interface Props {
-  title: string;
+  title?: string;
   description: string;
   imageSrc?: string;
   slug?: string;
@@ -18,7 +18,9 @@ export const Meta: React.FC<Props> = ({
 }) => {
   const baseUrl = getBaseUrl();
   const canonicalUrl = useCanonicalUrl({ slug });
-  const actualTitle = `${title} | NPM Package Size`;
+  const actualTitle = title
+    ? `${title} | NPM Package Size`
+    : "NPM Package Size";
   const imgSrc = imageSrc
     ? `${baseUrl}${imageSrc}`
     : `${baseUrl}/thumbnail.png`;
