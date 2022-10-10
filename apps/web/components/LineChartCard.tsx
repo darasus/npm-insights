@@ -1,5 +1,5 @@
 import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
-import { ResponsiveContainer, AreaChart, Area, Tooltip } from "recharts";
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { Card } from "./Card";
 

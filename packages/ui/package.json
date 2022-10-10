@@ -7,6 +7,10 @@
   "scripts": {
     "lint": "eslint *.ts*"
   },
+  "dependencies": {
+    "utils": "workspace:*",
+    "hooks": "workspace:*"
+  },
   "devDependencies": {
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",

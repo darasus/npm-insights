@@ -14,12 +14,14 @@ import {
 import { trpc } from "../../utils/trpc";
 import { Card } from "../../components/Card";
 import { useRouter } from "next/router";
+import { useDebounce } from "hooks";
 
 export function PackageSearchInput() {
   const router = useRouter();
   const [q, setQ] = useState("");
+  const debouncedQ = useDebounce(q, 250);
   const searchResults = trpc.package.searchPackage.useQuery(
-    { q },
+    { q: debouncedQ },
     { enabled: Boolean(q), keepPreviousData: true, refetchOnWindowFocus: false }
   );
   const {

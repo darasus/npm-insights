@@ -1,23 +1,8 @@
 import { httpLink, loggerLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
-import type { inferProcedureInput, inferProcedureOutput } from "@trpc/server";
-// ℹ️ Type-only import:
-// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html#type-only-imports-and-export
 import superjson from "superjson";
 import { AppRouter } from "../server/routers/_app";
-
-function getBaseUrl() {
-  if (typeof window !== "undefined") {
-    return "";
-  }
-  // reference for vercel.com
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-
-  // assume localhost
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-}
+import { getBaseUrl } from "utils";
 
 /**
  * A set of strongly-typed React hooks from your `AppRouter` type signature with `createReactQueryHooks`.
