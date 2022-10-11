@@ -15,7 +15,7 @@ import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
 import Image from "next/image";
 import { HomeIcon } from "@heroicons/react/24/solid";
-import { GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react/ssg";
 import { appRouter } from "../../server/routers/_app";
 import { createContext } from "../../server/context";
@@ -23,22 +23,16 @@ import superjson from "superjson";
 import { Layout } from "../../components/Layout";
 import { Meta } from "ui";
 
-interface Props {
-  pkgId: string;
-}
-
-export default function Page({ pkgId }: Props) {
+export default function Page({
+  pkg,
+  pkgId,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [c1, c2, c3, c4] = useToken("colors", [
     "green.100",
     "green.200",
     "orange.100",
     "orange.200",
   ]);
-  const router = useRouter();
-  const pkg = trpc.package.getInfo.useQuery(
-    { pkgId },
-    { enabled: !!pkgId, refetchOnWindowFocus: false }
-  );
   const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
@@ -48,8 +42,6 @@ export default function Page({ pkgId }: Props) {
     { enabled: !!pkgId, refetchOnWindowFocus: false }
   );
   const data = pkgSizeHistory.data?.sizeHistory;
-
-  if (pkg.isLoading) return null;
 
   const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : "";
   const sizeLabel = data ? formatKbs(data?.[data?.length - 1]?.size || 0) : "";
@@ -68,15 +60,15 @@ export default function Page({ pkgId }: Props) {
           <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
             <Box>
               <Text fontSize={"2xl"} fontWeight={"bold"}>
-                {`${pkg.data?.name}@${pkg.data?.latestVersion}`}
+                {`${pkg.name}@${pkg.latestVersion}`}
               </Text>
             </Box>
             <Box mb={2}>
-              <Text>{pkg.data?.description}</Text>
+              <Text>{pkg.description}</Text>
             </Box>
             <Flex>
               <Button
-                href={`https://npmjs.com/package/${pkg.data?.name}`}
+                href={`https://npmjs.com/package/${pkg.name}`}
                 as="a"
                 size="xs"
                 mr={2}
@@ -93,7 +85,7 @@ export default function Page({ pkgId }: Props) {
                 npm
               </Button>
               <Button
-                href={pkg.data?.repository}
+                href={pkg.repository}
                 as="a"
                 size="xs"
                 target={"_blank"}
@@ -110,7 +102,7 @@ export default function Page({ pkgId }: Props) {
                 GitHub
               </Button>
               <Button
-                href={pkg.data?.homepage}
+                href={pkg.homepage}
                 as="a"
                 size="xs"
                 target={"_blank"}
@@ -183,10 +175,12 @@ export async function getServerSideProps(
     ctx: await createContext(),
     transformer: superjson,
   });
-  await ssg.package.getInfo.prefetch({ pkgId });
+
+  const pkg = await ssg.package.getInfo.fetch({ pkgId });
+
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      pkg,
       pkgId,
     },
   };
