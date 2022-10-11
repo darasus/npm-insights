@@ -54,6 +54,7 @@ export default function Page({
       <Meta
         description={`Find out the size of '${pkgId}'`}
         imageSrc={`/api/og?pkgId=${pkgId}`}
+        slug={pkgId}
       />
       <Layout>
         <Flex flexDirection={"column"} alignItems="center">

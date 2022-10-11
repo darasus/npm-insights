@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { getBaseUrl } from "utils";
+import { getProductionBaseUrl } from "utils";
 
 interface UseCanonicalUrlArgs {
   slug?: string;
@@ -7,13 +7,9 @@ interface UseCanonicalUrlArgs {
 
 export function useCanonicalUrl({ slug }: UseCanonicalUrlArgs) {
   const router = useRouter();
-  const baseUrl = getBaseUrl();
+  const baseUrl = getProductionBaseUrl();
 
-  if (router.pathname.startsWith("/posts/")) {
-    return `${baseUrl}${router.asPath}`;
-  }
-
-  if (router.pathname.startsWith("/p/") && slug) {
+  if (router.pathname.startsWith("/package/") && slug) {
     return `${baseUrl}/p/${slug}`;
   }
 

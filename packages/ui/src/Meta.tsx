@@ -24,7 +24,7 @@ export const Meta: React.FC<Props> = ({
   const imgSrc = imageSrc
     ? `${baseUrl}${imageSrc}`
     : `${baseUrl}/thumbnail.png`;
-  const url = `${baseUrl}/p/${slug}`;
+  const url = `${baseUrl}/package/${slug}`;
 
   return (
     <Head>
