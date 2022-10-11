@@ -21,6 +21,7 @@ import { appRouter } from "../../server/routers/_app";
 import { createContext } from "../../server/context";
 import superjson from "superjson";
 import { Layout } from "../../components/Layout";
+import { Meta } from "ui";
 
 interface Props {
   pkgId: string;
@@ -57,108 +58,114 @@ export default function Page({ pkgId }: Props) {
     : "";
 
   return (
-    <Layout>
-      <Flex flexDirection={"column"} alignItems="center">
-        <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
-          <Box>
-            <Text fontSize={"2xl"} fontWeight={"bold"}>
-              {`${pkg.data?.name}@${pkg.data?.latestVersion}`}
-            </Text>
-          </Box>
-          <Box mb={2}>
-            <Text>{pkg.data?.description}</Text>
-          </Box>
-          <Flex>
-            <Button
-              href={`https://npmjs.com/package/${pkg.data?.name}`}
-              as="a"
-              size="xs"
-              mr={2}
-              target={"_blank"}
-              leftIcon={
-                <Image
-                  height="12"
-                  width="12"
-                  src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/npm.svg"
-                  alt="npm logo"
-                />
-              }
-            >
-              npm
-            </Button>
-            <Button
-              href={pkg.data?.repository}
-              as="a"
-              size="xs"
-              target={"_blank"}
-              mr={2}
-              leftIcon={
-                <Image
-                  height="12"
-                  width="12"
-                  src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/github.svg"
-                  alt="npm logo"
-                />
-              }
-            >
-              GitHub
-            </Button>
-            <Button
-              href={pkg.data?.homepage}
-              as="a"
-              size="xs"
-              target={"_blank"}
-              leftIcon={<HomeIcon height={15} width={15} />}
-            >
-              Homepage
-            </Button>
-          </Flex>
-        </Card>
-        <Grid
-          templateColumns="repeat(2, 1fr)"
-          templateRows="repeat(2, 1fr)"
-          gap={4}
-          mx={4}
-          w={"full"}
-          h="xl"
-        >
-          <GridItem rowSpan={1} colSpan={1}>
-            <LineChartCard
-              dataKey="gzip"
-              label={gzipLabel}
-              description="Gzipped"
-              data={data}
-              fillColor={c1}
-              strokeColor={c2}
-              isLoading={pkgSizeHistory.isLoading}
-            />
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={1}>
-            <LineChartCard
-              dataKey="size"
-              label={sizeLabel}
-              description="Minified"
-              data={data}
-              fillColor={c3}
-              strokeColor={c4}
-              isLoading={pkgSizeHistory.isLoading}
-            />
-          </GridItem>
-          <GridItem rowSpan={1} colSpan={2}>
-            <LineChartCard
-              dataKey="count"
-              // label={formatNumber(pkgDownloads.data?.reverse()[0]?.count)}
-              label={downloadLabel}
-              description="Downloads yesterday"
-              data={pkgDownloads.data}
-              fillColor={c3}
-              strokeColor={c4}
-              isLoading={pkgDownloads.isLoading}
-            />
-          </GridItem>
-        </Grid>
-      </Flex>
-    </Layout>
+    <>
+      <Meta
+        description={`Find out the size of '${pkgId}'`}
+        imageSrc={`/api/og?pkgId=${pkgId}`}
+      />
+      <Layout>
+        <Flex flexDirection={"column"} alignItems="center">
+          <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
+            <Box>
+              <Text fontSize={"2xl"} fontWeight={"bold"}>
+                {`${pkg.data?.name}@${pkg.data?.latestVersion}`}
+              </Text>
+            </Box>
+            <Box mb={2}>
+              <Text>{pkg.data?.description}</Text>
+            </Box>
+            <Flex>
+              <Button
+                href={`https://npmjs.com/package/${pkg.data?.name}`}
+                as="a"
+                size="xs"
+                mr={2}
+                target={"_blank"}
+                leftIcon={
+                  <Image
+                    height="12"
+                    width="12"
+                    src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/npm.svg"
+                    alt="npm logo"
+                  />
+                }
+              >
+                npm
+              </Button>
+              <Button
+                href={pkg.data?.repository}
+                as="a"
+                size="xs"
+                target={"_blank"}
+                mr={2}
+                leftIcon={
+                  <Image
+                    height="12"
+                    width="12"
+                    src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/github.svg"
+                    alt="npm logo"
+                  />
+                }
+              >
+                GitHub
+              </Button>
+              <Button
+                href={pkg.data?.homepage}
+                as="a"
+                size="xs"
+                target={"_blank"}
+                leftIcon={<HomeIcon height={15} width={15} />}
+              >
+                Homepage
+              </Button>
+            </Flex>
+          </Card>
+          <Grid
+            templateColumns="repeat(2, 1fr)"
+            templateRows="repeat(2, 1fr)"
+            gap={4}
+            mx={4}
+            w={"full"}
+            h="xl"
+          >
+            <GridItem rowSpan={1} colSpan={1}>
+              <LineChartCard
+                dataKey="gzip"
+                label={gzipLabel}
+                description="Gzipped"
+                data={data}
+                fillColor={c1}
+                strokeColor={c2}
+                isLoading={pkgSizeHistory.isLoading}
+              />
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={1}>
+              <LineChartCard
+                dataKey="size"
+                label={sizeLabel}
+                description="Minified"
+                data={data}
+                fillColor={c3}
+                strokeColor={c4}
+                isLoading={pkgSizeHistory.isLoading}
+              />
+            </GridItem>
+            <GridItem rowSpan={1} colSpan={2}>
+              <LineChartCard
+                dataKey="count"
+                // label={formatNumber(pkgDownloads.data?.reverse()[0]?.count)}
+                label={downloadLabel}
+                description="Downloads yesterday"
+                data={pkgDownloads.data}
+                fillColor={c3}
+                strokeColor={c4}
+                isLoading={pkgDownloads.isLoading}
+              />
+            </GridItem>
+          </Grid>
+        </Flex>
+      </Layout>
+    </>
   );
 }
 

@@ -5,7 +5,10 @@ import { PackageSearchInput } from "../features/PackageSearchInput/PackageSearch
 export default function Web() {
   return (
     <>
-      <Meta description="Find out the size of any NPM package" />
+      <Meta
+        description="Find out the size of any NPM package"
+        imageSrc="/api/og"
+      />
       <Center height="100vh" width="100wh">
         <Flex w="full" maxW={"lg"} flexDirection="column" alignItems={"center"}>
           <Text fontSize={"2xl"} fontWeight="bold" mb={4}>

@@ -17,9 +17,11 @@
     "@trpc/next": "^10.0.0-proxy-beta.15",
     "@trpc/react": "^10.0.0-proxy-beta.15",
     "@trpc/server": "^10.0.0-proxy-beta.15",
+    "@vercel/og": "^0.0.15",
     "date-fns": "^2.29.3",
     "downshift": "^6.1.12",
     "framer-motion": "^6",
+    "hooks": "workspace:*",
     "lib": "workspace:*",
     "package-build-stats": "^7.3.13",
     "react-hook-form": "^7.37.0",
@@ -28,7 +30,6 @@
     "superjson": "^1.10.0",
     "ui": "workspace:*",
     "utils": "workspace:*",
-    "hooks": "workspace:*",
     "zod": "^3.19.1"
   },
   "devDependencies": {
