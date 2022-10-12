@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useCombobox } from "downshift";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import {
-  Button,
   Flex,
   Input,
   InputGroup,
@@ -74,20 +72,9 @@ export function PackageSearchInput() {
               borderColor="gray.200"
             />
             <InputRightElement>
-              <Button
-                size="sm"
-                {...getToggleButtonProps()}
-                disabled={searchResults.isFetching}
-                mr={1}
-              >
-                {!searchResults.isFetching &&
-                  (isOpen ? (
-                    <ChevronDownIcon width={15} height={15} />
-                  ) : (
-                    <ChevronUpIcon width={15} height={15} />
-                  ))}
-                {searchResults.isFetching && <Spinner width={15} height={15} />}
-              </Button>
+              {searchResults.isFetching && (
+                <Spinner width={15} height={15} color={"brand"} />
+              )}
             </InputRightElement>
           </InputGroup>
         </Flex>
@@ -104,7 +91,7 @@ export function PackageSearchInput() {
             py={2}
             flex={1}
             overflowY="auto"
-            maxH={40}
+            maxH={"52"}
             zIndex="dropdown"
           >
             {searchResults.data?.map((item, index: number) => (

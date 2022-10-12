@@ -4,12 +4,10 @@ import {
   Flex,
   Grid,
   GridItem,
-  IconButton,
   Text,
   useToken,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
-import { useRouter } from "next/router";
 import { formatKbs, formatNumber } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
@@ -102,15 +100,17 @@ export default function Page({
               >
                 GitHub
               </Button>
-              <Button
-                href={pkg.homepage}
-                as="a"
-                size="xs"
-                target={"_blank"}
-                leftIcon={<HomeIcon height={15} width={15} />}
-              >
-                Homepage
-              </Button>
+              {pkg.homepage && (
+                <Button
+                  href={pkg.homepage}
+                  as="a"
+                  size="xs"
+                  target={"_blank"}
+                  leftIcon={<HomeIcon height={15} width={15} />}
+                >
+                  Homepage
+                </Button>
+              )}
             </Flex>
           </Card>
           <Grid
