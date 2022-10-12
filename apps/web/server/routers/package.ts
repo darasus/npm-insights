@@ -16,7 +16,7 @@ export const packageRouter = t.router({
       return {
         name: pkg.name as string,
         description: pkg.description as string,
-        homepage: pkg.homepage as string,
+        homepage: (pkg?.homepage || null) as string | null,
         repository: pkg.repository.url
           .replace("git+", "")
           .replace(".git", "") as string,
