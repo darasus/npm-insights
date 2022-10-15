@@ -20,17 +20,26 @@ import { createContext } from "../../server/context";
 import superjson from "superjson";
 import { Layout } from "../../components/Layout";
 import { Meta } from "ui";
+import { usePkgId } from "../../hooks/usePkgId";
 
 export default function Page({
-  pkg,
-  pkgId,
+  pkgInitialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const pkgId = usePkgId();
   const [c1, c2, c3, c4] = useToken("colors", [
     "green.100",
     "green.200",
     "orange.100",
     "orange.200",
   ]);
+  const { data: pkg } = trpc.package.getInfo.useQuery(
+    { pkgId },
+    {
+      enabled: !!pkgId,
+      refetchOnWindowFocus: false,
+      initialData: pkgInitialData,
+    }
+  );
   const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
@@ -59,15 +68,15 @@ export default function Page({
           <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
             <Box>
               <Text fontSize={"2xl"} fontWeight={"bold"}>
-                {`${pkg.name}@${pkg.latestVersion}`}
+                {`${pkg?.name}@${pkg?.latestVersion}`}
               </Text>
             </Box>
             <Box mb={2}>
-              <Text>{pkg.description}</Text>
+              <Text>{pkg?.description}</Text>
             </Box>
             <Flex>
               <Button
-                href={`https://npmjs.com/package/${pkg.name}`}
+                href={`https://npmjs.com/package/${pkg?.name}`}
                 as="a"
                 size="xs"
                 mr={2}
@@ -84,7 +93,7 @@ export default function Page({
                 npm
               </Button>
               <Button
-                href={pkg.repository}
+                href={pkg?.repository}
                 as="a"
                 size="xs"
                 target={"_blank"}
@@ -100,9 +109,9 @@ export default function Page({
               >
                 GitHub
               </Button>
-              {pkg.homepage && (
+              {pkg?.homepage && (
                 <Button
-                  href={pkg.homepage}
+                  href={pkg?.homepage}
                   as="a"
                   size="xs"
                   target={"_blank"}
@@ -162,9 +171,7 @@ export default function Page({
   );
 }
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext<{ id: string }>
-) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const pkgId = (
     typeof context.query?.pkgId === "string"
       ? context.query?.pkgId
@@ -181,8 +188,8 @@ export async function getServerSideProps(
 
   return {
     props: {
-      pkg,
-      pkgId,
+      trpcState: ssg.dehydrate(),
+      pkgInitialData: pkg,
     },
   };
 }

@@ -44,7 +44,9 @@ export function PackageSearchInput() {
     },
     onSelectedItemChange(changes) {
       if (changes.selectedItem) {
-        router.push(`/package/${changes.selectedItem.name}`);
+        router.push(`/package/${changes.selectedItem.name}`, undefined, {
+          shallow: true,
+        });
       }
     },
   });

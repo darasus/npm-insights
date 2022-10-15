@@ -9,7 +9,7 @@ async function main() {
   await generatePackages();
   await generateSizeDetails();
 
-  console.log("✅ Done!");
+  console.info("✅ Done!");
   process.exit(0);
 }
 
