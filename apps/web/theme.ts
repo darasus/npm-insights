@@ -6,7 +6,8 @@ const config: ThemeConfig = {
 
 const token = {
   color: {
-    brand: "#6d28d9",
+    brand: "#d1d0b5",
+    background: "#14161f",
   },
 };
 
@@ -21,7 +22,11 @@ export const theme = extendTheme({
   styles: {
     global: {
       "html, body": {
-        backgroundColor: "gray.50",
+        backgroundColor: token.color.background,
+        color: token.color.brand,
+      },
+      "*": {
+        borderColor: token.color.brand,
       },
     },
   },
@@ -30,7 +35,19 @@ export const theme = extendTheme({
     outline: `0 0 0 2px ${token.color.brand + "50"}`,
   },
   colors: {
-    brand: token.color.brand,
+    brand: {
+      100: `${token.color.brand + "10"}`,
+      200: `${token.color.brand + "20"}`,
+      300: `${token.color.brand + "30"}`,
+      400: `${token.color.brand + "40"}`,
+      500: `${token.color.brand + "50"}`,
+      600: `${token.color.brand + "60"}`,
+      700: `${token.color.brand + "70"}`,
+      800: `${token.color.brand + "80"}`,
+      900: `${token.color.brand + "90"}`,
+      1000: `${token.color.brand}`,
+    },
+    background: token.color.background,
     gray: {
       50: "#fafafa",
       100: "#f5f5f5",
@@ -43,6 +60,16 @@ export const theme = extendTheme({
       800: "#424242",
       900: "#212121",
       1000: "#0a0a0a",
+    },
+    components: {
+      Button: {
+        variants: {
+          outline: {
+            bg: "red.400",
+            boxShadow: "0 0 2px 2px #efdfde",
+          },
+        },
+      },
     },
   },
 });

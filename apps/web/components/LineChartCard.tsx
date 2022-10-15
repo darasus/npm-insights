@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Text, useToken } from "@chakra-ui/react";
 import { ResponsiveContainer, AreaChart, Area } from "recharts";
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { Card } from "./Card";
@@ -8,8 +8,6 @@ interface Props {
   label: string;
   description: string;
   data?: Array<Record<string, number | string>>;
-  strokeColor?: string;
-  fillColor?: string;
   isLoading?: boolean;
 }
 
@@ -18,10 +16,9 @@ export function LineChartCard({
   label,
   description,
   data = [],
-  strokeColor,
-  fillColor,
   isLoading,
 }: Props) {
+  const [brand, brandLight] = useToken("colors", ["brand.1000", "brand.400"]);
   const showData = !isLoading && data.length > 0;
   const showError = !isLoading && data.length === 0;
 
@@ -48,7 +45,7 @@ export function LineChartCard({
               <Text fontWeight={"bold"} fontSize="2xl">
                 {label}
               </Text>
-              <Text color="gray.600">{description}</Text>
+              <Text color="brand.900">{description}</Text>
             </Flex>
             <ResponsiveContainer>
               <AreaChart
@@ -58,8 +55,8 @@ export function LineChartCard({
                 <Area
                   type="monotoneX"
                   dataKey={dataKey}
-                  stroke={strokeColor}
-                  fill={fillColor}
+                  stroke={brand}
+                  fill={brandLight}
                 />
                 {/* <Tooltip /> */}
               </AreaChart>

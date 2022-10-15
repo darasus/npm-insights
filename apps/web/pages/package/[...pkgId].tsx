@@ -12,7 +12,10 @@ import { formatKbs, formatNumber } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
 import Image from "next/image";
-import { HomeIcon } from "@heroicons/react/24/solid";
+import {
+  HomeIcon,
+  ArrowTopRightOnSquareIcon,
+} from "@heroicons/react/24/outline";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react/ssg";
 import { appRouter } from "../../server/routers/_app";
@@ -26,12 +29,6 @@ export default function Page({
   pkgInitialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const pkgId = usePkgId();
-  const [c1, c2, c3, c4] = useToken("colors", [
-    "green.100",
-    "green.200",
-    "orange.100",
-    "orange.200",
-  ]);
   const { data: pkg } = trpc.package.getInfo.useQuery(
     { pkgId },
     {
@@ -77,45 +74,40 @@ export default function Page({
             <Flex>
               <Button
                 href={`https://npmjs.com/package/${pkg?.name}`}
+                size="sm"
                 as="a"
-                size="xs"
                 mr={2}
                 target={"_blank"}
-                leftIcon={
-                  <Image
-                    height="12"
-                    width="12"
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/npm.svg"
-                    alt="npm logo"
-                  />
-                }
+                variant="outline"
+                leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
+                borderColor={"brand"}
+                _hover={{ bg: "brand.100" }}
               >
                 npm
               </Button>
               <Button
                 href={pkg?.repository}
+                size="sm"
                 as="a"
-                size="xs"
                 target={"_blank"}
                 mr={2}
-                leftIcon={
-                  <Image
-                    height="12"
-                    width="12"
-                    src="https://cdn.jsdelivr.net/npm/simple-icons@v7/icons/github.svg"
-                    alt="npm logo"
-                  />
-                }
+                variant="outline"
+                leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
+                borderColor={"brand"}
+                _hover={{ bg: "brand.100" }}
               >
                 GitHub
               </Button>
               {pkg?.homepage && (
                 <Button
                   href={pkg?.homepage}
+                  size="sm"
                   as="a"
-                  size="xs"
                   target={"_blank"}
                   leftIcon={<HomeIcon height={15} width={15} />}
+                  variant="outline"
+                  borderColor={"brand"}
+                  _hover={{ bg: "brand.100" }}
                 >
                   Homepage
                 </Button>
@@ -136,8 +128,6 @@ export default function Page({
                 label={gzipLabel}
                 description="Gzipped"
                 data={data}
-                fillColor={c1}
-                strokeColor={c2}
                 isLoading={pkgSizeHistory.isLoading}
               />
             </GridItem>
@@ -147,20 +137,15 @@ export default function Page({
                 label={sizeLabel}
                 description="Minified"
                 data={data}
-                fillColor={c3}
-                strokeColor={c4}
                 isLoading={pkgSizeHistory.isLoading}
               />
             </GridItem>
             <GridItem rowSpan={1} colSpan={2}>
               <LineChartCard
                 dataKey="count"
-                // label={formatNumber(pkgDownloads.data?.reverse()[0]?.count)}
                 label={downloadLabel}
                 description="Downloads yesterday"
                 data={pkgDownloads.data}
-                fillColor={c3}
-                strokeColor={c4}
                 isLoading={pkgDownloads.isLoading}
               />
             </GridItem>

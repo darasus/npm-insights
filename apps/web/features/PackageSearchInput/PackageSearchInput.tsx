@@ -8,6 +8,7 @@ import {
   List,
   ListItem,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { Card } from "../../components/Card";
@@ -71,7 +72,11 @@ export function PackageSearchInput() {
               {...getInputProps()}
               placeholder="Search npm package..."
               borderRadius={"none"}
-              borderColor="gray.200"
+              _hover={{ borderColor: "brand.1000" }}
+              _focusVisible={{
+                borderColor: "brand.1000",
+              }}
+              _placeholder={{ color: "brand", opacity: 1 }}
             />
             <InputRightElement>
               {searchResults.isFetching && (
@@ -95,6 +100,7 @@ export function PackageSearchInput() {
             overflowY="auto"
             maxH={"52"}
             zIndex="dropdown"
+            bg="background"
           >
             {searchResults.data?.map((item, index: number) => (
               <ListItem
@@ -104,12 +110,16 @@ export function PackageSearchInput() {
                 })}
                 key={index}
                 transition="background-color 220ms, color 220ms"
-                bg={index === highlightedIndex ? "gray.100" : undefined}
+                bg={index === highlightedIndex ? "brand.1000" : undefined}
                 px={4}
                 py={2}
                 cursor="pointer"
               >
-                {item.name}
+                <Text
+                  color={index === highlightedIndex ? "background" : undefined}
+                >
+                  {item.name}
+                </Text>
               </ListItem>
             ))}
           </List>
