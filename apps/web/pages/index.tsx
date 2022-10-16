@@ -1,5 +1,6 @@
 import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { Meta } from "ui";
+import { Link, Meta } from "ui";
+import { Logo } from "../components/Logo";
 import { PackageSearchInput } from "../features/PackageSearchInput/PackageSearchInput";
 
 export default function Web() {
@@ -11,12 +12,15 @@ export default function Web() {
       />
       <Center height="100vh" width="100wh">
         <Flex w="full" maxW={"lg"} flexDirection="column" alignItems={"center"}>
-          <Text fontSize={"2xl"} fontWeight="bold" mb={4}>
-            NPM Package Size
-          </Text>
+          <Center mb={4}>
+            <Link href="/">
+              <Logo />
+            </Link>
+          </Center>
           <Box mb={4} px={4} w="full">
             <PackageSearchInput />
           </Box>
+          <Text>Find the size of any NPM package</Text>
         </Flex>
       </Center>
     </>
