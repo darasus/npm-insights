@@ -2,18 +2,15 @@ import {
   AspectRatio,
   Box,
   Button,
-  Divider,
   Flex,
   Grid,
   GridItem,
   Text,
-  useToken,
 } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { formatKbs, formatNumber } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
 import { LineChartCard } from "../../components/LineChartCard";
-import Image from "next/image";
 import {
   HomeIcon,
   ArrowTopRightOnSquareIcon,

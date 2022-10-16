@@ -33,9 +33,11 @@ export function LineChartCard({
             h="full"
             w="full"
           >
-            <Spinner />
+            <Spinner mb={2} />
             <Box>
-              <Text fontSize={"sm"}>Generating package data...</Text>
+              <Text fontSize={"sm"} px={2} textAlign="center" lineHeight={1.2}>
+                Generating package data...
+              </Text>
             </Box>
           </Flex>
         )}
