@@ -76,7 +76,7 @@ export function PackageSearchInput() {
               _focusVisible={{
                 borderColor: "brand.1000",
               }}
-              _placeholder={{ color: "brand", opacity: 1 }}
+              _placeholder={{ color: "brand.1000", opacity: 1 }}
             />
             <InputRightElement>
               {searchResults.isFetching && (
@@ -100,7 +100,7 @@ export function PackageSearchInput() {
             overflowY="auto"
             maxH={"52"}
             zIndex="dropdown"
-            bg="background"
+            bg="background.1000"
           >
             {searchResults.data?.map((item, index: number) => (
               <ListItem
@@ -116,7 +116,9 @@ export function PackageSearchInput() {
                 cursor="pointer"
               >
                 <Text
-                  color={index === highlightedIndex ? "background" : undefined}
+                  color={
+                    index === highlightedIndex ? "background.1000" : undefined
+                  }
                 >
                   {item.name}
                 </Text>

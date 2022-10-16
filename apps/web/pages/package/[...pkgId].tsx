@@ -1,6 +1,8 @@
 import {
+  AspectRatio,
   Box,
   Button,
+  Divider,
   Flex,
   Grid,
   GridItem,
@@ -62,14 +64,40 @@ export default function Page({
       />
       <Layout>
         <Flex flexDirection={"column"} alignItems="center">
-          <Card display={"flex"} flexDirection={"column"} mb={4} w="full" p={4}>
+          <Card
+            display={"flex"}
+            flexDirection={"column"}
+            mb={4}
+            w="full"
+            p={8}
+            bg="brand.1000"
+            border="none"
+          >
             <Box>
-              <Text fontSize={"2xl"} fontWeight={"bold"}>
+              <Text
+                fontSize={"4xl"}
+                fontWeight={900}
+                color="background.1000"
+                lineHeight={1}
+              >
                 {`${pkg?.name}@${pkg?.latestVersion}`}
               </Text>
             </Box>
+            <Box
+              h="10"
+              backgroundImage="repeating-linear-gradient(-45deg, transparent, transparent 8px, currentcolor 8px, currentcolor 10px)"
+              color="background.1000"
+              my={2}
+            />
             <Box mb={2}>
-              <Text>{pkg?.description}</Text>
+              <Text
+                color="background.1000"
+                fontWeight={500}
+                fontSize="lg"
+                lineHeight={1}
+              >
+                {pkg?.description}
+              </Text>
             </Box>
             <Flex>
               <Button
@@ -78,10 +106,14 @@ export default function Page({
                 as="a"
                 mr={2}
                 target={"_blank"}
-                variant="outline"
+                variant="solid"
                 leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
-                borderColor={"brand"}
-                _hover={{ bg: "brand.100" }}
+                borderColor={"background.1000"}
+                color="brand.1000"
+                backgroundColor="background.1000"
+                borderRadius={0}
+                borderWidth={0}
+                _hover={{ backgroundColor: "background.900" }}
               >
                 npm
               </Button>
@@ -93,8 +125,12 @@ export default function Page({
                 mr={2}
                 variant="outline"
                 leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
-                borderColor={"brand"}
-                _hover={{ bg: "brand.100" }}
+                borderColor={"background.1000"}
+                color="brand.1000"
+                backgroundColor="background.1000"
+                borderRadius={0}
+                borderWidth={0}
+                _hover={{ backgroundColor: "background.900" }}
               >
                 GitHub
               </Button>
@@ -106,8 +142,12 @@ export default function Page({
                   target={"_blank"}
                   leftIcon={<HomeIcon height={15} width={15} />}
                   variant="outline"
-                  borderColor={"brand"}
-                  _hover={{ bg: "brand.100" }}
+                  borderColor={"background.1000"}
+                  color="brand.1000"
+                  backgroundColor="background.1000"
+                  borderRadius={0}
+                  borderWidth={0}
+                  _hover={{ backgroundColor: "background.900" }}
                 >
                   Homepage
                 </Button>
@@ -120,34 +160,39 @@ export default function Page({
             gap={4}
             mx={4}
             w={"full"}
-            h="xl"
           >
             <GridItem rowSpan={1} colSpan={1}>
-              <LineChartCard
-                dataKey="gzip"
-                label={gzipLabel}
-                description="Gzipped"
-                data={data}
-                isLoading={pkgSizeHistory.isLoading}
-              />
+              <AspectRatio ratio={1}>
+                <LineChartCard
+                  dataKey="gzip"
+                  label={gzipLabel}
+                  description="Gzipped"
+                  data={data}
+                  isLoading={pkgSizeHistory.isLoading}
+                />
+              </AspectRatio>
             </GridItem>
             <GridItem rowSpan={1} colSpan={1}>
-              <LineChartCard
-                dataKey="size"
-                label={sizeLabel}
-                description="Minified"
-                data={data}
-                isLoading={pkgSizeHistory.isLoading}
-              />
+              <AspectRatio ratio={1}>
+                <LineChartCard
+                  dataKey="size"
+                  label={sizeLabel}
+                  description="Minified"
+                  data={data}
+                  isLoading={pkgSizeHistory.isLoading}
+                />
+              </AspectRatio>
             </GridItem>
             <GridItem rowSpan={1} colSpan={2}>
-              <LineChartCard
-                dataKey="count"
-                label={downloadLabel}
-                description="Downloads yesterday"
-                data={pkgDownloads.data}
-                isLoading={pkgDownloads.isLoading}
-              />
+              <AspectRatio ratio={2 / 1}>
+                <LineChartCard
+                  dataKey="count"
+                  label={downloadLabel}
+                  description="Downloads yesterday"
+                  data={pkgDownloads.data}
+                  isLoading={pkgDownloads.isLoading}
+                />
+              </AspectRatio>
             </GridItem>
           </Grid>
         </Flex>

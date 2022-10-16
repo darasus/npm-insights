@@ -6,8 +6,8 @@ const config: ThemeConfig = {
 
 const token = {
   color: {
-    brand: "#d1d0b5",
-    background: "#14161f",
+    brand: "#fd6a5f",
+    background: "#0c2210",
   },
 };
 
@@ -47,7 +47,18 @@ export const theme = extendTheme({
       900: `${token.color.brand + "90"}`,
       1000: `${token.color.brand}`,
     },
-    background: token.color.background,
+    background: {
+      100: `${token.color.background + "10"}`,
+      200: `${token.color.background + "20"}`,
+      300: `${token.color.background + "30"}`,
+      400: `${token.color.background + "40"}`,
+      500: `${token.color.background + "50"}`,
+      600: `${token.color.background + "60"}`,
+      700: `${token.color.background + "70"}`,
+      800: `${token.color.background + "80"}`,
+      900: `${token.color.background + "90"}`,
+      1000: `${token.color.background}`,
+    },
     gray: {
       50: "#fafafa",
       100: "#f5f5f5",

@@ -14,7 +14,7 @@ export default function Web() {
           <Text fontSize={"2xl"} fontWeight="bold" mb={4}>
             NPM Package Size
           </Text>
-          <Box mb={4} w="full">
+          <Box mb={4} px={4} w="full">
             <PackageSearchInput />
           </Box>
         </Flex>
