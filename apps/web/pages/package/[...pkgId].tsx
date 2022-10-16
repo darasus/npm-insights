@@ -91,6 +91,16 @@ export default function Page({
           </Card>
           <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={"full"}>
             <GridItem colSpan={4}>
+              {pkg?.homepage && (
+                <LinkButton
+                  href={pkg?.homepage}
+                  leftIcon={<HomeIcon height={15} width={15} />}
+                >
+                  Home
+                </LinkButton>
+              )}
+            </GridItem>
+            <GridItem colSpan={4}>
               <LinkButton
                 href={`https://npmjs.com/package/${pkg?.name}`}
                 mr={2}
@@ -107,16 +117,6 @@ export default function Page({
               >
                 GitHub
               </LinkButton>
-            </GridItem>
-            <GridItem colSpan={4}>
-              {pkg?.homepage && (
-                <LinkButton
-                  href={pkg?.homepage}
-                  leftIcon={<HomeIcon height={15} width={15} />}
-                >
-                  Homepage
-                </LinkButton>
-              )}
             </GridItem>
             <GridItem colSpan={6}>
               <AspectRatio ratio={1}>
