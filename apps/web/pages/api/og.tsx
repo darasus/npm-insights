@@ -1,5 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
+import { token } from "../../theme";
 
 export const config = {
   runtime: "experimental-edge",
@@ -13,7 +14,7 @@ const fontNormal = fetch(
 ).then((res) => res.arrayBuffer());
 const fontBold = fetch(
   new URL(
-    "../../assets/Source_Sans_Pro/SourceSansPro-Bold.ttf",
+    "../../assets/Source_Sans_Pro/SourceSansPro-Light.ttf",
     import.meta.url
   )
 ).then((res) => res.arrayBuffer());
@@ -31,43 +32,46 @@ export default async function handler(req: NextRequest) {
       <div
         style={{
           display: "flex",
-          background: "#fafafa",
+          background: token.color.background,
           width: "100%",
           height: "100%",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          color: "#0a0a0a",
-          border: "10px solid #6d28d9",
+          color: token.color.background,
         }}
       >
-        <span style={{ fontWeight: 400, fontSize: 80 }}>{`NPM 📦 Size`}</span>
-        {pkgId && (
+        <div
+          style={{
+            display: "flex",
+            backgroundColor: token.color.brand,
+            flexDirection: "column",
+            padding: "10px 40px 50px",
+          }}
+        >
           <span
-            style={{
-              fontWeight: 800,
-              fontSize: 120,
-              lineHeight: 0.5,
-              color: "#9e9e9e",
-            }}
-          >{`${pkgId}`}</span>
-        )}
+            style={{ fontWeight: 400, fontSize: 100, marginBottom: 10 }}
+          >{`NPM Package Size`}</span>
+          {pkgId && (
+            <span
+              style={{
+                fontWeight: 100,
+                fontSize: 80,
+                lineHeight: 0.5,
+              }}
+            >{`${pkgId}`}</span>
+          )}
+        </div>
       </div>
     ),
     {
       width: 1200,
       height: 630,
-      emoji: "twemoji",
       fonts: [
         {
           name: "Source Sans Pro",
           data: fontNormalData,
-          weight: 400,
-        },
-        {
-          name: "Source Sans Pro",
-          data: fontBoldData,
-          weight: 800,
+          weight: 100,
         },
       ],
     }

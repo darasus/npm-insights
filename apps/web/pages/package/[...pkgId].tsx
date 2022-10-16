@@ -59,7 +59,7 @@ export default function Page({
     <>
       <Meta
         description={`Find out the size of '${pkgId}'`}
-        imageSrc={`/api/og?pkgId=${pkgId}`}
+        imageSrc={`/api/og?pkgId=${pkg?.name}@${pkg?.latestVersion}`}
         slug={pkgId}
       />
       <Layout>
