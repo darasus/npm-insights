@@ -1,12 +1,4 @@
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Text,
-} from "@chakra-ui/react";
+import { AspectRatio, Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { trpc } from "../../utils/trpc";
 import { formatKbs, formatNumber } from "../../utils/formatKbs";
 import { Card } from "../../components/Card";
@@ -21,7 +13,7 @@ import { appRouter } from "../../server/routers/_app";
 import { createContext } from "../../server/context";
 import superjson from "superjson";
 import { Layout } from "../../components/Layout";
-import { Meta } from "ui";
+import { LinkButton, Meta } from "ui";
 import { usePkgId } from "../../hooks/usePkgId";
 
 export default function Page({
@@ -96,69 +88,37 @@ export default function Page({
                 {pkg?.description}
               </Text>
             </Box>
-            <Flex>
-              <Button
+          </Card>
+          <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={"full"}>
+            <GridItem colSpan={4}>
+              <LinkButton
                 href={`https://npmjs.com/package/${pkg?.name}`}
-                size="sm"
-                as="a"
                 mr={2}
-                target={"_blank"}
-                variant="solid"
                 leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
-                borderColor={"background.1000"}
-                color="brand.1000"
-                backgroundColor="background.1000"
-                borderRadius={0}
-                borderWidth={0}
-                _hover={{ backgroundColor: "background.900" }}
               >
                 npm
-              </Button>
-              <Button
-                href={pkg?.repository}
-                size="sm"
-                as="a"
-                target={"_blank"}
+              </LinkButton>
+            </GridItem>
+            <GridItem colSpan={4}>
+              <LinkButton
+                href={pkg?.repository!}
                 mr={2}
-                variant="outline"
                 leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
-                borderColor={"background.1000"}
-                color="brand.1000"
-                backgroundColor="background.1000"
-                borderRadius={0}
-                borderWidth={0}
-                _hover={{ backgroundColor: "background.900" }}
               >
                 GitHub
-              </Button>
+              </LinkButton>
+            </GridItem>
+            <GridItem colSpan={4}>
               {pkg?.homepage && (
-                <Button
+                <LinkButton
                   href={pkg?.homepage}
-                  size="sm"
-                  as="a"
-                  target={"_blank"}
                   leftIcon={<HomeIcon height={15} width={15} />}
-                  variant="outline"
-                  borderColor={"background.1000"}
-                  color="brand.1000"
-                  backgroundColor="background.1000"
-                  borderRadius={0}
-                  borderWidth={0}
-                  _hover={{ backgroundColor: "background.900" }}
                 >
                   Homepage
-                </Button>
+                </LinkButton>
               )}
-            </Flex>
-          </Card>
-          <Grid
-            templateColumns="repeat(2, 1fr)"
-            templateRows="repeat(2, 1fr)"
-            gap={4}
-            mx={4}
-            w={"full"}
-          >
-            <GridItem rowSpan={1} colSpan={1}>
+            </GridItem>
+            <GridItem colSpan={6}>
               <AspectRatio ratio={1}>
                 <LineChartCard
                   dataKey="gzip"
@@ -169,7 +129,7 @@ export default function Page({
                 />
               </AspectRatio>
             </GridItem>
-            <GridItem rowSpan={1} colSpan={1}>
+            <GridItem colSpan={6}>
               <AspectRatio ratio={1}>
                 <LineChartCard
                   dataKey="size"
@@ -180,7 +140,7 @@ export default function Page({
                 />
               </AspectRatio>
             </GridItem>
-            <GridItem rowSpan={1} colSpan={2}>
+            <GridItem colSpan={12}>
               <AspectRatio ratio={2 / 1}>
                 <LineChartCard
                   dataKey="count"

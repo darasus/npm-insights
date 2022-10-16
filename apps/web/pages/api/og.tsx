@@ -1,6 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import { token } from "../../theme";
+import { token } from "../../token";
 
 export const config = {
   runtime: "experimental-edge",

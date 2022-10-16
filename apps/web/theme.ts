@@ -1,14 +1,8 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
+import { token } from "./token";
 
 const config: ThemeConfig = {
   useSystemColorMode: false,
-};
-
-export const token = {
-  color: {
-    brand: "#fd6a5f",
-    background: "#0c2210",
-  },
 };
 
 export const headingSizeMap = {
