@@ -1,0 +1,21 @@
+{
+  "runtime": "edge",
+  "name": "api/og",
+  "deploymentTarget": "v8-worker",
+  "entrypoint": "index.js",
+  "envVarsInUse": ["JEST_WORKER_ID"],
+  "assets": [
+    {
+      "name": "SourceSansPro-Regular.abb65e07ba246dd3.ttf",
+      "path": "assets/SourceSansPro-Regular.abb65e07ba246dd3.ttf"
+    },
+    {
+      "name": "SourceSansPro-Light.a212613ea96a2250.ttf",
+      "path": "assets/SourceSansPro-Light.a212613ea96a2250.ttf"
+    },
+    {
+      "name": "noto-sans-v27-latin-regular.5dda3fca77107598.ttf",
+      "path": "assets/noto-sans-v27-latin-regular.5dda3fca77107598.ttf"
+    }
+  ]
+}

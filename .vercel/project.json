@@ -1,0 +1,15 @@
+{
+  "projectId": "prj_QDYCdKi1ufzpKJotA0s3aP2J7C2O",
+  "orgId": "team_ykzdMpepGaAICvQCXoBJssCG",
+  "settings": {
+    "createdAt": 1665242151891,
+    "framework": "nextjs",
+    "devCommand": null,
+    "installCommand": "pnpm install",
+    "buildCommand": null,
+    "outputDirectory": null,
+    "rootDirectory": "apps/web",
+    "directoryListing": false,
+    "nodeVersion": "16.x"
+  }
+}

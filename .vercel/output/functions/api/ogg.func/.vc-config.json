@@ -1,0 +1,9 @@
+{
+  "handler": "apps/web/___next_launcher.cjs",
+  "runtime": "nodejs16.x",
+  "environment": {},
+  "supportsMultiPayloads": false,
+  "launcherType": "Nodejs",
+  "shouldAddHelpers": false,
+  "shouldAddSourcemapSupport": false
+}
