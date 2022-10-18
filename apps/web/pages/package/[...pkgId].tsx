@@ -1,48 +1,66 @@
-import { AspectRatio, Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
-import { trpc } from "../../utils/trpc";
-import { formatKbs, formatNumber } from "../../utils/formatKbs";
-import { Card } from "../../components/Card";
-import { LineChartCard } from "../../components/LineChartCard";
+import {
+  AspectRatio,
+  Box,
+  Center,
+  Flex,
+  Grid,
+  GridItem,
+  Spinner,
+  Text,
+} from '@chakra-ui/react'
+import { trpc } from '../../utils/trpc'
+import { formatKbs, formatNumber } from '../../utils/formatKbs'
+import { Card } from '../../components/Card'
+import { LineChartCard } from '../../components/LineChartCard'
 import {
   HomeIcon,
   ArrowTopRightOnSquareIcon,
-} from "@heroicons/react/24/outline";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { createProxySSGHelpers } from "@trpc/react/ssg";
-import { appRouter } from "../../server/routers/_app";
-import { createContext } from "../../server/context";
-import superjson from "superjson";
-import { Layout } from "../../components/Layout";
-import { LinkButton, Meta } from "ui";
-import { usePkgId } from "../../hooks/usePkgId";
+} from '@heroicons/react/24/outline'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { createProxySSGHelpers } from '@trpc/react/ssg'
+import { appRouter } from '../../server/routers/_app'
+import { createContext } from '../../server/context'
+import superjson from 'superjson'
+import { Layout } from '../../components/Layout'
+import { LinkButton, Meta } from 'ui'
+import { usePkgId } from '../../hooks/usePkgId'
+import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 
 export default function Page({
   pkgInitialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const pkgId = usePkgId();
-  const { data: pkg } = trpc.package.getInfo.useQuery(
+  const pkgId = usePkgId()
+  const { data: pkg, isLoading } = trpc.package.getInfo.useQuery(
     { pkgId },
     {
       enabled: !!pkgId,
       refetchOnWindowFocus: false,
       initialData: pkgInitialData,
     }
-  );
+  )
   const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
-  );
+  )
   const pkgDownloads = trpc.package.getPackageDownloads.useQuery(
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
-  );
-  const data = pkgSizeHistory.data?.sizeHistory;
+  )
+  const data = pkgSizeHistory.data?.sizeHistory
 
-  const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : "";
-  const sizeLabel = data ? formatKbs(data?.[data?.length - 1]?.size || 0) : "";
+  const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : ''
+  const sizeLabel = data ? formatKbs(data?.[data?.length - 1]?.size || 0) : ''
   const downloadLabel = pkgDownloads.data
     ? formatNumber(pkgDownloads.data[pkgDownloads.data.length - 1]?.count || 0)
-    : "";
+    : ''
+
+  if (isLoading) {
+    return (
+      <Center w="full">
+        <Spinner />
+      </Center>
+    )
+  }
 
   return (
     <>
@@ -52,10 +70,10 @@ export default function Page({
         slug={pkgId}
       />
       <Layout>
-        <Flex flexDirection={"column"} alignItems="center">
+        <Flex flexDirection={'column'} alignItems="center">
           <Card
-            display={"flex"}
-            flexDirection={"column"}
+            display={'flex'}
+            flexDirection={'column'}
             mb={4}
             w="full"
             p={8}
@@ -64,7 +82,7 @@ export default function Page({
           >
             <Box>
               <Text
-                fontSize={"4xl"}
+                fontSize={'4xl'}
                 fontWeight={900}
                 color="background.1000"
                 lineHeight={1}
@@ -89,7 +107,7 @@ export default function Page({
               </Text>
             </Box>
           </Card>
-          <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={"full"}>
+          <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={'full'}>
             <GridItem colSpan={4}>
               {pkg?.homepage && (
                 <LinkButton
@@ -155,28 +173,34 @@ export default function Page({
         </Flex>
       </Layout>
     </>
-  );
+  )
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const pkgId = (
-    typeof context.query?.pkgId === "string"
+    typeof context.query?.pkgId === 'string'
       ? context.query?.pkgId
-      : context.query?.pkgId?.join("/")
-  ) as string;
+      : context.query?.pkgId?.join('/')
+  ) as string
+
+  if (!createIsFirstServerCall(context)) {
+    return {
+      props: {},
+    }
+  }
 
   const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: await createContext(),
     transformer: superjson,
-  });
+  })
 
-  const pkg = await ssg.package.getInfo.fetch({ pkgId });
+  const pkg = await ssg.package.getInfo.fetch({ pkgId })
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
       pkgInitialData: pkg,
     },
-  };
+  }
 }
