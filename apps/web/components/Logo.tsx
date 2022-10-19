@@ -1,10 +1,15 @@
-import { token } from "../token";
+import { token } from '../token'
 
-export function Logo() {
+interface Props {
+  w?: number
+  h?: number
+}
+
+export function Logo({ h = 44, w = 44 }: Props) {
   return (
     <svg
-      width="44"
-      height="44"
+      width={w}
+      height={h}
       viewBox="0 0 22 22"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -14,5 +19,5 @@ export function Logo() {
         stroke={token.color.brand}
       />
     </svg>
-  );
+  )
 }
