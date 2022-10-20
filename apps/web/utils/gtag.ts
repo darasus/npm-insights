@@ -2,7 +2,7 @@ export const trackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {
-  ;(window as any).gtag('config', trackingId, {
+  ;(window as any)?.gtag?.('config', trackingId, {
     page_path: url,
     debug_event: process.env.NODE_ENV === 'production' ? undefined : '1',
   })
@@ -10,7 +10,7 @@ export const pageview = (url: string) => {
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const event = ({ action, category, label, value }: any) => {
-  ;(window as any).gtag('event', action, {
+  ;(window as any)?.gtag?.('event', action, {
     event_category: category,
     event_label: label,
     value: value,

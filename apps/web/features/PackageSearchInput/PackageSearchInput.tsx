@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useCombobox } from "downshift";
+import React, { useState } from 'react'
+import { useCombobox } from 'downshift'
 import {
   Flex,
   Input,
@@ -9,20 +9,22 @@ import {
   ListItem,
   Spinner,
   Text,
-} from "@chakra-ui/react";
-import { trpc } from "../../utils/trpc";
-import { Card } from "../../components/Card";
-import { useRouter } from "next/router";
-import { useDebounce } from "hooks";
+  useToken,
+} from '@chakra-ui/react'
+import { trpc } from '../../utils/trpc'
+import { Card } from '../../components/Card'
+import { useRouter } from 'next/router'
+import { useDebounce } from 'hooks'
 
 export function PackageSearchInput() {
-  const router = useRouter();
-  const [q, setQ] = useState("");
-  const debouncedQ = useDebounce(q, 250);
+  const [b200] = useToken('colors', ['brand.600'])
+  const router = useRouter()
+  const [q, setQ] = useState('')
+  const debouncedQ = useDebounce(q, 250)
   const searchResults = trpc.package.searchPackage.useQuery(
     { q: debouncedQ },
     { enabled: Boolean(q), keepPreviousData: true, refetchOnWindowFocus: false }
-  );
+  )
   const {
     isOpen,
     selectedItem,
@@ -35,25 +37,25 @@ export function PackageSearchInput() {
     getItemProps,
   } = useCombobox<{ name: string; description: string; version: string }>({
     items: searchResults.data || [],
-    itemToString: (option) => (option ? option.name : ""),
+    itemToString: (option) => (option ? option.name : ''),
     onInputValueChange: async ({ inputValue }) => {
       if (inputValue) {
-        setQ(inputValue);
+        setQ(inputValue)
       } else {
-        setQ("");
+        setQ('')
       }
     },
     onSelectedItemChange(changes) {
       if (changes.selectedItem) {
         router.push(`/package/${changes.selectedItem.name}`, undefined, {
           shallow: true,
-        });
+        })
       }
     },
-  });
+  })
 
   const showSuggestions =
-    isOpen && searchResults.data && searchResults.data.length > 0;
+    isOpen && searchResults.data && searchResults.data.length > 0
 
   return (
     <Flex direction="column" align="center">
@@ -63,7 +65,7 @@ export function PackageSearchInput() {
         flex="1 1 auto"
         w="full"
         position="relative"
-        zIndex={"dropdown"}
+        zIndex={'dropdown'}
       >
         <Flex direction="row" alignItems="baseline" w="full">
           <InputGroup w="full">
@@ -71,34 +73,35 @@ export function PackageSearchInput() {
               w="full"
               {...getInputProps()}
               placeholder="Search npm package..."
-              borderRadius={"none"}
-              _hover={{ borderColor: "brand.1000" }}
+              borderRadius={'none'}
+              _hover={{ borderColor: 'brand.1000' }}
               _focusVisible={{
-                borderColor: "brand.1000",
+                borderColor: 'inherit',
+                boxShadow: `0px 0px 0px 4px ${b200}`,
               }}
-              _placeholder={{ color: "brand.1000", opacity: 1 }}
+              _placeholder={{ color: 'brand.1000', opacity: 1 }}
             />
             <InputRightElement>
               {searchResults.isFetching && (
-                <Spinner width={15} height={15} color={"brand"} />
+                <Spinner width={15} height={15} color={'brand'} />
               )}
             </InputRightElement>
           </InputGroup>
         </Flex>
         <Card
-          borderWidth={showSuggestions ? "thin" : "0px"}
+          borderWidth={showSuggestions ? 'thin' : '0px'}
           position="absolute"
           left={0}
           right={0}
-          top={"12"}
+          top={'12'}
         >
           <List
             {...getMenuProps()}
-            display={showSuggestions ? undefined : "none"}
+            display={showSuggestions ? undefined : 'none'}
             py={2}
             flex={1}
             overflowY="auto"
-            maxH={"52"}
+            maxH={'52'}
             zIndex="dropdown"
             bg="background.1000"
           >
@@ -110,14 +113,14 @@ export function PackageSearchInput() {
                 })}
                 key={index}
                 transition="background-color 220ms, color 220ms"
-                bg={index === highlightedIndex ? "brand.1000" : undefined}
+                bg={index === highlightedIndex ? 'brand.1000' : undefined}
                 px={4}
                 py={2}
                 cursor="pointer"
               >
                 <Text
                   color={
-                    index === highlightedIndex ? "background.1000" : undefined
+                    index === highlightedIndex ? 'background.1000' : undefined
                   }
                 >
                   {item.name}
@@ -128,5 +131,5 @@ export function PackageSearchInput() {
         </Card>
       </Flex>
     </Flex>
-  );
+  )
 }
