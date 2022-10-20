@@ -30,8 +30,7 @@
     "recharts": "2.1.12",
     "superjson": "^1.10.0",
     "ui": "workspace:*",
-    "utils": "workspace:*",
-    "zod": "^3.19.1"
+    "utils": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

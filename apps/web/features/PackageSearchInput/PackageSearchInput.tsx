@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useCombobox } from 'downshift'
 import {
+  Box,
   Flex,
   Input,
   InputGroup,
@@ -76,7 +77,7 @@ export function PackageSearchInput({ showKbd = false }: Props) {
           <InputGroup w="full">
             <Input
               w="full"
-              {...getInputProps()}
+              {...getInputProps({ refKey: 'inputRef' })}
               placeholder="Search npm package..."
               borderRadius={'none'}
               _hover={{ borderColor: 'brand.1000' }}
@@ -91,15 +92,15 @@ export function PackageSearchInput({ showKbd = false }: Props) {
                 <Spinner width={15} height={15} color={'brand'} />
               ) : (
                 showKbd && (
-                  <>
+                  <Flex display={['none', 'none', 'flex']}>
                     <Kbd bg={'background.1000'} mr={1}>
                       ⌘
                     </Kbd>{' '}
-                    +{' '}
+                    <Text lineHeight={1}>+</Text>{' '}
                     <Kbd bg={'background.1000'} ml={1}>
                       K
                     </Kbd>
-                  </>
+                  </Flex>
                 )
               )}
             </InputRightElement>
