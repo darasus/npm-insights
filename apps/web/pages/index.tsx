@@ -1,7 +1,7 @@
-import { Box, Center, Flex, Text } from "@chakra-ui/react";
-import { Link, Meta } from "ui";
-import { Logo } from "../components/Logo";
-import { PackageSearchInput } from "../features/PackageSearchInput/PackageSearchInput";
+import { Box, Center, Flex, Text } from '@chakra-ui/react'
+import { Link, Meta } from 'ui'
+import { LogoWithBeta } from '../components/Logo'
+import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
 
 export default function Web() {
   return (
@@ -11,10 +11,10 @@ export default function Web() {
         imageSrc="/api/og"
       />
       <Center height="100vh" width="100wh">
-        <Flex w="full" maxW={"lg"} flexDirection="column" alignItems={"center"}>
+        <Flex w="full" maxW={'lg'} flexDirection="column" alignItems={'center'}>
           <Center mb={4}>
             <Link href="/">
-              <Logo />
+              <LogoWithBeta />
             </Link>
           </Center>
           <Box mb={4} px={4} w="full">
@@ -24,5 +24,5 @@ export default function Web() {
         </Flex>
       </Center>
     </>
-  );
+  )
 }
