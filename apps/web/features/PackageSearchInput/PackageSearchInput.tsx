@@ -5,6 +5,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Kbd,
   List,
   ListItem,
   Spinner,
@@ -16,7 +17,11 @@ import { Card } from '../../components/Card'
 import { useRouter } from 'next/router'
 import { useDebounce } from 'hooks'
 
-export function PackageSearchInput() {
+interface Props {
+  showKbd?: boolean
+}
+
+export function PackageSearchInput({ showKbd = false }: Props) {
   const [b200] = useToken('colors', ['brand.600'])
   const router = useRouter()
   const [q, setQ] = useState('')
@@ -81,9 +86,21 @@ export function PackageSearchInput() {
               }}
               _placeholder={{ color: 'brand.1000', opacity: 1 }}
             />
-            <InputRightElement>
-              {searchResults.isFetching && (
+            <InputRightElement w="auto" mr={2}>
+              {searchResults.isFetching ? (
                 <Spinner width={15} height={15} color={'brand'} />
+              ) : (
+                showKbd && (
+                  <>
+                    <Kbd bg={'background.1000'} mr={1}>
+                      ⌘
+                    </Kbd>{' '}
+                    +{' '}
+                    <Kbd bg={'background.1000'} ml={1}>
+                      K
+                    </Kbd>
+                  </>
+                )
               )}
             </InputRightElement>
           </InputGroup>

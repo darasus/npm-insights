@@ -5,9 +5,11 @@ import { trpc } from '../utils/trpc'
 import * as gtag from '../utils/gtag'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { SearchOverlay } from '../components/SearchOverlay'
 
 function MyApp({ Component, pageProps }: any) {
-  const { events, locale, defaultLocale } = useRouter()
+  const { events } = useRouter()
+
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       gtag.pageview(url)
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }: any) {
       />
       <ChakraProvider theme={theme}>
         <Component {...pageProps} />
+        <SearchOverlay />
       </ChakraProvider>
     </>
   )

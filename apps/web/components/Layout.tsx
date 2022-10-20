@@ -1,7 +1,7 @@
-import { Box, Center } from "@chakra-ui/react";
-import { Link } from "ui";
-import { PackageSearchInput } from "../features/PackageSearchInput/PackageSearchInput";
-import { Logo } from "./Logo";
+import { Box, Center } from '@chakra-ui/react'
+import { Link } from 'ui'
+import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
+import { Logo } from './Logo'
 
 export function Layout({ children }: React.PropsWithChildren) {
   return (
@@ -12,9 +12,9 @@ export function Layout({ children }: React.PropsWithChildren) {
         </Link>
       </Center>
       <Box mb={4}>
-        <PackageSearchInput />
+        <PackageSearchInput showKbd />
       </Box>
       <Box>{children}</Box>
     </Box>
-  );
+  )
 }
