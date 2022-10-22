@@ -6,10 +6,10 @@ const config: ThemeConfig = {
 }
 
 export const headingSizeMap = {
-  h1: ['4xl', '6xl', '6xl'],
-  h2: '4xl',
-  h3: '4xl',
-  h4: '4xl',
+  h1: ['2xl', '4xl', '4xl'],
+  h2: '2xl',
+  h3: '2xl',
+  h4: '2xl',
 }
 
 export const theme = extendTheme({

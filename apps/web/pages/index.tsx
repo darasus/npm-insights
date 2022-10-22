@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/react'
 import { Link, Meta } from 'ui'
-import { LogoWithBeta } from '../components/Logo'
+import { LogoWithBeta } from '../components/LogoWithBeta'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
 
 export default function Web() {

@@ -20,7 +20,7 @@
     "@trpc/server": "^10.0.0-proxy-beta.20",
     "@vercel/og": "^0.0.15",
     "date-fns": "^2.29.3",
-    "downshift": "^6.1.12",
+    "downshift": "^7.0.0",
     "framer-motion": "^6",
     "hooks": "workspace:*",
     "lib": "workspace:*",

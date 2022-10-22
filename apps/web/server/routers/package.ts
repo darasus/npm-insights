@@ -3,7 +3,7 @@ import { compareSemanticVersions } from 'lib'
 import { date, z } from 'zod'
 import { t } from '../trpc'
 
-export const packageRouter = t.router({
+export const npmRouter = t.router({
   getInfo: t.procedure
     .input(
       z.object({
@@ -106,4 +106,59 @@ export const packageRouter = t.router({
     await ctx.cache.perge()
     return { status: 'ok' }
   }),
+})
+
+export const githubRouter = t.router({
+  getRepo: t.procedure
+    .input(
+      z.object({
+        pkgId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const pkg = await ctx.npm.fetchPackage(input.pkgId)
+
+      if (!pkg) return null
+
+      const [owner, repo] = pkg.repository.url
+        .replace('git+', '')
+        .replace('.git', '')
+        .replace('https://github.com/', '')
+        .replace('http://github.com/', '')
+        .split('/')
+
+      return ctx.github.fetchRepository({ owner, repo }).then((res) => res.data)
+    }),
+  getRepositoryReadme: t.procedure
+    .input(
+      z.object({
+        pkgId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const pkg = await ctx.npm.fetchPackage(input.pkgId)
+
+      if (!pkg) return null
+
+      const [owner, repo] = pkg.repository.url
+        .replace('git+', '')
+        .replace('.git', '')
+        .replace('https://github.com/', '')
+        .replace('http://github.com/', '')
+        .split('/')
+
+      const response = await ctx.github
+        .fetchRepositoryReadme({ owner, repo })
+        .then((res) => res.data)
+
+      if ('download_url' in response) {
+        const md = await fetch(response?.download_url as any).then((res) =>
+          res.text()
+        )
+
+        return md
+      }
+
+      return null
+    }),
 })

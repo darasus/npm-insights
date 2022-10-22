@@ -20,14 +20,18 @@ import { useDebounce } from 'hooks'
 
 interface Props {
   showKbd?: boolean
+  isTransparent?: boolean
 }
 
-export function PackageSearchInput({ showKbd = false }: Props) {
+export function PackageSearchInput({
+  showKbd = false,
+  isTransparent = false,
+}: Props) {
   const [b200] = useToken('colors', ['brand.600'])
   const router = useRouter()
   const [q, setQ] = useState('')
   const debouncedQ = useDebounce(q, 250)
-  const searchResults = trpc.package.searchPackage.useQuery(
+  const searchResults = trpc.npm.searchPackage.useQuery(
     { q: debouncedQ },
     { enabled: Boolean(q), keepPreviousData: true, refetchOnWindowFocus: false }
   )
@@ -38,7 +42,6 @@ export function PackageSearchInput({ showKbd = false }: Props) {
     getLabelProps,
     getMenuProps,
     getInputProps,
-    getComboboxProps,
     highlightedIndex,
     getItemProps,
   } = useCombobox<{ name: string; description: string; version: string }>({
@@ -66,7 +69,6 @@ export function PackageSearchInput({ showKbd = false }: Props) {
   return (
     <Flex direction="column" align="center">
       <Flex
-        {...getComboboxProps()}
         direction="column"
         flex="1 1 auto"
         w="full"
@@ -77,7 +79,7 @@ export function PackageSearchInput({ showKbd = false }: Props) {
           <InputGroup w="full">
             <Input
               w="full"
-              {...getInputProps({ refKey: 'inputRef' })}
+              {...getInputProps()}
               placeholder="Search npm package..."
               borderRadius={'none'}
               _hover={{ borderColor: 'brand.1000' }}
@@ -121,7 +123,7 @@ export function PackageSearchInput({ showKbd = false }: Props) {
             overflowY="auto"
             maxH={'52'}
             zIndex="dropdown"
-            bg="background.1000"
+            bg={isTransparent ? 'transparent' : 'background.1000'}
           >
             {searchResults.data?.map((item, index: number) => (
               <ListItem

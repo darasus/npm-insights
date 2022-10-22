@@ -1,4 +1,5 @@
-export { CacheService } from "./src/cache";
-export { stringToHash } from "./src/hash";
-export { NPM } from "./src/npm";
-export { compareSemanticVersions } from "./src/compareSemanticVersions";
+export { CacheService } from './src/cache'
+export { stringToHash } from './src/hash'
+export { NPM } from './src/npm'
+export { GitHub } from './src/github'
+export { compareSemanticVersions } from './src/compareSemanticVersions'

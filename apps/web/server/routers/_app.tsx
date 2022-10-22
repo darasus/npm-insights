@@ -1,8 +1,9 @@
-import { t } from "../trpc";
-import { packageRouter } from "./package";
+import { t } from '../trpc'
+import { npmRouter, githubRouter } from './package'
 
 export const appRouter = t.router({
-  package: packageRouter,
-});
+  npm: npmRouter,
+  github: githubRouter,
+})
 
-export type AppRouter = typeof appRouter;
+export type AppRouter = typeof appRouter

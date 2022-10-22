@@ -8,7 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ioredis": "^5.2.3"
-  },
-  "devDependencies": {}
+    "@octokit/core": "^4.1.0",
+    "ioredis": "^5.2.3",
+    "octokit": "^2.0.9"
+  }
 }

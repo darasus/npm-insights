@@ -12,6 +12,7 @@ import { trpc } from '../../utils/trpc'
 import { formatKbs, formatNumber } from '../../utils/formatKbs'
 import { Card } from '../../components/Card'
 import { LineChartCard } from '../../components/LineChartCard'
+import { serialize } from 'next-mdx-remote/serialize'
 import {
   HomeIcon,
   ArrowTopRightOnSquareIcon,
@@ -25,12 +26,16 @@ import { Layout } from '../../components/Layout'
 import { LinkButton, Meta } from 'ui'
 import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
+import { useRepository } from '../../hooks/useRepository'
+import { Readme } from '../../features/Readme/Readme'
 
 export default function Page({
   pkgInitialData,
+  source,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const pkgId = usePkgId()
-  const { data: pkg, isLoading } = trpc.package.getInfo.useQuery(
+  // const githubRepo = useRepository(pkgId)
+  const { data: pkg, isLoading } = trpc.npm.getInfo.useQuery(
     { pkgId },
     {
       enabled: !!pkgId,
@@ -38,11 +43,11 @@ export default function Page({
       initialData: pkgInitialData,
     }
   )
-  const pkgSizeHistory = trpc.package.getSizeHistory.useQuery(
+  const pkgSizeHistory = trpc.npm.getSizeHistory.useQuery(
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
   )
-  const pkgDownloads = trpc.package.getPackageDownloads.useQuery(
+  const pkgDownloads = trpc.npm.getPackageDownloads.useQuery(
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
   )
@@ -106,6 +111,11 @@ export default function Page({
                 {pkg?.description}
               </Text>
             </Box>
+            {/* <Text color="background.1000">
+              {githubRepo.data?.stargazers_count
+                ? formatNumber(githubRepo.data?.stargazers_count)
+                : 'Loading...'}
+            </Text> */}
           </Card>
           <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={'full'}>
             <GridItem colSpan={4}>
@@ -195,12 +205,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     transformer: superjson,
   })
 
-  const pkg = await ssg.package.getInfo.fetch({ pkgId })
+  const pkg = await ssg.npm.getInfo.fetch({ pkgId })
+  const md = await ssg.github.getRepositoryReadme.fetch({ pkgId })
+  const mdxSource = await serialize(md || '')
 
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      // trpcState: ssg.dehydrate(),
       pkgInitialData: pkg,
+      source: mdxSource,
     },
   }
 }
