@@ -1,4 +1,4 @@
-import { Button as ChakraButton, ButtonProps } from "@chakra-ui/react";
+import { Button as ChakraButton, ButtonProps, Text } from '@chakra-ui/react'
 
 export function LinkButton({
   children,
@@ -9,17 +9,17 @@ export function LinkButton({
       size="sm"
       as="a"
       mr={2}
-      target={"_blank"}
+      target={'_blank'}
       variant="outline"
-      borderColor={"brand.1000"}
+      borderColor={'brand.1000'}
       color="brand.1000"
       borderRadius={0}
-      _hover={{ backgroundColor: "brand.100" }}
+      _hover={{ backgroundColor: 'brand.100' }}
       w="full"
       h="14"
       {...props}
     >
-      {children}
+      <Text lineHeight={1}>{children}</Text>
     </ChakraButton>
-  );
+  )
 }

@@ -1,22 +1,15 @@
 import {
   AspectRatio,
-  Box,
   Center,
   Flex,
   Grid,
   GridItem,
   Spinner,
-  Text,
 } from '@chakra-ui/react'
 import { trpc } from '../../utils/trpc'
 import { formatKbs, formatNumber } from '../../utils/formatKbs'
-import { Card } from '../../components/Card'
 import { LineChartCard } from '../../components/LineChartCard'
 import { serialize } from 'next-mdx-remote/serialize'
-import {
-  HomeIcon,
-  ArrowTopRightOnSquareIcon,
-} from '@heroicons/react/24/outline'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { createProxySSGHelpers } from '@trpc/react/ssg'
 import { appRouter } from '../../server/routers/_app'
@@ -28,6 +21,7 @@ import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 import { useRepository } from '../../hooks/useRepository'
 import { Readme } from '../../features/Readme/Readme'
+import { PackageInfo } from '../../components/PackageInfo'
 
 export default function Page({
   pkgInitialData,
@@ -67,6 +61,8 @@ export default function Page({
     )
   }
 
+  if (!pkg) return null
+
   return (
     <>
       <Meta
@@ -76,76 +72,15 @@ export default function Page({
       />
       <Layout>
         <Flex flexDirection={'column'} alignItems="center">
-          <Card
-            display={'flex'}
-            flexDirection={'column'}
-            mb={4}
-            w="full"
-            p={8}
-            bg="brand.1000"
-            border="none"
-          >
-            <Box>
-              <Text
-                fontSize={'4xl'}
-                fontWeight={900}
-                color="background.1000"
-                lineHeight={1}
-              >
-                {`${pkg?.name}@${pkg?.latestVersion}`}
-              </Text>
-            </Box>
-            <Box
-              h="10"
-              backgroundImage="repeating-linear-gradient(-45deg, transparent, transparent 8px, currentcolor 8px, currentcolor 10px)"
-              color="background.1000"
-              my={2}
-            />
-            <Box mb={2}>
-              <Text
-                color="background.1000"
-                fontWeight={500}
-                fontSize="lg"
-                lineHeight={1}
-              >
-                {pkg?.description}
-              </Text>
-            </Box>
-            {/* <Text color="background.1000">
-              {githubRepo.data?.stargazers_count
-                ? formatNumber(githubRepo.data?.stargazers_count)
-                : 'Loading...'}
-            </Text> */}
-          </Card>
+          <PackageInfo
+            pkg={pkg}
+            url={
+              pkg?.homepage ||
+              pkg?.repository ||
+              `https://npmjs.com/package/${pkg?.name}`
+            }
+          />
           <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={'full'}>
-            <GridItem colSpan={4}>
-              {pkg?.homepage && (
-                <LinkButton
-                  href={pkg?.homepage}
-                  leftIcon={<HomeIcon height={15} width={15} />}
-                >
-                  Home
-                </LinkButton>
-              )}
-            </GridItem>
-            <GridItem colSpan={4}>
-              <LinkButton
-                href={`https://npmjs.com/package/${pkg?.name}`}
-                mr={2}
-                leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
-              >
-                npm
-              </LinkButton>
-            </GridItem>
-            <GridItem colSpan={4}>
-              <LinkButton
-                href={pkg?.repository!}
-                mr={2}
-                leftIcon={<ArrowTopRightOnSquareIcon height="15" width="15" />}
-              >
-                GitHub
-              </LinkButton>
-            </GridItem>
             <GridItem colSpan={6}>
               <AspectRatio ratio={1}>
                 <LineChartCard
