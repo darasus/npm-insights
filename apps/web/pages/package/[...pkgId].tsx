@@ -141,14 +141,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   })
 
   const pkg = await ssg.npm.getInfo.fetch({ pkgId })
-  const md = await ssg.github.getRepositoryReadme.fetch({ pkgId })
-  const mdxSource = await serialize(md || '')
 
   return {
     props: {
       // trpcState: ssg.dehydrate(),
       pkgInitialData: pkg,
-      source: mdxSource,
     },
   }
 }
