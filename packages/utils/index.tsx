@@ -1,4 +1,4 @@
-const productionUrl = 'https://www.npm-package-size.com'
+const productionUrl = 'https://www.js.watch'
 
 export function getBaseUrl() {
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
