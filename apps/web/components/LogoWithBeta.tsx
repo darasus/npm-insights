@@ -1,11 +1,6 @@
 import { Box, Text } from '@chakra-ui/react'
 import { Logo } from './Logo'
 
-interface Props {
-  w?: number
-  h?: number
-}
-
 export function LogoWithBeta() {
   return (
     <Box position={'relative'}>

@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
 import { inferProcedureOutput } from '@trpc/server'
 import { LinkButton } from 'ui'
@@ -50,11 +50,6 @@ export function PackageInfo({ pkg, url }: { pkg: Pkg; url: string }) {
           {pkg?.description}
         </Text>
       </Box>
-      {/* <Text color="background.1000">
-              {githubRepo.data?.stargazers_count
-                ? formatNumber(githubRepo.data?.stargazers_count)
-                : 'Loading...'}
-            </Text> */}
     </Card>
   )
 }

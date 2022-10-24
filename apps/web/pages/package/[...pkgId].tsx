@@ -9,23 +9,19 @@ import {
 import { trpc } from '../../utils/trpc'
 import { formatKbs, formatNumber } from '../../utils/formatKbs'
 import { LineChartCard } from '../../components/LineChartCard'
-import { serialize } from 'next-mdx-remote/serialize'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { createProxySSGHelpers } from '@trpc/react/ssg'
 import { appRouter } from '../../server/routers/_app'
 import { createContext } from '../../server/context'
 import superjson from 'superjson'
 import { Layout } from '../../components/Layout'
-import { LinkButton, Meta } from 'ui'
+import { Meta } from 'ui'
 import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
-import { useRepository } from '../../hooks/useRepository'
-import { Readme } from '../../features/Readme/Readme'
 import { PackageInfo } from '../../components/PackageInfo'
 
 export default function Page({
   pkgInitialData,
-  source,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const pkgId = usePkgId()
   // const githubRepo = useRepository(pkgId)

@@ -4,8 +4,6 @@ import * as mdx from '@mdx-js/react'
 import { headingSizeMap } from '../theme'
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/solid'
 
-type Props = any
-
 type Components = React.ComponentProps<typeof mdx.MDXProvider>['components']
 
 const components: Components = {
