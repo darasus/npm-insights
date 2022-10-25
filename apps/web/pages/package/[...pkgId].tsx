@@ -20,12 +20,13 @@ import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 import { PackageInfo } from '../../components/PackageInfo'
 import { PackageDownloadsChart } from '../../features/PackageDownloadsChart/PackageDownloadsChart'
+import { useRepositoryStarHistory } from '../../hooks/useRepositoryStarHistory'
+import { PackageStarsChart } from '../../features/PackageStarsChart/PackageStarsChart'
 
 export default function Page({
   pkgInitialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const pkgId = usePkgId()
-  // const githubRepo = useRepository(pkgId)
   const { data: pkg, isLoading } = trpc.npm.getInfo.useQuery(
     { pkgId },
     {
@@ -99,6 +100,11 @@ export default function Page({
             <GridItem colSpan={12}>
               <AspectRatio ratio={2 / 1}>
                 <PackageDownloadsChart />
+              </AspectRatio>
+            </GridItem>
+            <GridItem colSpan={12}>
+              <AspectRatio ratio={2 / 1}>
+                <PackageStarsChart />
               </AspectRatio>
             </GridItem>
           </Grid>

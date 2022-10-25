@@ -160,4 +160,25 @@ export const githubRouter = t.router({
 
       return null
     }),
+  getRepositoryStarHistory: t.procedure
+    .input(
+      z.object({
+        pkgId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const pkg = await ctx.npm.fetchPackage(input.pkgId)
+
+      if (!pkg) return null
+
+      const [owner, repo] = pkg.repository.url
+        .replace('git+', '')
+        .replace('.git', '')
+        .replace('https://github.com/', '')
+        .replace('http://github.com/', '')
+        .split('/')
+
+      const data = await ctx.github.fetchRepositoryStarHistory({ owner, repo })
+      return data
+    }),
 })

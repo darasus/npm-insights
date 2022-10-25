@@ -21,6 +21,7 @@
     "dotenv-cli": "^6.0.0",
     "encoding": "^0.1.13",
     "eslint-config-custom": "workspace:*",
+    "github-star-history": "^1.1.13",
     "prettier": "latest",
     "turbo": "latest",
     "typescript": "^4.8.4"
