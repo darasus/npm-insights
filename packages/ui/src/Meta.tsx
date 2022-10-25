@@ -1,13 +1,13 @@
-import Head from "next/head";
-import React from "react";
-import { useCanonicalUrl } from "hooks";
-import { getBaseUrl } from "utils";
+import Head from 'next/head'
+import React from 'react'
+import { useCanonicalUrl } from 'hooks'
+import { getBaseUrl } from 'utils'
 
 interface Props {
-  title?: string;
-  description: string;
-  imageSrc?: string;
-  slug?: string;
+  title?: string
+  description: string
+  imageSrc?: string
+  slug?: string
 }
 
 export const Meta: React.FC<Props> = ({
@@ -16,15 +16,11 @@ export const Meta: React.FC<Props> = ({
   imageSrc,
   slug,
 }) => {
-  const baseUrl = getBaseUrl();
-  const canonicalUrl = useCanonicalUrl({ slug });
-  const actualTitle = title
-    ? `${title} | NPM Package Size`
-    : "NPM Package Size";
-  const imgSrc = imageSrc
-    ? `${baseUrl}${imageSrc}`
-    : `${baseUrl}/thumbnail.png`;
-  const url = `${baseUrl}/package/${slug}`;
+  const baseUrl = getBaseUrl()
+  const canonicalUrl = useCanonicalUrl({ slug })
+  const actualTitle = title ? `${title} | JS Watch` : 'JS Watch'
+  const imgSrc = imageSrc ? `${baseUrl}${imageSrc}` : `${baseUrl}/thumbnail.png`
+  const url = `${baseUrl}/package/${slug}`
 
   return (
     <Head>
@@ -46,5 +42,5 @@ export const Meta: React.FC<Props> = ({
 
       <link rel="canonical" href={canonicalUrl} />
     </Head>
-  );
-};
+  )
+}

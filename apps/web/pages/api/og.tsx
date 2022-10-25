@@ -52,7 +52,7 @@ export default async function handler(req: NextRequest) {
         >
           <span
             style={{ fontWeight: 400, fontSize: 100, marginBottom: 10 }}
-          >{`NPM Package Size`}</span>
+          >{`JS Watch`}</span>
           {pkgId && (
             <span
               style={{
