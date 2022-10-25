@@ -16,6 +16,11 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Ultra:wght@400&display=swap&text=js.watch"
           rel="stylesheet"
         />
+        <style>
+          {`a:hover {
+              text-decoration: underline;
+            }`}
+        </style>
       </Head>
       <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />

@@ -1,6 +1,5 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
-import { Logo } from '../../components/Logo'
 import { token } from '../../token'
 
 export const config = {
