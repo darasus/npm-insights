@@ -87,29 +87,40 @@ export function PackageSearchInput({
                 borderColor: 'inherit',
                 boxShadow: `0px 0px 0px 4px ${b200}`,
               }}
-              _placeholder={{ color: 'brand.1000', opacity: 1 }}
+              _placeholder={{
+                color: 'brand.1000',
+                opacity: 0.5,
+                fontWeight: 900,
+              }}
+              fontWeight={900}
+              borderWidth={2}
+              px={4}
+              py={2}
+              height={'auto'}
             />
             <InputRightElement w="auto" mr={2}>
-              {searchResults.isFetching ? (
-                <Spinner width={15} height={15} color={'brand'} />
-              ) : (
-                showKbd && (
-                  <Flex display={['none', 'none', 'flex']}>
-                    <Kbd bg={'background.1000'} mr={1}>
-                      ⌘
-                    </Kbd>{' '}
-                    <Text lineHeight={1}>+</Text>{' '}
-                    <Kbd bg={'background.1000'} ml={1}>
-                      K
-                    </Kbd>
-                  </Flex>
-                )
-              )}
+              <Flex h="full" alignItems={'center'}>
+                {searchResults.isFetching ? (
+                  <Spinner width={15} height={15} color={'brand'} />
+                ) : (
+                  showKbd && (
+                    <Flex display={['none', 'none', 'flex']} pt={0.5}>
+                      <Kbd bg={'background.1000'} mr={1}>
+                        ⌘
+                      </Kbd>{' '}
+                      <Text lineHeight={1}>+</Text>{' '}
+                      <Kbd bg={'background.1000'} ml={1}>
+                        K
+                      </Kbd>
+                    </Flex>
+                  )
+                )}
+              </Flex>
             </InputRightElement>
           </InputGroup>
         </Flex>
         <Card
-          borderWidth={showSuggestions ? 'thin' : '0px'}
+          borderWidth={showSuggestions ? 2 : 0}
           position="absolute"
           left={0}
           right={0}
@@ -142,6 +153,7 @@ export function PackageSearchInput({
                   color={
                     index === highlightedIndex ? 'background.1000' : undefined
                   }
+                  fontWeight={900}
                 >
                   {item.name}
                 </Text>

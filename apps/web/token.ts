@@ -1,6 +1,6 @@
 export const token = {
   color: {
-    brand: "#fd6a5f",
-    background: "#0c2210",
+    brand: '#fee67a',
+    background: '#522941',
   },
-};
+}

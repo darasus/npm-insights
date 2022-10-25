@@ -1,7 +1,5 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid'
+import { Box, Flex, Link, Text } from '@chakra-ui/react'
 import { inferProcedureOutput } from '@trpc/server'
-import { LinkButton } from 'ui'
 import { AppRouter } from '../server/routers/_app'
 import { Card } from './Card'
 
@@ -19,20 +17,18 @@ export function PackageInfo({ pkg, url }: { pkg: Pkg; url: string }) {
       border="none"
     >
       <Flex>
-        <LinkButton
+        <Link
           href={url}
+          target="_blank"
           fontSize={'4xl'}
           fontWeight={900}
           color="background.1000"
-          lineHeight={1}
-          width="fit-content"
           p={0}
           m={0}
           textDecoration="underline"
-          rightIcon={<ArrowTopRightOnSquareIcon height="25" width="25" />}
         >
           {`${pkg?.name}@${pkg?.latestVersion}`}
-        </LinkButton>
+        </Link>
       </Flex>
       <Box
         h="10"

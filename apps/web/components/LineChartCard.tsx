@@ -35,7 +35,7 @@ const CustomTooltip = ({ active, payload, label, data, key }: any) => {
 
   if (active && payload && payload.length) {
     return (
-      <Box borderWidth={'thin'} p={2} bg="background.1000">
+      <Box borderWidth={2} p={2} bg="background.1000">
         <Box>
           <Text>{getLabel()?.label}</Text>
         </Box>
@@ -100,8 +100,9 @@ export function LineChartCard({
                   type="monotoneX"
                   dataKey={dataKey}
                   stroke={brand}
+                  strokeWidth={2}
                   fill={brandLight}
-                  activeDot={{ r: 5, fill: bg, strokeWidth: 1, stroke: brand }}
+                  activeDot={{ r: 5, fill: bg, strokeWidth: 2, stroke: brand }}
                 />
                 <Tooltip
                   cursor={false}

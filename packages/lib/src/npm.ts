@@ -38,7 +38,7 @@ export class NPM {
             repository: z.object({
               url: z.string(),
             }),
-            homepage: z.string().nullable(),
+            homepage: z.string().nullish().default(null),
             'dist-tags': z.object({
               latest: z.string(),
             }),

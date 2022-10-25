@@ -1,6 +1,5 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
-import { Logo } from '../../components/Logo'
 import { token } from '../../token'
 
 export const config = {
@@ -8,10 +7,13 @@ export const config = {
 }
 
 const fontNormal = fetch(
-  new URL('../../assets/fonts/desktop/Inter-Regular.otf', import.meta.url)
+  new URL('../../assets/fonts/inter/desktop/Inter-Regular.otf', import.meta.url)
 ).then((res) => res.arrayBuffer())
 const fontBold = fetch(
-  new URL('../../assets/fonts/desktop/Inter-Black.otf', import.meta.url)
+  new URL('../../assets/fonts/inter/desktop/Inter-Black.otf', import.meta.url)
+).then((res) => res.arrayBuffer())
+const ultraFont = fetch(
+  new URL('../../assets/fonts/ultra/Ultra-Regular.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer())
 
 export default async function handler(req: NextRequest) {
@@ -19,9 +21,10 @@ export default async function handler(req: NextRequest) {
   const pkgId = searchParams.get('pkgId')
   const description = searchParams.get('description')
 
-  const [fontNormalData, fontBoldData] = await Promise.all([
+  const [fontNormalData, fontBoldData, ultraFontData] = await Promise.all([
     fontNormal,
     fontBold,
+    ultraFont,
   ])
 
   return new ImageResponse(
@@ -33,11 +36,19 @@ export default async function handler(req: NextRequest) {
           color: token.color.background,
         }}
       >
-        <div tw="flex mb-2">
-          <Logo scale={3} />
+        <div tw="flex mb-8">
+          <span
+            style={{
+              fontFamily: 'Ultra',
+              fontSize: 80,
+              color: token.color.brand,
+            }}
+          >
+            js.watch
+          </span>
         </div>
         <div
-          tw="flex flex-col px-8 py-4 mx-8"
+          tw="flex flex-col px-10 py-8 mx-8"
           style={{
             backgroundColor: token.color.brand,
           }}
@@ -45,15 +56,16 @@ export default async function handler(req: NextRequest) {
           {pkgId && (
             <span
               style={{
-                fontSize: 80,
+                fontSize: 60,
                 fontFamily: 'Bold',
+                marginBottom: 4,
               }}
             >{`${pkgId}`}</span>
           )}
           {description && (
             <span
               style={{
-                fontSize: 60,
+                fontSize: 40,
                 fontFamily: 'Regular',
               }}
             >{`${description}`}</span>
@@ -74,6 +86,11 @@ export default async function handler(req: NextRequest) {
           name: 'Bold',
           data: fontBoldData,
           weight: 900,
+        },
+        {
+          name: 'Ultra',
+          data: ultraFontData,
+          weight: 400,
         },
       ],
     }
