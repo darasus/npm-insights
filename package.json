@@ -19,6 +19,7 @@
     "@types/react": "18.0.17",
     "dotenv": "^16.0.3",
     "dotenv-cli": "^6.0.0",
+    "encoding": "^0.1.13",
     "eslint-config-custom": "workspace:*",
     "prettier": "latest",
     "turbo": "latest",

@@ -18,6 +18,8 @@ export const theme = extendTheme({
       'html, body': {
         backgroundColor: token.color.background,
         color: token.color.brand,
+        fontFamily: 'Inter, sans-serif',
+        fontWeight: 500,
       },
       '*': {
         borderColor: token.color.brand,

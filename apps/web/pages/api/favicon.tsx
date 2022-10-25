@@ -22,7 +22,7 @@ export default async function handler(req: NextRequest) {
           color: token.color.background,
         }}
       >
-        <Logo w={30} h={30} />
+        <Logo scale={1} />
       </div>
     ),
     {

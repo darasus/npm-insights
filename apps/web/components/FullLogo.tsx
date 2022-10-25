@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react'
 import { Logo } from './Logo'
 
-export function LogoWithBeta() {
+export function FullLogo() {
   return (
     <Box position={'relative'}>
       <Logo />
@@ -13,7 +13,7 @@ export function LogoWithBeta() {
         display="flex"
         alignItems="center"
       >
-        <Text fontSize="sm" fontWeight="bold" color="brand.1000">
+        <Text fontSize="sm" fontWeight={900} color="brand.1000">
           Watch
         </Text>
       </Box>

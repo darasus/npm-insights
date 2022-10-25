@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect } from 'react'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
+import { FullLogo } from './FullLogo'
 import { Logo } from './Logo'
 
 export function SearchOverlay() {
@@ -52,22 +53,7 @@ export function SearchOverlay() {
         <Box w="full" m="0 auto" p={4}>
           <Center mb={4}>
             <Link href="/">
-              <Box position={'relative'}>
-                <Logo />
-                <Box
-                  position={'absolute'}
-                  left={'100%'}
-                  top={0}
-                  bottom={0}
-                  display="flex"
-                  alignItems="center"
-                  ml={1}
-                >
-                  <Text fontSize="sm" color="brand.1000">
-                    Beta
-                  </Text>
-                </Box>
-              </Box>
+              <FullLogo />
             </Link>
           </Center>
           <Box>

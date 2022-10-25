@@ -10,7 +10,7 @@ const components: Components = {
   h1: (props) => (
     <Text
       as="h1"
-      fontWeight={'bold'}
+      fontWeight={900}
       fontSize={headingSizeMap['h1']}
       lineHeight={1}
       {...props}
@@ -19,7 +19,7 @@ const components: Components = {
   h2: (props) => (
     <Text
       as="h2"
-      fontWeight={'bold'}
+      fontWeight={900}
       mt={4}
       fontSize={headingSizeMap['h2']}
       lineHeight={1}
@@ -29,7 +29,7 @@ const components: Components = {
   h3: (props) => (
     <Text
       as="h3"
-      fontWeight={'bold'}
+      fontWeight={900}
       mt={4}
       fontSize={headingSizeMap['h3']}
       lineHeight={1}
@@ -39,7 +39,7 @@ const components: Components = {
   h4: (props) => (
     <Text
       as="h4"
-      fontWeight={'bold'}
+      fontWeight={900}
       mt={4}
       fontSize={headingSizeMap['h4']}
       lineHeight={1}

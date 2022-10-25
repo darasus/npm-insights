@@ -8,6 +8,10 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
