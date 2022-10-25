@@ -38,9 +38,9 @@ export const npmRouter = t.router({
           Object.keys(pkg.versions).map((v) => {
             return ctx.npm
               .fetchPackageStats(input.pkgId, v)
-              .then(({ version, size, gzip }: any) => {
+              .then(({ size, gzip }: any) => {
                 return {
-                  version,
+                  version: v,
                   size,
                   gzip,
                 }
@@ -83,7 +83,7 @@ export const npmRouter = t.router({
         input.pkgId,
         format(
           sub(new Date(), {
-            months: 6,
+            years: 1,
           }),
           'yyyy-MM-dd'
         ),

@@ -7,7 +7,7 @@ import {
   Spinner,
 } from '@chakra-ui/react'
 import { trpc } from '../../utils/trpc'
-import { formatKbs, formatNumber } from '../../utils/formatKbs'
+import { formatKbs } from '../../utils/formatKbs'
 import { LineChartCard } from '../../components/LineChartCard'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { createProxySSGHelpers } from '@trpc/react/ssg'
@@ -19,6 +19,7 @@ import { Meta } from 'ui'
 import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 import { PackageInfo } from '../../components/PackageInfo'
+import { PackageDownloadsChart } from '../../features/PackageDownloadsChart/PackageDownloadsChart'
 
 export default function Page({
   pkgInitialData,
@@ -37,17 +38,13 @@ export default function Page({
     { pkgId },
     { enabled: !!pkgId, refetchOnWindowFocus: false }
   )
-  const pkgDownloads = trpc.npm.getPackageDownloads.useQuery(
-    { pkgId },
-    { enabled: !!pkgId, refetchOnWindowFocus: false }
-  )
-  const data = pkgSizeHistory.data?.sizeHistory
+  const data = pkgSizeHistory.data?.sizeHistory.map((i) => ({
+    ...i,
+    descriptor: i.version,
+  }))
 
   const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : ''
   const sizeLabel = data ? formatKbs(data?.[data?.length - 1]?.size || 0) : ''
-  const downloadLabel = pkgDownloads.data
-    ? formatNumber(pkgDownloads.data[pkgDownloads.data.length - 1]?.count || 0)
-    : ''
 
   if (isLoading) {
     return (
@@ -101,13 +98,7 @@ export default function Page({
             </GridItem>
             <GridItem colSpan={12}>
               <AspectRatio ratio={2 / 1}>
-                <LineChartCard
-                  dataKey="count"
-                  label={downloadLabel}
-                  description="Downloads yesterday"
-                  data={pkgDownloads.data}
-                  isLoading={pkgDownloads.isLoading}
-                />
+                <PackageDownloadsChart />
               </AspectRatio>
             </GridItem>
           </Grid>

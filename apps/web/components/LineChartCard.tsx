@@ -1,7 +1,10 @@
 import { Box, Flex, Spinner, Text, useToken } from '@chakra-ui/react'
-import { ResponsiveContainer, AreaChart, Area } from 'recharts'
+import { ResponsiveContainer, AreaChart, Area, Tooltip, Line } from 'recharts'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import { Card } from './Card'
+import { format } from 'date-fns'
+import { usePkgId } from '../hooks/usePkgId'
+import { formatKbs, formatNumber } from '../utils/formatKbs'
 
 interface Props {
   dataKey: string
@@ -11,6 +14,41 @@ interface Props {
   isLoading?: boolean
 }
 
+const CustomTooltip = ({ active, payload, label, data, key }: any) => {
+  const pkgId = usePkgId()
+
+  const getLabel = () => {
+    if (data[label].date) {
+      return {
+        data: formatNumber(payload[0].value),
+        label: format(new Date(data[label].date), 'MMM d yyyy'),
+      }
+    }
+    if (data[label].version) {
+      return {
+        data: formatKbs(payload[0].value),
+        label: `${pkgId}@${data[label].version}`,
+      }
+    }
+    return null
+  }
+
+  if (active && payload && payload.length) {
+    return (
+      <Box borderWidth={'thin'} p={2} bg="background.1000">
+        <Box>
+          <Text>{getLabel()?.label}</Text>
+        </Box>
+        <Box>
+          <Text fontWeight={900}>{getLabel()?.data}</Text>
+        </Box>
+      </Box>
+    )
+  }
+
+  return null
+}
+
 export function LineChartCard({
   dataKey,
   label,
@@ -18,7 +56,11 @@ export function LineChartCard({
   data = [],
   isLoading,
 }: Props) {
-  const [brand, brandLight] = useToken('colors', ['brand.1000', 'brand.400'])
+  const [brand, brandLight, bg] = useToken('colors', [
+    'brand.1000',
+    'brand.400',
+    'background.1000',
+  ])
   const showData = !isLoading && data.length > 0
   const showError = !isLoading && data.length === 0
 
@@ -59,8 +101,12 @@ export function LineChartCard({
                   dataKey={dataKey}
                   stroke={brand}
                   fill={brandLight}
+                  activeDot={{ r: 5, fill: bg, strokeWidth: 1, stroke: brand }}
                 />
-                {/* <Tooltip /> */}
+                <Tooltip
+                  cursor={false}
+                  content={<CustomTooltip data={data} />}
+                />
               </AreaChart>
             </ResponsiveContainer>
           </>
