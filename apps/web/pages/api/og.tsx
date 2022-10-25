@@ -1,5 +1,6 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
+import { Logo } from '../../components/Logo'
 import { token } from '../../token'
 
 export const config = {
@@ -7,21 +8,16 @@ export const config = {
 }
 
 const fontNormal = fetch(
-  new URL(
-    '../../assets/Source_Sans_Pro/SourceSansPro-Regular.ttf',
-    import.meta.url
-  )
+  new URL('../../assets/fonts/desktop/Inter-Regular.otf', import.meta.url)
 ).then((res) => res.arrayBuffer())
 const fontBold = fetch(
-  new URL(
-    '../../assets/Source_Sans_Pro/SourceSansPro-Light.ttf',
-    import.meta.url
-  )
+  new URL('../../assets/fonts/desktop/Inter-Black.otf', import.meta.url)
 ).then((res) => res.arrayBuffer())
 
 export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl
   const pkgId = searchParams.get('pkgId')
+  const description = searchParams.get('description')
 
   const [fontNormalData, fontBoldData] = await Promise.all([
     fontNormal,
@@ -31,36 +27,36 @@ export default async function handler(req: NextRequest) {
   return new ImageResponse(
     (
       <div
+        tw="flex w-full h-full flex-col justify-center items-center"
         style={{
-          display: 'flex',
           background: token.color.background,
-          width: '100%',
-          height: '100%',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
           color: token.color.background,
         }}
       >
+        <div tw="flex mb-2">
+          <Logo scale={3} />
+        </div>
         <div
+          tw="flex flex-col px-8 py-4 mx-8"
           style={{
-            display: 'flex',
             backgroundColor: token.color.brand,
-            flexDirection: 'column',
-            padding: '10px 40px 50px',
           }}
         >
-          <span
-            style={{ fontWeight: 400, fontSize: 100, marginBottom: 10 }}
-          >{`JS Watch`}</span>
           {pkgId && (
             <span
               style={{
-                fontWeight: 100,
                 fontSize: 80,
-                lineHeight: 0.5,
+                fontFamily: 'Bold',
               }}
             >{`${pkgId}`}</span>
+          )}
+          {description && (
+            <span
+              style={{
+                fontSize: 60,
+                fontFamily: 'Regular',
+              }}
+            >{`${description}`}</span>
           )}
         </div>
       </div>
@@ -70,9 +66,14 @@ export default async function handler(req: NextRequest) {
       height: 630,
       fonts: [
         {
-          name: 'Source Sans Pro',
+          name: 'Regular',
           data: fontNormalData,
-          weight: 100,
+          weight: 500,
+        },
+        {
+          name: 'Bold',
+          data: fontBoldData,
+          weight: 900,
         },
       ],
     }

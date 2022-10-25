@@ -12,10 +12,9 @@ export function LogoWithBeta() {
         bottom={0}
         display="flex"
         alignItems="center"
-        ml={1}
       >
-        <Text fontSize="sm" color="brand.1000">
-          Beta
+        <Text fontSize="sm" fontWeight="bold" color="brand.1000">
+          Watch
         </Text>
       </Box>
     </Box>
