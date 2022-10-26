@@ -30,13 +30,12 @@ export default function Page({
     { pkgId },
     {
       enabled: !!pkgId,
-      refetchOnWindowFocus: false,
       initialData: pkgInitialData,
     }
   )
   const pkgSizeHistory = trpc.npm.getSizeHistory.useQuery(
     { pkgId },
-    { enabled: !!pkgId, refetchOnWindowFocus: false }
+    { enabled: !!pkgId }
   )
   const data = pkgSizeHistory.data?.sizeHistory.map((i) => ({
     ...i,

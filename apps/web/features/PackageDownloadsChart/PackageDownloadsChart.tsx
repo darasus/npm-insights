@@ -7,7 +7,7 @@ export const PackageDownloadsChart = () => {
   const pkgId = usePkgId()
   const pkgDownloads = trpc.npm.getPackageDownloads.useQuery(
     { pkgId },
-    { enabled: !!pkgId, refetchOnWindowFocus: false }
+    { enabled: !!pkgId }
   )
   const downloadLabel = pkgDownloads.data
     ? formatNumber(pkgDownloads.data[pkgDownloads.data.length - 1]?.count || 0)

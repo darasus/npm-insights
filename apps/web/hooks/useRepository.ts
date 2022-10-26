@@ -5,7 +5,6 @@ export const useRepository = (pkgId: string) => {
     { pkgId },
     {
       enabled: !!pkgId,
-      refetchOnWindowFocus: false,
     }
   )
 }
