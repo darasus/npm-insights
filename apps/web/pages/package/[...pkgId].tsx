@@ -6,7 +6,6 @@ import {
   GridItem,
   Spinner,
 } from '@chakra-ui/react'
-import { trpc } from '../../utils/trpc'
 import { formatKbs } from '../../utils/formatKbs'
 import { LineChartCard } from '../../components/LineChartCard'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
@@ -20,26 +19,18 @@ import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 import { PackageInfo } from '../../components/PackageInfo'
 import { PackageDownloadsChart } from '../../features/PackageDownloadsChart/PackageDownloadsChart'
+import { useRepoInfo } from '../../hooks/useRepoInfo'
+import { useRepoSizeHistory } from '../../hooks/useRepoSizeHistory'
 
 export default function Page({
   pkgInitialData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const pkgId = usePkgId()
-  // const githubRepo = useRepository(pkgId)
-  const { data: pkg, isLoading } = trpc.npm.getInfo.useQuery(
-    { pkgId },
-    {
-      enabled: !!pkgId,
-      initialData: pkgInitialData,
-    }
-  )
-  const pkgSizeHistory = trpc.npm.getSizeHistory.useQuery(
-    { pkgId },
-    { enabled: !!pkgId }
-  )
+  const { isLoading, data: pkg } = useRepoInfo({ initialData: pkgInitialData })
+  const pkgSizeHistory = useRepoSizeHistory()
+
   const data = pkgSizeHistory.data?.sizeHistory.map((i) => ({
     ...i,
-    descriptor: i.version,
   }))
 
   const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : ''
@@ -47,7 +38,7 @@ export default function Page({
 
   if (isLoading) {
     return (
-      <Center w="full">
+      <Center w="full" h="full">
         <Spinner />
       </Center>
     )
