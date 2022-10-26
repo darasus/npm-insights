@@ -5,7 +5,6 @@ export const useRepositoryReadme = (pkgId: string) => {
     { pkgId },
     {
       enabled: !!pkgId,
-      refetchOnWindowFocus: false,
     }
   )
 }

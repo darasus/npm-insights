@@ -1,8 +1,8 @@
-import { httpLink, loggerLink } from "@trpc/client";
-import { createTRPCNext } from "@trpc/next";
-import superjson from "superjson";
-import { AppRouter } from "../server/routers/_app";
-import { getBaseUrl } from "utils";
+import { httpLink, loggerLink } from '@trpc/client'
+import { createTRPCNext } from '@trpc/next'
+import superjson from 'superjson'
+import { AppRouter } from '../server/routers/_app'
+import { getBaseUrl } from 'utils'
 
 /**
  * A set of strongly-typed React hooks from your `AppRouter` type signature with `createReactQueryHooks`.
@@ -27,8 +27,8 @@ export const trpc = createTRPCNext<AppRouter>({
         loggerLink({
           enabled: (opts) =>
             // eslint-disable-next-line turbo/no-undeclared-env-vars
-            process.env.NODE_ENV === "development" ||
-            (opts.direction === "down" && opts.result instanceof Error),
+            process.env.NODE_ENV === 'development' ||
+            (opts.direction === 'down' && opts.result instanceof Error),
         }),
         httpLink({
           url: `${getBaseUrl()}/api/trpc`,
@@ -37,11 +37,13 @@ export const trpc = createTRPCNext<AppRouter>({
       /**
        * @link https://react-query.tanstack.com/reference/QueryClient
        */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-    };
+      queryClientConfig: {
+        defaultOptions: { queries: { refetchOnWindowFocus: false } },
+      },
+    }
   },
   /**
    * @link https://trpc.io/docs/ssr
    */
   ssr: false,
-});
+})

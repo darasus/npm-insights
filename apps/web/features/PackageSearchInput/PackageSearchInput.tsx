@@ -33,7 +33,7 @@ export function PackageSearchInput({
   const debouncedQ = useDebounce(q, 250)
   const searchResults = trpc.npm.searchPackage.useQuery(
     { q: debouncedQ },
-    { enabled: Boolean(q), keepPreviousData: true, refetchOnWindowFocus: false }
+    { enabled: Boolean(q), keepPreviousData: true }
   )
   const {
     isOpen,
