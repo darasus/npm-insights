@@ -5,9 +5,5 @@ import clsx from 'clsx'
 type Props = React.PropsWithChildren<LinkProps> & { hoverStyles?: boolean }
 
 export function Link({ children, hoverStyles = true, ...props }: Props) {
-  return (
-    <NextLink {...props}>
-      <a>{children}</a>
-    </NextLink>
-  )
+  return <NextLink {...props}>{children}</NextLink>
 }
