@@ -15,7 +15,9 @@ export function Card({
   return (
     <div
       {...props}
-      className={clsx('overflow-hidden', className, { 'border-2': hasBorder })}
+      className={clsx('overflow-hidden border-brand-1000', className, {
+        'border-2': hasBorder,
+      })}
     >
       {children}
     </div>
