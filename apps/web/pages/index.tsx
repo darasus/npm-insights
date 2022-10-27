@@ -10,19 +10,19 @@ export default function Web() {
         description="Find out the size of any NPM package"
         imageSrc="/api/og"
       />
-      <Center height="100vh" width="100wh">
-        <Flex w="full" maxW={'lg'} flexDirection="column" alignItems={'center'}>
-          <Center mb={4}>
+      <div className="flex items-center justify-center h-screen w-screen">
+        <div className="flex w-full max-w-lg flex-col items-center">
+          <div className="mb-4">
             <Link href="/">
               <Logo />
             </Link>
-          </Center>
-          <Box mb={4} px={4} w="full">
+          </div>
+          <div className="mb-4 px-4 w-full">
             <PackageSearchInput />
-          </Box>
-          <Text fontWeight={900}>Find the size of any NPM package</Text>
-        </Flex>
-      </Center>
+          </div>
+          <span className="font-black">Find the size of any NPM package</span>
+        </div>
+      </div>
     </>
   )
 }
