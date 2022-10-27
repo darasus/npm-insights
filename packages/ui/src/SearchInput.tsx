@@ -31,7 +31,7 @@ export const SearchInput = React.forwardRef<HTMLDivElement>(
               <Spinner />
             ) : (
               showKbd && (
-                <div className="flex items-center text-gray-500 dark:text-gray-400 mr-3">
+                <div className="flex items-center text-gray-500 dark:text-gray-400 mr-3 hidden md:flex">
                   <Kbd>⌘</Kbd>
                   <div className="text-brand-1000 mx-1">+</div>
                   <Kbd>k</Kbd>

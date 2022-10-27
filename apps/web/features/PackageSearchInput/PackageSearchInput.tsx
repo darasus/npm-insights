@@ -65,6 +65,7 @@ export function PackageSearchInput({
             })}
             placeholder="Search npm package..."
             isLoading={searchResults.isFetching}
+            showKbd={showKbd}
           />
         </div>
         <Card
