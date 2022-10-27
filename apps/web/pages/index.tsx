@@ -1,4 +1,3 @@
-import { Box, Center, Flex, Text } from '@chakra-ui/react'
 import { Link, Meta } from 'ui'
 import { Logo } from '../components/Logo'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'

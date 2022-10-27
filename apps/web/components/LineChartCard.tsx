@@ -1,10 +1,10 @@
-import { Box, Flex, Spinner, Text, useToken } from '@chakra-ui/react'
 import { ResponsiveContainer, AreaChart, Area, Tooltip, Line } from 'recharts'
 import { XCircleIcon } from '@heroicons/react/24/outline'
 import { Card } from './Card'
 import { format } from 'date-fns'
 import { usePkgId } from '../hooks/usePkgId'
 import { formatKbs, formatNumber } from '../utils/formatKbs'
+import { token } from '../token'
 
 interface Props {
   dataKey: string
@@ -35,14 +35,14 @@ const CustomTooltip = ({ active, payload, label, data, key }: any) => {
 
   if (active && payload && payload.length) {
     return (
-      <Box borderWidth={2} p={2} bg="background.1000">
-        <Box>
-          <Text>{getLabel()?.label}</Text>
-        </Box>
-        <Box>
-          <Text fontWeight={900}>{getLabel()?.data}</Text>
-        </Box>
-      </Box>
+      <div className="border-2 p-2 bg-background-1000">
+        <div>
+          <span>{getLabel()?.label}</span>
+        </div>
+        <div>
+          <span className="font-black">{getLabel()?.data}</span>
+        </div>
+      </div>
     )
   }
 
@@ -56,41 +56,28 @@ export function LineChartCard({
   data = [],
   isLoading,
 }: Props) {
-  const [brand, brandLight, bg] = useToken('colors', [
-    'brand.1000',
-    'brand.400',
-    'background.1000',
-  ])
   const showData = !isLoading && data.length > 0
   const showError = !isLoading && data.length === 0
 
   return (
-    <Box h={'full'} w={'full'}>
-      <Card display="flex" flexDirection={'column'} h={'full'} w={'full'}>
+    <div className="h-full w-full">
+      <Card className="flex flex-col h-full w-full">
         {isLoading && (
-          <Flex
-            alignItems={'center'}
-            justifyContent="center"
-            flexDirection={'column'}
-            h="full"
-            w="full"
-          >
-            <Spinner mb={2} />
-            <Box>
-              <Text fontSize={'sm'} px={2} textAlign="center" lineHeight={1.2}>
+          <div className="flex items-center justify-center h-full w-full flex-col">
+            <span>Loading...</span>
+            <div>
+              <span className="text-sm px-2 text-center leading-normal">
                 Generating package data...
-              </Text>
-            </Box>
-          </Flex>
+              </span>
+            </div>
+          </div>
         )}
         {showData && (
           <>
-            <Flex flexDirection={'column'} alignItems="center" pt={4}>
-              <Text fontWeight={900} fontSize="2xl">
-                {label}
-              </Text>
-              <Text color="brand.900">{description}</Text>
-            </Flex>
+            <div className="flex flex-col items-center pt-4">
+              <span className="font-black text-2xl">{label}</span>
+              <span className="text-brand-900">{description}</span>
+            </div>
             <ResponsiveContainer>
               <AreaChart
                 data={data}
@@ -99,10 +86,15 @@ export function LineChartCard({
                 <Area
                   type="monotoneX"
                   dataKey={dataKey}
-                  stroke={brand}
+                  stroke={token.color.brand}
                   strokeWidth={2}
-                  fill={brandLight}
-                  activeDot={{ r: 5, fill: bg, strokeWidth: 2, stroke: brand }}
+                  fill={`${token.color.brand + '50'}`}
+                  activeDot={{
+                    r: 5,
+                    fill: token.color.background,
+                    strokeWidth: 2,
+                    stroke: token.color.brand,
+                  }}
                 />
                 <Tooltip
                   cursor={false}
@@ -113,20 +105,14 @@ export function LineChartCard({
           </>
         )}
         {showError && (
-          <Flex
-            alignItems={'center'}
-            justifyContent="center"
-            flexDirection={'column'}
-            h="full"
-            w="full"
-          >
+          <div className="flex items-center justify-center flex-col h-full w-full">
             <XCircleIcon width={30} height={30} />
-            <Text fontSize={'sm'} textAlign="center" px={4}>
+            <span className="text-sm text-center px-4">
               Unfortunately no data is available for this package.
-            </Text>
-          </Flex>
+            </span>
+          </div>
         )}
       </Card>
-    </Box>
+    </div>
   )
 }

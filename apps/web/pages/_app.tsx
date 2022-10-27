@@ -1,8 +1,6 @@
 import '../styles/tailwind.css'
 
-import { ChakraProvider } from '@chakra-ui/react'
 import Script from 'next/script'
-import { theme } from '../theme'
 import { trpc } from '../utils/trpc'
 import * as gtag from '../utils/gtag'
 import { useRouter } from 'next/router'
@@ -49,10 +47,8 @@ function MyApp({ Component, pageProps }: any) {
           />
         </>
       )}
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-        <SearchOverlay />
-      </ChakraProvider>
+      <Component {...pageProps} />
+      <SearchOverlay />
     </>
   )
 }

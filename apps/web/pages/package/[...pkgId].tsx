@@ -1,11 +1,3 @@
-import {
-  AspectRatio,
-  Center,
-  Flex,
-  Grid,
-  GridItem,
-  Spinner,
-} from '@chakra-ui/react'
 import { formatKbs } from '../../utils/formatKbs'
 import { LineChartCard } from '../../components/LineChartCard'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
@@ -38,9 +30,9 @@ export default function Page({
 
   if (isLoading) {
     return (
-      <Center w="full" h="full">
-        <Spinner />
-      </Center>
+      <div className="flex w-full h-full items-center justify-center">
+        <span>Loading...</span>
+      </div>
     )
   }
 
@@ -54,18 +46,20 @@ export default function Page({
         slug={pkgId}
       />
       <Layout>
-        <Flex flexDirection={'column'} alignItems="center">
-          <PackageInfo
-            pkg={pkg}
-            url={
-              pkg?.homepage ||
-              pkg?.repository ||
-              `https://npmjs.com/package/${pkg?.name}`
-            }
-          />
-          <Grid templateColumns="repeat(12, 1fr)" gap={4} mx={4} w={'full'}>
-            <GridItem colSpan={6}>
-              <AspectRatio ratio={1}>
+        <div className="flex flex-col items-center">
+          <div className="mb-4 w-full">
+            <PackageInfo
+              pkg={pkg}
+              url={
+                pkg?.homepage ||
+                pkg?.repository ||
+                `https://npmjs.com/package/${pkg?.name}`
+              }
+            />
+          </div>
+          <div className="grid grid-cols-12 gap-4 mx-4 w-full">
+            <div className="col-span-6">
+              <div className="aspect-square">
                 <LineChartCard
                   dataKey="gzip"
                   label={gzipLabel}
@@ -73,10 +67,10 @@ export default function Page({
                   data={data}
                   isLoading={pkgSizeHistory.isLoading}
                 />
-              </AspectRatio>
-            </GridItem>
-            <GridItem colSpan={6}>
-              <AspectRatio ratio={1}>
+              </div>
+            </div>
+            <div className="col-span-6">
+              <div className="aspect-square">
                 <LineChartCard
                   dataKey="size"
                   label={sizeLabel}
@@ -84,15 +78,15 @@ export default function Page({
                   data={data}
                   isLoading={pkgSizeHistory.isLoading}
                 />
-              </AspectRatio>
-            </GridItem>
-            <GridItem colSpan={12}>
-              <AspectRatio ratio={2 / 1}>
+              </div>
+            </div>
+            <div className="col-span-12">
+              <div className="aspect-video">
                 <PackageDownloadsChart />
-              </AspectRatio>
-            </GridItem>
-          </Grid>
-        </Flex>
+              </div>
+            </div>
+          </div>
+        </div>
       </Layout>
     </>
   )

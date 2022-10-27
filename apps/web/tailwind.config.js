@@ -1,9 +1,4 @@
-const token = {
-  color: {
-    brand: '#fee67a',
-    background: '#522941',
-  },
-}
+const { token } = require('./token')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

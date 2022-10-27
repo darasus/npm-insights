@@ -1,9 +1,7 @@
-import { Text, TextProps } from '@chakra-ui/react'
-
-export function Logo(props: TextProps) {
+export function Logo() {
   return (
-    <Text fontFamily={'Ultra'} fontSize="4xl" color="brand.1000" {...props}>
+    <span className="text-4xl text-brand-1000" style={{ fontFamily: 'Ultra' }}>
       js.watch
-    </Text>
+    </span>
   )
 }
