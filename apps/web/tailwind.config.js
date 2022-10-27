@@ -9,6 +9,10 @@ module.exports = {
     '../../packages/ui/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontFamily: {
+      body: ['Inter', 'sans-serif'],
+      brand: ['Ultra', 'serif'],
+    },
     extend: {
       colors: {
         brand: {

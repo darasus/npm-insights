@@ -54,8 +54,6 @@ export function PackageSearchInput({
   const showSuggestions =
     isOpen && searchResults.data && searchResults.data.length > 0
 
-  console.log({ showSuggestions })
-
   return (
     <div className="flex flex-col items-center relative z-50">
       <div className="flex flex-col items-center w-full relative z-50">

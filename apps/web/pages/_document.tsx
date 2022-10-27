@@ -3,7 +3,7 @@ import { getBaseUrl } from 'utils'
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" className="font-body">
       <Head>
         <link rel="shortcut icon" href={`${getBaseUrl()}/api/favicon`} />
         <link
