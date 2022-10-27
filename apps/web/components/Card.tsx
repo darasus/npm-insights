@@ -1,9 +1,23 @@
-import { Box, BoxProps } from '@chakra-ui/react'
+import clsx from 'clsx'
+import React from 'react'
 
-export function Card({ children, ...props }: BoxProps) {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  hasBorder?: boolean
+  className?: string
+}
+
+export function Card({
+  children,
+  className,
+  hasBorder = true,
+  ...props
+}: Props) {
   return (
-    <Box overflow={'hidden'} borderWidth={2} {...props}>
+    <div
+      {...props}
+      className={clsx('overflow-hidden', className, { 'border-2': hasBorder })}
+    >
       {children}
-    </Box>
+    </div>
   )
 }

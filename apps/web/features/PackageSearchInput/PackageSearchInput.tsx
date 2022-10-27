@@ -1,22 +1,11 @@
 import React, { useState } from 'react'
 import { useCombobox } from 'downshift'
-import {
-  Box,
-  Flex,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Kbd,
-  List,
-  ListItem,
-  Spinner,
-  Text,
-  useToken,
-} from '@chakra-ui/react'
 import { trpc } from '../../utils/trpc'
 import { Card } from '../../components/Card'
 import { useRouter } from 'next/router'
 import { useDebounce } from 'hooks'
+import { SearchInput } from 'ui'
+import clsx from 'clsx'
 
 interface Props {
   showKbd?: boolean
@@ -27,7 +16,6 @@ export function PackageSearchInput({
   showKbd = false,
   isTransparent = false,
 }: Props) {
-  const [b200] = useToken('colors', ['brand.600'])
   const router = useRouter()
   const [q, setQ] = useState('')
   const debouncedQ = useDebounce(q, 250)
@@ -66,102 +54,56 @@ export function PackageSearchInput({
   const showSuggestions =
     isOpen && searchResults.data && searchResults.data.length > 0
 
+  console.log({ showSuggestions })
+
   return (
-    <Flex direction="column" align="center">
-      <Flex
-        direction="column"
-        flex="1 1 auto"
-        w="full"
-        position="relative"
-        zIndex={'dropdown'}
-      >
-        <Flex direction="row" alignItems="baseline" w="full">
-          <InputGroup w="full">
-            <Input
-              w="full"
-              {...getInputProps()}
-              placeholder="Search npm package..."
-              borderRadius={'none'}
-              _hover={{ borderColor: 'brand.1000' }}
-              _focusVisible={{
-                borderColor: 'inherit',
-                boxShadow: `0px 0px 0px 4px ${b200}`,
-              }}
-              _placeholder={{
-                color: 'brand.1000',
-                opacity: 0.5,
-                fontWeight: 900,
-              }}
-              fontWeight={900}
-              borderWidth={2}
-              px={4}
-              py={2}
-              height={'auto'}
-            />
-            <InputRightElement w="auto" mr={2}>
-              <Flex h="full" alignItems={'center'}>
-                {searchResults.isFetching ? (
-                  <Spinner width={15} height={15} color={'brand'} />
-                ) : (
-                  showKbd && (
-                    <Flex display={['none', 'none', 'flex']} pt={0.5}>
-                      <Kbd bg={'background.1000'} mr={1}>
-                        ⌘
-                      </Kbd>{' '}
-                      <Text lineHeight={1}>+</Text>{' '}
-                      <Kbd bg={'background.1000'} ml={1}>
-                        K
-                      </Kbd>
-                    </Flex>
-                  )
-                )}
-              </Flex>
-            </InputRightElement>
-          </InputGroup>
-        </Flex>
+    <div className="flex flex-col items-center relative z-50">
+      <div className="flex flex-col items-center w-full relative z-50">
+        <div className="flex items-baseline w-full">
+          <SearchInput
+            {...getInputProps()}
+            placeholder="Search npm package..."
+          />
+        </div>
         <Card
-          borderWidth={showSuggestions ? 2 : 0}
-          position="absolute"
-          left={0}
-          right={0}
-          top={'12'}
+          hasBorder={!!showSuggestions}
+          className="absolute left-0 right-0 top-14"
         >
-          <List
+          <div
             {...getMenuProps()}
-            display={showSuggestions ? undefined : 'none'}
-            py={2}
-            flex={1}
-            overflowY="auto"
-            maxH={'52'}
-            zIndex="dropdown"
-            bg={isTransparent ? 'transparent' : 'background.1000'}
+            className={clsx(
+              'py-2 flex-1 overflow-y-auto max-h-48 z-50',
+              showSuggestions ? undefined : 'hidden',
+              isTransparent ? 'bg-transparent' : 'bg-background-1000'
+            )}
           >
             {searchResults.data?.map((item, index: number) => (
-              <ListItem
+              <div
                 {...getItemProps({
                   item,
                   index,
                 })}
                 key={index}
-                transition="background-color 220ms, color 220ms"
-                bg={index === highlightedIndex ? 'brand.1000' : undefined}
-                px={4}
-                py={2}
-                cursor="pointer"
+                className={clsx(
+                  index === highlightedIndex ? 'bg-brand-1000' : undefined,
+                  'px-4 py-2 cursor-pointer'
+                )}
               >
-                <Text
-                  color={
-                    index === highlightedIndex ? 'background.1000' : undefined
-                  }
-                  fontWeight={900}
+                <span
+                  className={clsx(
+                    index === highlightedIndex
+                      ? 'text-background-1000'
+                      : undefined,
+                    'font-black'
+                  )}
                 >
                   {item.name}
-                </Text>
-              </ListItem>
+                </span>
+              </div>
             ))}
-          </List>
+          </div>
         </Card>
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   )
 }

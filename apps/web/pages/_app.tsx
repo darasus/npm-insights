@@ -1,6 +1,6 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import '../styles/tailwind.css'
+
 import Script from 'next/script'
-import { theme } from '../theme'
 import { trpc } from '../utils/trpc'
 import * as gtag from '../utils/gtag'
 import { useRouter } from 'next/router'
@@ -25,15 +25,17 @@ function MyApp({ Component, pageProps }: any) {
 
   return (
     <>
-      <Script
-        strategy="worker"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.trackingId}`}
-      />
-      <Script
-        id="gtag-init"
-        strategy="worker"
-        dangerouslySetInnerHTML={{
-          __html: `
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <Script
+            strategy="worker"
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.trackingId}`}
+          />
+          <Script
+            id="gtag-init"
+            strategy="worker"
+            dangerouslySetInnerHTML={{
+              __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -41,12 +43,12 @@ function MyApp({ Component, pageProps }: any) {
               page_path: window.location.pathname,
             });
           `,
-        }}
-      />
-      <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
-        <SearchOverlay />
-      </ChakraProvider>
+            }}
+          />
+        </>
+      )}
+      <Component {...pageProps} />
+      <SearchOverlay />
     </>
   )
 }
