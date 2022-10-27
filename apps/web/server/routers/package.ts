@@ -18,7 +18,9 @@ export const npmRouter = t.router({
         name: pkg.name,
         description: pkg.description,
         homepage: pkg.homepage,
-        repository: pkg.repository.url.replace('git+', '').replace('.git', ''),
+        repository: pkg?.repository?.url
+          .replace('git+', '')
+          .replace('.git', ''),
         latestVersion: pkg['dist-tags'].latest,
       }
     }),
@@ -118,6 +120,7 @@ export const githubRouter = t.router({
       const pkg = await ctx.npm.fetchPackage(input.pkgId)
 
       if (!pkg) return null
+      if (!pkg.repository) return null
 
       const [owner, repo] = pkg.repository.url
         .replace('git+', '')
@@ -138,6 +141,7 @@ export const githubRouter = t.router({
       const pkg = await ctx.npm.fetchPackage(input.pkgId)
 
       if (!pkg) return null
+      if (!pkg.repository) return null
 
       const [owner, repo] = pkg.repository.url
         .replace('git+', '')

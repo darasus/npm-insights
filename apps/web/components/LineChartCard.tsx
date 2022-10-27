@@ -35,7 +35,7 @@ const CustomTooltip = ({ active, payload, label, data, key }: any) => {
 
   if (active && payload && payload.length) {
     return (
-      <div className="border-2 p-2 bg-background-1000">
+      <div className="border-2 border-brand-1000 p-2 bg-background-1000">
         <div>
           <span>{getLabel()?.label}</span>
         </div>

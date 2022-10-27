@@ -61,6 +61,7 @@ export function PackageSearchInput({
           <SearchInput
             {...getInputProps()}
             placeholder="Search npm package..."
+            isLoading={searchResults.isFetching}
           />
         </div>
         <Card

@@ -35,9 +35,12 @@ export class NPM {
           .object({
             name: z.string(),
             description: z.string(),
-            repository: z.object({
-              url: z.string(),
-            }),
+            repository: z
+              .object({
+                url: z.string(),
+              })
+              .nullish()
+              .default({ url: '' }),
             homepage: z.string().nullish().default(null),
             'dist-tags': z.object({
               latest: z.string(),
