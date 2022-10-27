@@ -14,11 +14,9 @@ import { PackageDownloadsChart } from '../../features/PackageDownloadsChart/Pack
 import { useRepoInfo } from '../../hooks/useRepoInfo'
 import { useRepoSizeHistory } from '../../hooks/useRepoSizeHistory'
 
-export default function Page({
-  pkgInitialData,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page() {
   const pkgId = usePkgId()
-  const { isLoading, data: pkg } = useRepoInfo({ initialData: pkgInitialData })
+  const { isLoading, data: pkg } = useRepoInfo()
   const pkgSizeHistory = useRepoSizeHistory()
 
   const data = pkgSizeHistory.data?.sizeHistory.map((i) => ({
@@ -111,12 +109,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     transformer: superjson,
   })
 
-  const pkg = await ssg.npm.getInfo.fetch({ pkgId })
+  await ssg.npm.getInfo.prefetch({ pkgId })
 
   return {
     props: {
-      // trpcState: ssg.dehydrate(),
-      pkgInitialData: pkg,
+      trpcState: ssg.dehydrate(),
     },
   }
 }
