@@ -10,7 +10,5 @@ module.exports = withTM({
   images: {
     domains: ['cdn.jsdelivr.net'],
   },
-  experimental: {
-    nextScriptWorkers: true,
-  },
+  experimental: {},
 })
