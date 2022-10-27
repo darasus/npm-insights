@@ -59,7 +59,10 @@ export function PackageSearchInput({
       <div className="flex flex-col items-center w-full relative z-50">
         <div className="flex items-baseline w-full">
           <SearchInput
-            {...getInputProps()}
+            {...getInputProps({
+              'aria-controls': 'search-input-controls-1',
+              'aria-labelledby': 'search-input-labelledby-1',
+            })}
             placeholder="Search npm package..."
             isLoading={searchResults.isFetching}
           />
@@ -69,7 +72,10 @@ export function PackageSearchInput({
           className="absolute left-0 right-0 top-14"
         >
           <div
-            {...getMenuProps()}
+            {...getMenuProps({
+              id: `search-list-controls-1`,
+              'aria-labelledby': 'search-list-labelledby-1',
+            })}
             className={clsx(
               'py-2 flex-1 overflow-y-auto max-h-48 z-50',
               showSuggestions ? undefined : 'hidden',
@@ -81,6 +87,7 @@ export function PackageSearchInput({
                 {...getItemProps({
                   item,
                   index,
+                  id: `search-input-controls-1-${index}`,
                 })}
                 key={index}
                 className={clsx(
