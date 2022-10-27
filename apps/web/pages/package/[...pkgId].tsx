@@ -6,7 +6,7 @@ import { appRouter } from '../../server/routers/_app'
 import { createContext } from '../../server/context'
 import superjson from 'superjson'
 import { Layout } from '../../components/Layout'
-import { Meta } from 'ui'
+import { Meta, Spinner } from 'ui'
 import { usePkgId } from '../../hooks/usePkgId'
 import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 import { PackageInfo } from '../../components/PackageInfo'
@@ -30,8 +30,8 @@ export default function Page({
 
   if (isLoading) {
     return (
-      <div className="flex w-full h-full items-center justify-center">
-        <span>Loading...</span>
+      <div className="flex w-screen h-screen items-center justify-center">
+        <Spinner />
       </div>
     )
   }
