@@ -5,6 +5,7 @@ import { format } from 'date-fns'
 import { usePkgId } from '../hooks/usePkgId'
 import { formatKbs, formatNumber } from '../utils/formatKbs'
 import { token } from '../token'
+import { Spinner } from 'ui'
 
 interface Props {
   dataKey: string
@@ -64,7 +65,7 @@ export function LineChartCard({
       <Card className="flex flex-col h-full w-full">
         {isLoading && (
           <div className="flex items-center justify-center h-full w-full flex-col">
-            <span>Loading...</span>
+            <Spinner />
             <div>
               <span className="text-sm px-2 text-center leading-normal">
                 Generating package data...
