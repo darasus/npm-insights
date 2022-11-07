@@ -1,14 +1,9 @@
 import { LineChartCard } from '../../components/LineChartCard'
-import { usePkgId } from '../../hooks/usePkgId'
+import { useRepoDownloadHistory } from '../../hooks/useRepoDownloadHistory'
 import { formatNumber } from '../../utils/formatKbs'
-import { trpc } from '../../utils/trpc'
 
 export const PackageDownloadsChart = () => {
-  const pkgId = usePkgId()
-  const pkgDownloads = trpc.npm.getPackageDownloads.useQuery(
-    { pkgId },
-    { enabled: !!pkgId }
-  )
+  const pkgDownloads = useRepoDownloadHistory()
   const downloadLabel = pkgDownloads.data
     ? formatNumber(pkgDownloads.data[pkgDownloads.data.length - 1]?.count || 0)
     : ''
