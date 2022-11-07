@@ -1,4 +1,5 @@
 import { Link, Meta } from 'ui'
+import { DevelopedBy } from '../components/DevelopedBy'
 import { Logo } from '../components/Logo'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
 
@@ -20,6 +21,7 @@ export default function Web() {
             <PackageSearchInput />
           </div>
           <span className="font-black">Find the size of any NPM package</span>
+          <DevelopedBy />
         </div>
       </div>
     </>
