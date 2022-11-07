@@ -6,9 +6,9 @@ export class CacheService {
     token: process.env.UPSTASH_REDIS_REST_TOKEN!,
   })
 
-  fetch = async (
+  fetch = async <T>(
     key: string,
-    fetcher: () => Promise<string | null>,
+    fetcher: () => Promise<T | null>,
     expires: number
   ) => {
     const existing = await this.get(key)
@@ -18,15 +18,15 @@ export class CacheService {
     return this.set(key, fetcher, expires)
   }
 
-  get = async (key: string): Promise<string | null> => {
-    const value = await this.redis.get<string>(key)
+  get = async <T>(key: string): Promise<T | null> => {
+    const value = await this.redis.get<T>(key)
     if (value === null) return null
     return value
   }
 
-  set = async (
+  set = async <T>(
     key: string,
-    fetcher: () => Promise<string | null>,
+    fetcher: () => Promise<T | null>,
     expires: number
   ) => {
     const value = await fetcher()

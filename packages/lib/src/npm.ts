@@ -47,7 +47,7 @@ export class NPM {
             }),
             versions: z.record(z.string(), z.object({ name: z.string() })),
           })
-          .parse(JSON.parse(data))
+          .parse(data)
       : null
   }
 
@@ -65,7 +65,7 @@ export class NPM {
       ms('10 years')
     )
 
-    return data ? JSON.parse(data) : null
+    return data as any
   }
 
   async searchPackages(q: string) {
@@ -81,7 +81,7 @@ export class NPM {
       ms('10 years')
     )
 
-    return data ? JSON.parse(data) : null
+    return data as any
   }
 
   async fetchDownloads(pkgId: string, start: string, end: string) {
@@ -96,6 +96,6 @@ export class NPM {
       ms('1d')
     )
 
-    return data ? JSON.parse(data) : null
+    return data as any
   }
 }
