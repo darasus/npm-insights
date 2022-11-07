@@ -57,11 +57,10 @@ importers:
       '@headlessui/react': ^1.7.3
       '@heroicons/react': ^2.0.12
       '@tanstack/react-query': ^4.10.1
-      '@trpc/client': 10.0.0-proxy-beta.26
-      '@trpc/next': 10.0.0-proxy-beta.26
-      '@trpc/react': ^10.0.0-proxy-beta.20
-      '@trpc/react-query': 10.0.0-proxy-beta.26
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/client': 10.0.0-rc.5
+      '@trpc/next': 10.0.0-rc.5
+      '@trpc/react-query': 10.0.0-rc.5
+      '@trpc/server': 10.0.0-rc.5
       '@vercel/analytics': ^0.1.2
       '@vercel/og': ^0.0.15
       date-fns: ^2.29.3
@@ -80,17 +79,17 @@ importers:
       tsconfig: workspace:*
       ui: workspace:*
       utils: workspace:*
+      zod: ^3.19.1
     dependencies:
       '@emotion/react': 11.10.4_@babel+core@7.19.3
       '@emotion/styled': 11.10.4_kegwiu6rx7up4av2fgiwfiva5q
       '@headlessui/react': 1.7.3
       '@heroicons/react': 2.0.12
       '@tanstack/react-query': 4.10.1
-      '@trpc/client': 10.0.0-proxy-beta.26_vu5ifdrqz65hq4g32lr3d5gbm4
-      '@trpc/next': 10.0.0-proxy-beta.26_onij3kge764pddam5rkcnutkeu
-      '@trpc/react': 10.0.0-proxy-beta.20_lwkr7xjv5thtxiqsvqiucvndyu
-      '@trpc/react-query': 10.0.0-proxy-beta.26_lwkr7xjv5thtxiqsvqiucvndyu
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/client': 10.0.0-rc.5_@trpc+server@10.0.0-rc.5
+      '@trpc/next': 10.0.0-rc.5_uuzacm2guuz44y7sd4vjipq45m
+      '@trpc/react-query': 10.0.0-rc.5_3secijmoy6x6sxk55sdximre5y
+      '@trpc/server': 10.0.0-rc.5
       '@vercel/analytics': 0.1.2
       '@vercel/og': 0.0.15
       date-fns: 2.29.3
@@ -105,6 +104,7 @@ importers:
       superjson: 1.10.0
       ui: link:../../packages/ui
       utils: link:../../packages/utils
+      zod: 3.19.1
     devDependencies:
       '@babel/core': 7.19.3
       eslint: 7.32.0
@@ -1286,62 +1286,51 @@ packages:
       use-sync-external-store: 1.2.0
     dev: false
 
-  /@trpc/client/10.0.0-proxy-beta.26_vu5ifdrqz65hq4g32lr3d5gbm4:
-    resolution: {integrity: sha512-NTAqTtMCsB5DneoseK/oFYA9YkcIXHuYp1zojnhNpNA+HFzFvkDUHsKNmaPwd5c/KxLr7nP/jQvRzvVuZbgBng==}
+  /@trpc/client/10.0.0-rc.5_@trpc+server@10.0.0-rc.5:
+    resolution: {integrity: sha512-+wVbec1UYCk4L3Z8XihkmOjeHN36HE+Ur4uKVR1DlA/9yUlxC2j/YIuhLN0mMiqGezVsMWNE/vCckVWAiRGN5w==}
+    deprecated: Use ^10.0.0-rc.6
     peerDependencies:
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/server': 10.0.0-rc.5
     dependencies:
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/server': 10.0.0-rc.5
     dev: false
 
-  /@trpc/next/10.0.0-proxy-beta.26_onij3kge764pddam5rkcnutkeu:
-    resolution: {integrity: sha512-msyNRgBVKPI+JnJynmUdE5QK/xAFAQYFPmAH1dJdM+nAxlk8ZNeRR5ohXK4oIqK/GTSMIdcNzDPdXFVB9KiiJQ==}
+  /@trpc/next/10.0.0-rc.5_uuzacm2guuz44y7sd4vjipq45m:
+    resolution: {integrity: sha512-icP9MV8gnvS1qGipwmOGi7CU/Hj6Y2sEOaJRw1N9LgsalQB2yCR53Q2IA/S+H7jnlvyFQTCyHwmnBinjhTbA+w==}
+    deprecated: Use ^10.0.0-rc.6
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
-      '@trpc/client': 10.0.0-proxy-beta.26
+      '@trpc/client': 10.0.0-rc.5
       '@trpc/react-query': ^10.0.0-proxy-beta.21
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/server': 10.0.0-rc.5
       next: '*'
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
       '@tanstack/react-query': 4.10.1
-      '@trpc/client': 10.0.0-proxy-beta.26_vu5ifdrqz65hq4g32lr3d5gbm4
-      '@trpc/react-query': 10.0.0-proxy-beta.26_lwkr7xjv5thtxiqsvqiucvndyu
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/client': 10.0.0-rc.5_@trpc+server@10.0.0-rc.5
+      '@trpc/react-query': 10.0.0-rc.5_3secijmoy6x6sxk55sdximre5y
+      '@trpc/server': 10.0.0-rc.5
       react-ssr-prepass: 1.5.0
     dev: false
 
-  /@trpc/react-query/10.0.0-proxy-beta.26_lwkr7xjv5thtxiqsvqiucvndyu:
-    resolution: {integrity: sha512-8/wDnNTNsn9ULXldegpqoNCgMMepVTU66t7ynyNFuSHE9eSd8J2sWKyEzK7lxVHa1kU+NjWhYoG+iDoXrKE6Cg==}
+  /@trpc/react-query/10.0.0-rc.5_3secijmoy6x6sxk55sdximre5y:
+    resolution: {integrity: sha512-i18VFsaHIVdlAaLM7Hg75xRC9mAd0bYTyFC8chjIMWWmD2G+a6DbwWxxjM5fLkn05eiPBtxcGTW2Q5eCcWtlOA==}
     peerDependencies:
       '@tanstack/react-query': ^4.3.8
-      '@trpc/client': 10.0.0-proxy-beta.26
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/client': 10.0.0-rc.5
+      '@trpc/server': 10.0.0-rc.5
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
       '@tanstack/react-query': 4.10.1
-      '@trpc/client': 10.0.0-proxy-beta.26_vu5ifdrqz65hq4g32lr3d5gbm4
-      '@trpc/server': 10.0.0-proxy-beta.26
+      '@trpc/client': 10.0.0-rc.5_@trpc+server@10.0.0-rc.5
+      '@trpc/server': 10.0.0-rc.5
     dev: false
 
-  /@trpc/react/10.0.0-proxy-beta.20_lwkr7xjv5thtxiqsvqiucvndyu:
-    resolution: {integrity: sha512-axuy3Nf71j6vVQFhc7ATSOW4gMTL92RSMTA0p93dNoNQpKqADGjjB1bFUqAmCeAjy441s+h9tqhj3g14sQ/NmA==}
-    peerDependencies:
-      '@tanstack/react-query': ^4.3.8
-      '@trpc/client': 10.0.0-proxy-beta.20
-      '@trpc/server': 10.0.0-proxy-beta.20
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@tanstack/react-query': 4.10.1
-      '@trpc/client': 10.0.0-proxy-beta.26_vu5ifdrqz65hq4g32lr3d5gbm4
-      '@trpc/server': 10.0.0-proxy-beta.26
-    dev: false
-
-  /@trpc/server/10.0.0-proxy-beta.26:
-    resolution: {integrity: sha512-XMpsQnH5s5Mn7CbRUMq2qT8TlHWNSygAizmpKnMhk3JDuLtqQNfxqGG41JzXiKNUcDrfcWt+MEyEa18sEjLYiA==}
+  /@trpc/server/10.0.0-rc.5:
+    resolution: {integrity: sha512-SMj1uFL1iocYDCkLFrjyiRCAQFFA6uu7kWhIZGpWFGcZMl805CVuliWdbYcHbGU0diF/BlEAJ5BWZsfjnOkDXA==}
+    deprecated: Use ^10.0.0-rc.6
     dev: false
 
   /@types/acorn/4.0.6:

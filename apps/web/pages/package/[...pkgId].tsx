@@ -1,7 +1,6 @@
 import { formatKbs } from '../../utils/formatKbs'
 import { LineChartCard } from '../../components/LineChartCard'
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
-import { createProxySSGHelpers } from '@trpc/react/ssg'
+import { GetServerSidePropsContext } from 'next'
 import { appRouter } from '../../server/routers/_app'
 import { createContext } from '../../server/context'
 import superjson from 'superjson'
@@ -13,6 +12,7 @@ import { PackageInfo } from '../../components/PackageInfo'
 import { PackageDownloadsChart } from '../../features/PackageDownloadsChart/PackageDownloadsChart'
 import { useRepoInfo } from '../../hooks/useRepoInfo'
 import { useRepoSizeHistory } from '../../hooks/useRepoSizeHistory'
+import { createProxySSGHelpers } from '@trpc/react-query/ssg'
 
 export default function Page() {
   const pkgId = usePkgId()
