@@ -10,11 +10,13 @@ import clsx from 'clsx'
 interface Props {
   showKbd?: boolean
   isTransparent?: boolean
+  focusOnMount?: boolean
 }
 
 export function PackageSearchInput({
   showKbd = false,
   isTransparent = false,
+  focusOnMount,
 }: Props) {
   const router = useRouter()
   const [q, setQ] = useState('')
@@ -66,6 +68,7 @@ export function PackageSearchInput({
             placeholder="Search npm package..."
             isLoading={searchResults.isFetching}
             showKbd={showKbd}
+            focusOnMount={focusOnMount}
           />
         </div>
         <Card

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Spinner } from './Spinner'
 
 const Kbd = ({ children }: React.PropsWithChildren) => {
@@ -12,14 +12,27 @@ const Kbd = ({ children }: React.PropsWithChildren) => {
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isLoading?: boolean
   showKbd?: boolean
+  focusOnMount?: boolean
 }
 
 export const SearchInput = React.forwardRef<HTMLDivElement>(
-  function SearchInput({ isLoading, showKbd = true, ...props }: Props, ref) {
+  function SearchInput(
+    { isLoading, focusOnMount, showKbd = true, ...props }: Props,
+    ref
+  ) {
+    const input = React.useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+      if (focusOnMount) {
+        input.current?.focus()
+      }
+    }, [focusOnMount])
+
     return (
       <div ref={ref} className="relative mt-1 rounded-md shadow-sm w-full">
         <input
           {...props}
+          ref={input}
           type="text"
           name="account-number"
           id="account-number"

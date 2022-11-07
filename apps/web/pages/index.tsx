@@ -18,7 +18,7 @@ export default function Web() {
             </Link>
           </div>
           <div className="mb-4 px-4 w-full">
-            <PackageSearchInput />
+            <PackageSearchInput focusOnMount />
           </div>
           <span className="font-black">Find the size of any NPM package</span>
           <DevelopedBy />

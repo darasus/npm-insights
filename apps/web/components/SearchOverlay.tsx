@@ -72,7 +72,11 @@ export function SearchOverlay() {
                     </Link>
                   </div>
                 </div>
-                <PackageSearchInput showKbd={false} isTransparent />
+                <PackageSearchInput
+                  showKbd={false}
+                  isTransparent
+                  focusOnMount
+                />
               </Dialog.Panel>
             </Transition.Child>
           </div>
