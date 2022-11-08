@@ -70,7 +70,6 @@ importers:
       framer-motion: ^6
       hooks: workspace:*
       lib: workspace:*
-      next-transpile-modules: 9.0.0
       package-build-stats: ^7.3.13
       react-hook-form: ^7.37.0
       react-query: '3'
@@ -109,7 +108,6 @@ importers:
       '@babel/core': 7.19.3
       eslint: 7.32.0
       eslint-config-custom: link:../../packages/eslint-config-custom
-      next-transpile-modules: 9.0.0
       tsconfig: link:../../packages/tsconfig
 
   packages/eslint-config-custom:
@@ -7852,13 +7850,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: false
-
-  /next-transpile-modules/9.0.0:
-    resolution: {integrity: sha512-VCNFOazIAnXn1hvgYYSTYMnoWgKgwlYh4lm1pKbSfiB3kj5ZYLcKVhfh3jkPOg1cnd9DP+pte9yCUocdPEUBTQ==}
-    dependencies:
-      enhanced-resolve: 5.10.0
-      escalade: 3.1.1
-    dev: true
 
   /next/13.0.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-uQ5z5e4D9mOe8+upy6bQdYYjo/kk1v3jMW87kTy2TgAyAsEO+CkwRnMgyZ4JoHEnhPZLHwh7dk0XymRNLe1gFw==}
