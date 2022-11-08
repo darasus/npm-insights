@@ -51,6 +51,9 @@ export function PackageSearchInput({
         })
       }
     },
+    onHighlightedIndexChange(changes) {
+      router.prefetch(`/package/${changes.selectedItem?.name}`)
+    },
   })
 
   const showSuggestions =
@@ -98,6 +101,9 @@ export function PackageSearchInput({
                   index === highlightedIndex ? 'bg-brand-1000' : undefined,
                   'px-4 py-2 cursor-pointer'
                 )}
+                onMouseEnter={() => {
+                  router.prefetch(`/package/${item.name}`)
+                }}
               >
                 <span
                   className={clsx(
