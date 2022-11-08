@@ -9,6 +9,7 @@ export const createContext = async (
 ) => {
   return {
     req: opts?.req,
+    res: opts?.res,
     npm: new NPM(),
     cache: new CacheService(),
     github: new GitHub(),
