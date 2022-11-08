@@ -56,16 +56,14 @@ export const trpc = createTRPCNext<AppRouter>({
     clientErrors: TRPCClientError<AppRouter>[]
   }): ResponseMeta {
     if (clientErrors.length) {
-      // propagate http first error from API calls
       return {
         status: clientErrors[0].data?.httpStatus ?? 500,
       }
     }
-    // cache request for 1 day + revalidate once every second
     const ONE_DAY_IN_SECONDS = 60 * 60 * 24
     return {
       headers: {
-        'cache-control': `s-maxage=60, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
+        'cache-control': `s-maxage=${ONE_DAY_IN_SECONDS}, stale-while-revalidate=${ONE_DAY_IN_SECONDS}`,
       },
     }
   },
