@@ -1,46 +1,54 @@
 import { Dialog, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
-import { useDisclosure } from '../hooks/useDisclosure'
 import { usePrevious } from '../hooks/usePrevious'
 import { Logo } from './Logo'
 
 export function SearchOverlay() {
   const router = useRouter()
   const previousPath = usePrevious(router.asPath)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleEvent = useCallback(
     (e: KeyboardEvent) => {
       if (e.metaKey && e.key === 'k') {
         e.preventDefault()
         if (isOpen) {
-          onClose()
+          setIsOpen(false)
         } else {
-          onOpen()
+          setIsOpen(true)
+        }
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        if (isOpen) {
+          setIsOpen(false)
         }
       }
     },
-    [isOpen, onClose, onOpen]
+    [isOpen]
   )
 
   useEffect(() => {
     if (isOpen && previousPath && router.asPath !== previousPath) {
-      onClose()
+      setIsOpen(false)
     }
-  }, [router.asPath, onClose, previousPath, isOpen])
+  }, [router.asPath, previousPath, isOpen])
 
   useEffect(() => {
     window.addEventListener('keydown', handleEvent)
     return () => window.removeEventListener('keydown', handleEvent)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [handleEvent])
 
   return (
     <Transition.Root show={isOpen} as={React.Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
+      <Dialog
+        as="div"
+        className="relative z-50"
+        onClose={() => setIsOpen(false)}
+      >
         <Transition.Child
           as={React.Fragment}
           enter="ease-out duration-300"
