@@ -34,6 +34,7 @@ export function PackageSearchInput({
     getInputProps,
     highlightedIndex,
     getItemProps,
+    inputValue,
   } = useCombobox<{ name: string; description: string; version: string }>({
     items: searchResults.data || [],
     itemToString: (option) => (option ? option.name : ''),
@@ -46,9 +47,7 @@ export function PackageSearchInput({
     },
     onSelectedItemChange(changes) {
       if (changes.selectedItem) {
-        router.push(`/package/${changes.selectedItem.name}`, undefined, {
-          shallow: true,
-        })
+        router.push(`/package/${changes.selectedItem.name}`)
       }
     },
     onHighlightedIndexChange(changes) {
@@ -67,6 +66,13 @@ export function PackageSearchInput({
             {...getInputProps({
               'aria-controls': 'search-input-controls-1',
               'aria-labelledby': 'search-input-labelledby-1',
+              onKeyDown: (e) => {
+                if (e.key === 'Enter' && highlightedIndex === -1) {
+                  router.push(`/package/${inputValue}`, undefined, {
+                    shallow: true,
+                  })
+                }
+              },
             })}
             placeholder="Search npm package..."
             isLoading={searchResults.isFetching}

@@ -11,6 +11,9 @@ export class NPM {
     const url = `https://registry.npmjs.org/${pkgId}`
     const res = await fetch(url)
     const { time, users, ...data } = await res.json()
+
+    if (!data.versions) return null
+
     const versions = Object.keys(data.versions)
       .filter((v) => !v.includes('-'))
       .sort((a: any, b: any) => {

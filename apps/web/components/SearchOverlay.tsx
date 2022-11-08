@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
 import { usePrevious } from '../hooks/usePrevious'
-import { Logo } from './Logo'
+import { Logo } from 'ui'
 
 export function SearchOverlay() {
   const router = useRouter()

@@ -1,7 +1,7 @@
 import { Link } from 'ui'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
 import { DevelopedBy } from './DevelopedBy'
-import { Logo } from './Logo'
+import { Logo } from 'ui'
 
 export function Layout({ children }: React.PropsWithChildren) {
   return (

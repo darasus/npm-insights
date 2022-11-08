@@ -1,9 +1,8 @@
-import { Link, Meta } from 'ui'
+import { Link, Meta, Logo } from 'ui'
 import { DevelopedBy } from '../components/DevelopedBy'
-import { Logo } from '../components/Logo'
 import { PackageSearchInput } from '../features/PackageSearchInput/PackageSearchInput'
 
-export default function Web() {
+export default function HomePage() {
   return (
     <>
       <Meta

@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server'
 import { format, sub, isWeekend } from 'date-fns'
 import { z } from 'zod'
 import { t } from '../trpc'
@@ -12,7 +13,12 @@ export const npmRouter = t.router({
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId)
 
-      if (!pkg) return null
+      if (!pkg) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Package with this name is not found.',
+        })
+      }
 
       return {
         name: pkg.name,
@@ -50,9 +56,9 @@ export const npmRouter = t.router({
           })
         )
 
-      sizeHistory = sizeHistory.filter(
-        (i: any) => Boolean(i.size) && Boolean(i.gzip)
-      )
+      sizeHistory =
+        sizeHistory?.filter((i: any) => Boolean(i.size) && Boolean(i.gzip)) ??
+        []
 
       return { sizeHistory }
     }),

@@ -1,23 +1,25 @@
 import { formatKbs } from '../../utils/formatKbs'
 import { LineChartCard } from '../../components/LineChartCard'
-import { GetServerSidePropsContext } from 'next'
-import { appRouter } from '../../server/routers/_app'
-import { createContext } from '../../server/context'
-import superjson from 'superjson'
 import { Layout } from '../../components/Layout'
-import { Meta, Spinner } from 'ui'
+import { Error, Meta } from 'ui'
 import { usePkgId } from '../../hooks/usePkgId'
-import { createIsFirstServerCall } from '../../utils/createIsFirstServerCall'
 import { PackageInfo } from '../../components/PackageInfo'
 import { PackageDownloadsChart } from '../../features/PackageDownloadsChart/PackageDownloadsChart'
 import { useRepoInfo } from '../../hooks/useRepoInfo'
 import { useRepoSizeHistory } from '../../hooks/useRepoSizeHistory'
-import { createProxySSGHelpers } from '@trpc/react-query/ssg'
 
 export default function Page() {
   const pkgId = usePkgId()
-  const { isLoading, data: pkg } = useRepoInfo()
-  const pkgSizeHistory = useRepoSizeHistory()
+  const { data: pkg, error } = useRepoInfo()
+  const pkgSizeHistory = useRepoSizeHistory({ pkgId: pkg?.name })
+
+  if (error) {
+    return (
+      <Error statusCode={error?.data?.httpStatus} message={error?.message} />
+    )
+  }
+
+  if (!pkg) return null
 
   const data = pkgSizeHistory.data?.sizeHistory.map((i) => ({
     ...i,
@@ -25,16 +27,6 @@ export default function Page() {
 
   const gzipLabel = data ? formatKbs(data?.[data?.length - 1]?.gzip || 0) : ''
   const sizeLabel = data ? formatKbs(data?.[data?.length - 1]?.size || 0) : ''
-
-  if (isLoading) {
-    return (
-      <div className="flex w-screen h-screen items-center justify-center">
-        <Spinner />
-      </div>
-    )
-  }
-
-  if (!pkg) return null
 
   return (
     <>
@@ -88,32 +80,4 @@ export default function Page() {
       </Layout>
     </>
   )
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const pkgId = (
-    typeof context.query?.pkgId === 'string'
-      ? context.query?.pkgId
-      : context.query?.pkgId?.join('/')
-  ) as string
-
-  if (!createIsFirstServerCall(context)) {
-    return {
-      props: {},
-    }
-  }
-
-  const ssg = createProxySSGHelpers({
-    router: appRouter,
-    ctx: await createContext(),
-    transformer: superjson,
-  })
-
-  await ssg.npm.getInfo.prefetch({ pkgId })
-
-  return {
-    props: {
-      trpcState: ssg.dehydrate(),
-    },
-  }
 }

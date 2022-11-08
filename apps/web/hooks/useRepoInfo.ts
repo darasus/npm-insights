@@ -7,6 +7,12 @@ export function useRepoInfo() {
     { pkgId },
     {
       enabled: !!pkgId,
+      retry: (_, error) => {
+        if (error.data?.httpStatus === 404) {
+          return false
+        }
+        return true
+      },
     }
   )
 }
