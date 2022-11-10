@@ -12,11 +12,18 @@ export default trpcNext.createNextApiHandler({
     }
   },
   responseMeta({ ctx, paths, type, errors }) {
+    console.log({ paths })
     // checking that no procedures errored
     const allOk = errors.length === 0
     // checking we're doing a query request
     const isQuery = type === 'query'
-    if (ctx?.res && allOk && isQuery) {
+    if (
+      ctx?.res &&
+      allOk &&
+      isQuery &&
+      // do not cache package size to be able to retrigger build
+      !paths?.includes('npm.getSizeHistory')
+    ) {
       // cache request for 1 day + revalidate once every second
       const ONE_DAY_IN_SECONDS = 60 * 60 * 24
       return {
