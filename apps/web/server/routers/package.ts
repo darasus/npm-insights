@@ -20,13 +20,16 @@ export const npmRouter = t.router({
         })
       }
 
+      const repositoryUrl =
+        typeof pkg?.repository === 'string'
+          ? pkg?.repository
+          : pkg?.repository?.url
+
       return {
         name: pkg.name,
         description: pkg.description,
         homepage: pkg.homepage,
-        repository: pkg?.repository?.url
-          .replace('git+', '')
-          .replace('.git', ''),
+        repository: repositoryUrl?.replace('git+', '').replace('.git', ''),
         latestVersion: pkg['dist-tags'].latest,
       }
     }),
@@ -128,7 +131,12 @@ export const githubRouter = t.router({
       if (!pkg) return null
       if (!pkg.repository) return null
 
-      const [owner, repo] = pkg.repository.url
+      const repositoryUrl =
+        typeof pkg?.repository === 'string'
+          ? pkg?.repository
+          : pkg?.repository?.url
+
+      const [owner, repo] = repositoryUrl
         .replace('git+', '')
         .replace('.git', '')
         .replace('https://github.com/', '')
@@ -146,10 +154,15 @@ export const githubRouter = t.router({
     .query(async ({ ctx, input }) => {
       const pkg = await ctx.npm.fetchPackage(input.pkgId)
 
-      if (!pkg) return null
-      if (!pkg.repository) return null
+      const repositoryUrl =
+        typeof pkg?.repository === 'string'
+          ? pkg?.repository
+          : pkg?.repository?.url
 
-      const [owner, repo] = pkg.repository.url
+      if (!pkg) return null
+      if (!repositoryUrl) return null
+
+      const [owner, repo] = repositoryUrl
         .replace('git+', '')
         .replace('.git', '')
         .replace('https://github.com/', '')

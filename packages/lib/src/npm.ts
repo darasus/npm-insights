@@ -33,11 +33,16 @@ export class NPM {
             name: z.string(),
             description: z.string(),
             repository: z
-              .object({
-                url: z.string(),
-              })
-              .nullish()
-              .default({ url: '' }),
+              .string()
+              .optional()
+              .or(
+                z
+                  .object({
+                    url: z.string(),
+                  })
+                  .optional()
+                  .default({ url: '' })
+              ),
             homepage: z.string().nullish().default(null),
             'dist-tags': z.object({
               latest: z.string(),
