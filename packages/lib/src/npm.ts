@@ -67,7 +67,7 @@ export class NPM {
       ms('10 years')
     )
 
-    return data as any
+    return typeof data === 'string' ? JSON.parse(data) : data
   }
 
   async searchPackages(q: string) {
